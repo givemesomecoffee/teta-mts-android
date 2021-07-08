@@ -15,7 +15,6 @@
         app:layout_constraintStart_toEndOf="@id/panel_nav_menu"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/movie_details_guideline"
         android:layout_width="wrap_content"
@@ -33,14 +32,12 @@
         app:layout_constraintEnd_toEndOf="@id/movie_cover"
         app:layout_constraintStart_toStartOf="@id/movie_cover"
         app:layout_constraintTop_toTopOf="@id/movie_details_guideline"
-
         app:srcCompat="@drawable/movie_details_top_rounded" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/movie_details_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         android:layout_marginTop="32dp"
         android:background="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,7 +99,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
             <ImageView
                 android:id="@+id/icon_star"
                 android:layout_width="wrap_content"
@@ -161,16 +157,13 @@
                 app:layout_constraintStart_toStartOf="@id/icon_star"
                 app:layout_constraintTop_toBottomOf="@id/icon_star" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/actors_section_v"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/movie_cover"
@@ -257,9 +250,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-
     <View
-
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@drawable/shadow"
@@ -268,7 +259,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@drawable/shadow"
@@ -280,11 +270,9 @@
         android:id="@+id/panel_nav_menu"
         android:layout_width="48dp"
         android:layout_height="0dp"
-
         app:layout_constraintBottom_toTopOf="@id/button_nav_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageView
         android:id="@+id/nav_menu_icon"
@@ -302,7 +290,6 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="46dp"
-
         app:layout_constraintBottom_toTopOf="@id/button_nav_account"
         app:layout_constraintStart_toStartOf="parent" />
 
