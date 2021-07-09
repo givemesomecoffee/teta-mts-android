@@ -9,18 +9,4 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
     }
-
-    override fun onStart() {
-        super.onStart()
-        switchLayouts()
-    }
-
-    private fun switchLayouts(){
-        val config = resources.configuration
-        if(config.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            setContentView(R.layout.activity_movie_details_h)
-        } else {
-            setContentView(R.layout.activity_movie_details)
-        }
-    }
 }
