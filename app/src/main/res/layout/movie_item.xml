@@ -57,7 +57,7 @@
         android:layout_marginBottom="5dp"
 
         android:contentDescription="@string/movie_rating"
-        android:src="@drawable/ic_star_filled"
+        android:src="@drawable/ic_star"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
          />
@@ -67,7 +67,7 @@
         android:layout_width="14dp"
         android:layout_height="13dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_star_filled"
+        android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/icon_star"
         app:layout_constraintTop_toTopOf="@id/icon_star" />
 
@@ -76,7 +76,7 @@
         android:layout_width="14dp"
         android:layout_height="13dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_star_filled"
+        android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/icon_star2"
         app:layout_constraintTop_toTopOf="@id/icon_star" />
 
@@ -85,7 +85,7 @@
         android:layout_width="14dp"
         android:layout_height="13dp"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_star_filled"
+        android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/icon_star3"
         app:layout_constraintTop_toTopOf="@id/icon_star" />
 
