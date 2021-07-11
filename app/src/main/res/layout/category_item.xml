@@ -12,5 +12,6 @@
     android:background="@drawable/round_border"
     android:padding="@dimen/padding_4"
     android:paddingStart="@dimen/padding_10"
-    android:paddingEnd="@dimen/padding_10"/>
+    android:paddingEnd="@dimen/padding_10"
+    android:textSize="@dimen/space_10"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

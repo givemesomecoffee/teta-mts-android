@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import coil.load
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import kotlin.math.roundToInt
 
 
 class MovieAdapter(
@@ -26,6 +27,7 @@ class MovieAdapter(
         val movieTitle: TextView = view.findViewById(R.id.movie_title)
         val movieDescription: TextView = view.findViewById(R.id.movie_description)
         val movieCover: ImageView = view.findViewById(R.id.movie_cover)
+        val movieAge: TextView = view.findViewById(R.id.age_sign)
 
     }
 
@@ -39,6 +41,8 @@ class MovieAdapter(
         holder.movieTitle.text = dataset[position].title
         holder.movieDescription.text = dataset[position].description
         holder.movieCover.load(dataset[position].imageUrl)
+        val ageRestriction = dataset[position].ageRestriction.toString() + "+"
+        holder.movieAge.text = ageRestriction
     }
 
     override fun getItemCount(): Int {
@@ -50,17 +54,20 @@ class MovieAdapter(
 
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
             val childCount = parent.childCount
-            var left = 0
-            var right = parent.width/2 + 20
+        /*    var left = 0
+            var right = parent.width/2 + 20*/
             val position = parent.getChildAdapterPosition(view)
 
 
-          val spacing = Math.round(spacing * parent.context.resources.displayMetrics.density)
-            val column = position % spanCount
+          val spacing = (55 * parent.context.resources.displayMetrics.density).roundToInt()
+            /*val column = position % spanCount*/
+
+
+            outRect.bottom = spacing
 
 
 
-            if (position % 2 != 0){
+          /*  if (position % 2 != 0){
                 left = 0
                 right = parent.width/2
             }
@@ -68,11 +75,11 @@ class MovieAdapter(
 
 
 
-        /*    outRect.left = spacing - column * spacing / spanCount
-            outRect.right = (column + 1) * spacing / spanCount*/
+        *//*    outRect.left = spacing - column * spacing / spanCount
+            outRect.right = (column + 1) * spacing / spanCount*//*
             outRect.left = left
             outRect.right = right
-      /*      outRect.top = if (position < spanCount) spacing else 0
+      *//*      outRect.top = if (position < spanCount) spacing else 0
             outRect.bottom = spacing*/
         }
 

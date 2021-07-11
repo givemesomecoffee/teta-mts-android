@@ -25,5 +25,7 @@ class MainActivity : AppCompatActivity() {
         val categoryList = findViewById<RecyclerView>(R.id.movie_category_list)
         val categoryModel = Categories(MovieCategoriesDataSourceImpl())
         categoryList.adapter = CategoryAdapter(this, categoryModel.getCategories())
+        categoryList.addItemDecoration(CategoryAdapter.RecyclerItemDecoration(1, 6))
+        movieList.addItemDecoration(MovieAdapter.RecyclerItemDecoration(1, 55))
     }
 }

@@ -8,7 +8,9 @@ class MovieCategoriesDataSourceImpl: MovieCategoriesDatasource {
         CategoryDto("драмы"),
         CategoryDto("комедии"),
         CategoryDto("артхаус"),
-        CategoryDto("мелодрамы")
+        CategoryDto("мелодрамы"),
+        CategoryDto("фантастика"),
+        CategoryDto("триллеры")
     )
     }
 

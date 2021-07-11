@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey">
 
     <ImageView
         android:id="@+id/icon_search"
@@ -35,7 +36,7 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 android:layout_marginTop="@dimen/offset_12"
-        app:layout_constraintEnd_toEndOf="@id/icon_search"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/page_title"
         app:layout_constraintTop_toBottomOf="@id/page_title"
         app:layout_constraintBottom_toTopOf="@id/test"
@@ -58,7 +59,7 @@ android:layout_marginTop="@dimen/offset_12"
         android:id="@+id/button_nav_home"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_nav_dimen"
-        android:layout_marginTop="@dimen/offset_46"
+
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_nav_account"
