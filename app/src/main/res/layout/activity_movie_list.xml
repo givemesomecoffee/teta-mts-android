@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey">
-
+<!-- TODO://move dimensions to res?(better ask Mike)  -->
     <ImageView
         android:id="@+id/icon_search"
         android:layout_width="wrap_content"
@@ -44,12 +44,12 @@ android:layout_marginTop="@dimen/offset_12"
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/test"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
 
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/button_nav_home"
-        app:layout_constraintEnd_toEndOf="@id/movie_category_list"
+
         app:layout_constraintStart_toStartOf="@id/movie_category_list"
         app:layout_constraintTop_toBottomOf="@id/movie_category_list"
         tools:listitem="@layout/movie_item"
@@ -106,5 +106,4 @@ android:layout_marginTop="@dimen/offset_12"
         app:layout_constraintStart_toStartOf="@id/button_nav_account"
         app:layout_constraintTop_toTopOf="@id/button_nav_account" />
 
-    <!--TODO:// cover spacing problem for grid with 2 columns(should be 20 for recycle start+end and auto between items) -->
 </androidx.constraintlayout.widget.ConstraintLayout>

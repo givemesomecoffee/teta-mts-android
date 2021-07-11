@@ -5,8 +5,9 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:minHeight="365dp"
+    android:id="@+id/movie_item"
     >
-
+<!-- TODO:// check all dimensions and colors and add tools(just for test)-->
     <androidx.cardview.widget.CardView
         android:id="@+id/movie_cover_wrapper"
         android:layout_width="150dp"
@@ -49,7 +50,8 @@
         android:layout_height="33dp"
         android:id="@+id/placeholder"
         app:layout_constraintTop_toBottomOf="@id/movie_description"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/icon_star"
         android:layout_width="14dp"

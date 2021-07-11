@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
-
+//TODO: remove this file
 class DividerItemDecoration : ItemDecoration {
     private var divider: Drawable?
 
