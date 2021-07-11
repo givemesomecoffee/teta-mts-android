@@ -46,19 +46,34 @@ class MovieAdapter(
     }
 
 
-    class RecyclerItemDecoration(private val spanCount: Int, private val spacing: Int) : RecyclerView.ItemDecoration() {
+    class RecyclerItemDecoration(private val spanCount: Int, private val spacing: Int = 20) : RecyclerView.ItemDecoration() {
 
         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-
-            val spacing = Math.round(spacing * parent.context.resources.displayMetrics.density)
+            val childCount = parent.childCount
+            var left = 0
+            var right = parent.width/2 + 20
             val position = parent.getChildAdapterPosition(view)
+
+
+          val spacing = Math.round(spacing * parent.context.resources.displayMetrics.density)
             val column = position % spanCount
 
-            outRect.left = spacing - column * spacing / spanCount
-            outRect.right = (column + 1) * spacing / spanCount
 
-            outRect.top = if (position < spanCount) spacing else 0
-            outRect.bottom = spacing
+
+            if (position % 2 != 0){
+                left = 0
+                right = parent.width/2
+            }
+
+
+
+
+        /*    outRect.left = spacing - column * spacing / spanCount
+            outRect.right = (column + 1) * spacing / spanCount*/
+            outRect.left = left
+            outRect.right = right
+      /*      outRect.top = if (position < spanCount) spacing else 0
+            outRect.bottom = spacing*/
         }
 
     }
