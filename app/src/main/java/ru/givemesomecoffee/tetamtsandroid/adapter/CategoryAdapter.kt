@@ -16,13 +16,15 @@ class CategoryAdapter(
     private val dataset: List<CategoryDto>
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    //TODO: rewrite inflate to use context from constructor
-    class CategoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view){
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
+
+    class CategoryViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val categoryTitle: TextView = view.findViewById(R.id.category_title)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-       val adapterLayout = LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false)
+        val adapterLayout =
+            inflater.inflate(R.layout.category_item, parent, false)
         return CategoryViewHolder(adapterLayout)
     }
 
@@ -33,21 +35,4 @@ class CategoryAdapter(
     override fun getItemCount(): Int {
         return dataset.size
     }
-
-    //TODO: remove itemDecoration
-    class RecyclerItemDecoration(private val spanCount: Int, private val spacing: Int = 20) : RecyclerView.ItemDecoration() {
-
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            val childCount = parent.childCount
-
-            val position = parent.getChildAdapterPosition(view)
-
-            val spacing = (6 * parent.context.resources.displayMetrics.density).roundToInt()
-            val endSpacing = (20 * parent.context.resources.displayMetrics.density).roundToInt()
-            outRect.right = if (position < childCount) spacing else endSpacing
-
-        }
-
-    }
-
 }

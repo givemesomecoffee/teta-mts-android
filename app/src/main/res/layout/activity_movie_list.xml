@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey">
-<!-- TODO://move dimensions to res?(better ask Mike)  -->
+    <!-- TODO://move dimensions to res?(better ask Mike)  -->
     <ImageView
         android:id="@+id/icon_search"
         android:layout_width="wrap_content"
@@ -33,27 +33,27 @@
         android:id="@+id/movie_category_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_12"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-android:layout_marginTop="@dimen/offset_12"
+        app:layout_constraintBottom_toTopOf="@id/test"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/page_title"
         app:layout_constraintTop_toBottomOf="@id/page_title"
-        app:layout_constraintBottom_toTopOf="@id/test"
-        />
+        tools:listitem="@layout/category_item" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/test"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
 
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/button_nav_home"
-
         app:layout_constraintStart_toStartOf="@id/movie_category_list"
         app:layout_constraintTop_toBottomOf="@id/movie_category_list"
-        tools:listitem="@layout/movie_item"
-        android:layout_marginTop="15dp"/>
+        tools:listitem="@layout/movie_item" />
 
     <View
         android:id="@+id/button_nav_home"
