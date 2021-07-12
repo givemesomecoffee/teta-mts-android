@@ -6,7 +6,7 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:minHeight="365dp">
-
+    <!-- TODO:// make contentDesc dynamic -->
     <androidx.cardview.widget.CardView
         android:id="@+id/movie_cover_wrapper"
         android:layout_width="@dimen/item_movie_cover_width"
@@ -34,7 +34,7 @@
         android:textSize="@dimen/space_14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_cover_wrapper"
-        tools:text="@tools:sample/full_names" />
+        tools:text="Гнев человеческий " />
 
     <TextView
         android:id="@+id/movie_description"
@@ -42,61 +42,30 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_10"
         android:textSize="@dimen/space_12"
-        app:layout_constraintBottom_toTopOf="@id/icon_star"
+        app:layout_constraintBottom_toTopOf="@id/ratingBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_title"
-        tools:text="@tools:sample/lorem"
-        app:layout_constraintVertical_chainStyle="spread_inside"/>
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        tools:text="Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя..." />
+
+    <RatingBar
+
+        android:id="@+id/ratingBar"
+        style="@style/MyRatingBar"
+        android:layout_width="wrap_content"
 
 
-    <ImageView
-        android:id="@+id/icon_star"
-        android:layout_width="@dimen/movie_item_ic_star_width"
-        android:layout_height="@dimen/movie_item_ic_star_height"
-        android:layout_marginBottom="@dimen/offset_5"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_15"
+        android:layout_marginBottom="@dimen/offset_5"
         android:contentDescription="@string/movie_rating"
-        android:src="@drawable/ic_star"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="4"
+        android:stepSize="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/movie_description"
-       />
-
-    <ImageView
-        android:id="@+id/icon_star2"
-        android:layout_width="@dimen/movie_item_ic_star_width"
-        android:layout_height="@dimen/movie_item_ic_star_height"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_star"
-        app:layout_constraintStart_toEndOf="@id/icon_star"
-        app:layout_constraintTop_toTopOf="@id/icon_star" />
-
-    <ImageView
-        android:id="@+id/icon_star3"
-        android:layout_width="@dimen/movie_item_ic_star_width"
-        android:layout_height="@dimen/movie_item_ic_star_height"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_star"
-        app:layout_constraintStart_toEndOf="@id/icon_star2"
-        app:layout_constraintTop_toTopOf="@id/icon_star" />
-
-    <ImageView
-        android:id="@+id/icon_star4"
-        android:layout_width="@dimen/movie_item_ic_star_width"
-        android:layout_height="@dimen/movie_item_ic_star_height"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_star"
-        app:layout_constraintStart_toEndOf="@id/icon_star3"
-        app:layout_constraintTop_toTopOf="@id/icon_star" />
-
-    <ImageView
-        android:id="@+id/icon_star5"
-        android:layout_width="@dimen/movie_item_ic_star_width"
-        android:layout_height="@dimen/movie_item_ic_star_height"
-        android:importantForAccessibility="no"
-        android:src="@drawable/ic_star"
-        app:layout_constraintStart_toEndOf="@id/icon_star4"
-        app:layout_constraintTop_toTopOf="@id/icon_star" />
+        app:layout_constraintTop_toBottomOf="@id/movie_description" />
 
     <TextView
         android:id="@+id/age_sign"

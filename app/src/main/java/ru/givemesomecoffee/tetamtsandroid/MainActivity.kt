@@ -1,6 +1,5 @@
 package ru.givemesomecoffee.tetamtsandroid
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -19,9 +18,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
 
-        val manager = GridLayoutManager(this, 2)
         val movieList = findViewById<RecyclerView>(R.id.test)
-       movieList.layoutManager = manager
+        val manager = GridLayoutManager(this, 2)
+        movieList.layoutManager = manager
         val model = Movies(MoviesDataSourceImpl())
         movieList.adapter = MovieAdapter(
             this,
@@ -30,12 +29,21 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, movieTitle, Toast.LENGTH_SHORT).show()
             })
         movieList.addItemDecoration(RecyclerItemDecoration(20, 55, 20))
+
         val categoryList = findViewById<RecyclerView>(R.id.movie_category_list)
         val categoryModel = Categories(MovieCategoriesDataSourceImpl())
-        categoryList.adapter = CategoryAdapter(this, categoryModel.getCategories())
+        categoryList.adapter = CategoryAdapter(
+            this,
+            categoryModel.getCategories(),
+            itemClick = { movieTitle: String ->
+                Toast.makeText(this, movieTitle, Toast.LENGTH_SHORT).show()
+            })
         categoryList.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
-
     }
-
-
 }
+
+
+
+// TODO: separate viewHolders
+// TODO: apply listeners with interface
+// TODO: diffutils????
