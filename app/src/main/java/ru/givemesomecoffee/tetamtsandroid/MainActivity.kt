@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
+
         val manager = GridLayoutManager(this, 2)
         val movieList = findViewById<RecyclerView>(R.id.test)
        movieList.layoutManager = manager

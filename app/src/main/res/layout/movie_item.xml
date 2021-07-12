@@ -2,17 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/movie_item"
+    android:id="@+id/movie_item_root"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:minHeight="365dp">
-    <!-- TODO:// check all dimensions and colors-->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/movie_cover_wrapper"
-        android:layout_width="150dp"
-        android:layout_height="216dp"
+        android:layout_width="@dimen/item_movie_cover_width"
+        android:layout_height="@dimen/item_movie_cover_height"
         android:layout_gravity="center"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="@dimen/radius_10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -51,10 +51,10 @@
 
     <ImageView
         android:id="@+id/icon_star"
-        android:layout_width="14dp"
-        android:layout_height="13dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="@dimen/movie_item_ic_star_width"
+        android:layout_height="@dimen/movie_item_ic_star_height"
+        android:layout_marginBottom="@dimen/offset_5"
+        android:layout_marginTop="@dimen/offset_15"
         android:contentDescription="@string/movie_rating"
         android:src="@drawable/ic_star"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,8 +64,8 @@
 
     <ImageView
         android:id="@+id/icon_star2"
-        android:layout_width="14dp"
-        android:layout_height="13dp"
+        android:layout_width="@dimen/movie_item_ic_star_width"
+        android:layout_height="@dimen/movie_item_ic_star_height"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/icon_star"
@@ -73,8 +73,8 @@
 
     <ImageView
         android:id="@+id/icon_star3"
-        android:layout_width="14dp"
-        android:layout_height="13dp"
+        android:layout_width="@dimen/movie_item_ic_star_width"
+        android:layout_height="@dimen/movie_item_ic_star_height"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/icon_star2"
@@ -82,8 +82,8 @@
 
     <ImageView
         android:id="@+id/icon_star4"
-        android:layout_width="14dp"
-        android:layout_height="13dp"
+        android:layout_width="@dimen/movie_item_ic_star_width"
+        android:layout_height="@dimen/movie_item_ic_star_height"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/icon_star3"
@@ -91,8 +91,8 @@
 
     <ImageView
         android:id="@+id/icon_star5"
-        android:layout_width="14dp"
-        android:layout_height="13dp"
+        android:layout_width="@dimen/movie_item_ic_star_width"
+        android:layout_height="@dimen/movie_item_ic_star_height"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_star"
         app:layout_constraintStart_toEndOf="@id/icon_star4"
@@ -100,13 +100,13 @@
 
     <TextView
         android:id="@+id/age_sign"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/movie_item_age_sign"
+        android:layout_height="@dimen/movie_item_age_sign"
         android:background="@drawable/circle"
         android:gravity="center"
         android:text="@string/age_sign"
         android:textAlignment="center"
-        android:textSize="7sp"
+        android:textSize="@dimen/space_7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

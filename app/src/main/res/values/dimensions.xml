@@ -9,21 +9,29 @@
 
     <item name="ic_star_height" type="dimen">15dp</item>
     <item name="ic_star_width" type="dimen">16dp</item>
+    <item name="movie_item_ic_star_height" type="dimen">13dp</item>
+    <item name="movie_item_ic_star_width" type="dimen">14dp</item>
 
     <item name="age_sign_dimen" type="dimen">41dp</item>
+    <item name="movie_item_age_sign" type="dimen">20dp</item>
 
     <item name="movie_cover_height" type="dimen">290dp</item>
+    <item name="item_movie_cover_height" type="dimen">216dp</item>
+    <item name="item_movie_cover_width" type="dimen">150dp</item>
 
     <item name="guideline_movie_details" type="dimen">224dp</item>
 
     <item name="active_indicator_height" type="dimen">3dp</item>
 
     <item name="offset_3" type="dimen">3dp</item>
+    <item name="offset_5" type="dimen">5dp</item>
     <item name="offset_8" type="dimen">8dp</item>
     <item name="offset_10" type="dimen">10dp</item>
     <item name="offset_12" type="dimen">12dp</item>
+    <item name="offset_15" type="dimen">15dp</item>
     <item name="offset_16" type="dimen">16dp</item>
     <item name="offset_20" type="dimen">20dp</item>
+    <item name="offset_22" type="dimen">22dp</item>
     <item name="offset_30" type="dimen">30dp</item>
     <item name="offset_32" type="dimen">32dp</item>
     <item name="offset_35" type="dimen">35dp</item>
@@ -32,10 +40,13 @@
     <item name="padding_4" type="dimen">4dp</item>
     <item name="padding_10" type="dimen">10dp</item>
 
+    <item name="space_7" type="dimen">7sp</item>
     <item name="space_10" type="dimen">10sp</item>
     <item name="space_12" type="dimen">12sp</item>
     <item name="space_14" type="dimen">14sp</item>
     <item name="space_16" type="dimen">16sp</item>
     <item name="space_20" type="dimen">20sp</item>
+    
+    <item name="radius_10" type="dimen">10dp</item>
 
 </resources>

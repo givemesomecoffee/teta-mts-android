@@ -18,6 +18,8 @@
 
     <string name="rating_img_error">rating img corrupted</string>
     <string name="movie_rating">rating 4</string>
+    <string name="ic_search_description">search</string>
+    <string name="movie_list_title">Популярное сейчас</string>
 
     <!-- /accessibility labels -->
 </resources>
