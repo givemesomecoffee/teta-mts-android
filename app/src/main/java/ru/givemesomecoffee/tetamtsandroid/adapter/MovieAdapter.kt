@@ -2,34 +2,23 @@ package ru.givemesomecoffee.tetamtsandroid.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.utils.MoviesCallback
-
+import ru.givemesomecoffee.tetamtsandroid.viewholder.MovieViewHolder
 
 class MovieAdapter(
     context: Context,
     private var dataset: List<MovieDto>,
     private var itemClick: ((String) -> Unit)?
-) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+) : RecyclerView.Adapter<MovieViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    class MovieViewHolder(view: View, itemClick: ((String) -> Unit)?) : RecyclerView.ViewHolder(view) {
-        val movieTitle: TextView = view.findViewById(R.id.movie_title)
-        val movieDescription: TextView = view.findViewById(R.id.movie_description)
-        val movieCover: ImageView = view.findViewById(R.id.movie_cover)
-        val movieAge: TextView = view.findViewById(R.id.age_sign)
-        val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val adapterLayout =
@@ -51,7 +40,7 @@ class MovieAdapter(
         holder.ratingBar.rating = movieRating.toFloat()
     }
 
-    fun updateMoviesList(newList: List<MovieDto>){
+    fun updateMoviesList(newList: List<MovieDto>) {
         val callback = MoviesCallback(dataset, newList)
         val diff = DiffUtil.calculateDiff(callback)
         diff.dispatchUpdatesTo(this)

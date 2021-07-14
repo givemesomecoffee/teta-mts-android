@@ -24,7 +24,7 @@
 
 
     <string name="movie_list_title">Популярное сейчас</string>
-    <string name="movie_list_category_title">Категории</string>
+    <string name="movie_list_category_title">Все категории</string>
 
 
 </resources>

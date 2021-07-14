@@ -3,41 +3,30 @@ package ru.givemesomecoffee.tetamtsandroid.adapter
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
+import ru.givemesomecoffee.tetamtsandroid.viewholder.CategoryViewHolder
+import ru.givemesomecoffee.tetamtsandroid.viewholder.HeaderViewHolder
 
 const val TYPE_CATEGORY = 1
 const val TYPE_HEADER = 0
 
 class CategoryAdapter(
     context: Context,
-    private val dataset: List<CategoryDto>
-
+    private val dataset: List<CategoryDto>,
+    private val itemClick: ((String) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-
-    var itemClick: ((String) -> Unit)? = null
-
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    class CategoryViewHolder(view: View, itemClick: ((String) -> Unit)?) :
-        RecyclerView.ViewHolder(view) {
-        val categoryTitle: TextView = view.findViewById(R.id.category_title)
-    }
-
-    class HeaderViewHolder(view: View) :
-        RecyclerView.ViewHolder(view) {
-        val categoryTitle: TextView = view.findViewById(R.id.category_title)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_HEADER -> HeaderViewHolder(inflater.inflate(R.layout.category_item, parent, false))
+            TYPE_HEADER -> HeaderViewHolder(
+                inflater.inflate(R.layout.category_item, parent, false),
+                itemClick
+            )
             TYPE_CATEGORY -> CategoryViewHolder(
                 inflater.inflate(
                     R.layout.category_item,
@@ -55,6 +44,9 @@ class CategoryAdapter(
                 categoryTitle.setText(R.string.movie_list_category_title)
                 categoryTitle.setTextColor(Color.WHITE)
                 categoryTitle.setBackgroundResource(R.drawable.category_border_filled)
+                itemView.setOnClickListener {
+                    itemClick?.invoke("Все категории")
+                }
             }
             is CategoryViewHolder -> holder.apply {
                 val item = dataset[position - 1]
