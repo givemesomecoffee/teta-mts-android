@@ -15,9 +15,13 @@ const val TYPE_HEADER = 0
 
 class CategoryAdapter(
     context: Context,
-    private val dataset: List<CategoryDto>,
-    private var itemClick: ((String) -> Unit)?
+    private val dataset: List<CategoryDto>
+
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+    var itemClick: ((String) -> Unit)? = null
+
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 

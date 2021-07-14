@@ -34,16 +34,25 @@ class MainActivity : AppCompatActivity() {
         val categoryModel = Categories(MovieCategoriesDataSourceImpl())
         categoryList.adapter = CategoryAdapter(
             this,
-            categoryModel.getCategories(),
-            itemClick = { movieTitle: String ->
-                Toast.makeText(this, movieTitle, Toast.LENGTH_SHORT).show()
-            })
+            categoryModel.getCategories()
+        )
+        (categoryList.adapter as CategoryAdapter).itemClick = { categoryTitle: String ->
+            if (categoryTitle == "боевики")
+                (movieList.adapter as MovieAdapter).updateMoviesList(
+                    listOf(
+                        model.getMovies()[0],
+                        model.getMovies()[3]
+                    )
+                )
+            else
+                Toast.makeText(this, categoryTitle, Toast.LENGTH_SHORT).show()
+        }
         categoryList.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
     }
 }
 
 
-
 // TODO: separate viewHolders
-// TODO: apply listeners with interface
-// TODO: diffutils????
+// TODO: apply listeners with interface (?)
+// TODO: почистить лапшу
+// TODO: save movies selected on orientation change

@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import ru.givemesomecoffee.tetamtsandroid.utils.MoviesCallback
 
 
 class MovieAdapter(
     context: Context,
-    private val dataset: List<MovieDto>,
+    private var dataset: List<MovieDto>,
     private var itemClick: ((String) -> Unit)?
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -47,6 +49,13 @@ class MovieAdapter(
         }
         val movieRating = item.rateScore
         holder.ratingBar.rating = movieRating.toFloat()
+    }
+
+    fun updateMoviesList(newList: List<MovieDto>){
+        val callback = MoviesCallback(dataset, newList)
+        val diff = DiffUtil.calculateDiff(callback)
+        diff.dispatchUpdatesTo(this)
+        this.dataset = newList
     }
 
     override fun getItemCount(): Int {
