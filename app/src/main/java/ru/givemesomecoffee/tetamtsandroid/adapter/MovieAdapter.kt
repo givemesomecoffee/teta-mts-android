@@ -19,7 +19,6 @@ class MovieAdapter(
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val adapterLayout =
             inflater.inflate(R.layout.movie_item, parent, false)
@@ -27,17 +26,7 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val item = dataset[position]
-        holder.movieTitle.text = item.title
-        holder.movieDescription.text = item.description
-        holder.movieCover.load(item.imageUrl)
-        val ageRestriction = item.ageRestriction.toString() + "+"
-        holder.movieAge.text = ageRestriction
-        holder.itemView.setOnClickListener {
-            itemClick?.invoke(item.title)
-        }
-        val movieRating = item.rateScore
-        holder.ratingBar.rating = movieRating.toFloat()
+        holder.bind(dataset[position])
     }
 
     fun updateMoviesList(newList: List<MovieDto>) {

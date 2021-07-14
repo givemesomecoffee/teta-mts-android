@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getNewList(model: Movies): List<MovieDto> {
         category = 1
-        return listOf(model.getMovies()[0], model.getMovies()[0])
+        return listOf(model.getMovies()[0], model.getMovies()[3])
     }
 
     private fun getFullList(model: Movies): List<MovieDto> {

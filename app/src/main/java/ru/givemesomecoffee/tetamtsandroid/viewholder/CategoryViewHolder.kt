@@ -4,8 +4,18 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
 
-class CategoryViewHolder(view: View, itemClick: ((String) -> Unit)?) :
+class CategoryViewHolder(view: View, private val itemClick: ((String) -> Unit)?) :
     RecyclerView.ViewHolder(view) {
-    val categoryTitle: TextView = view.findViewById(R.id.category_title)
+    private val categoryTitle: TextView = view.findViewById(R.id.category_title)
+
+    fun bind(item: CategoryDto) {
+        categoryTitle.text = item.title
+        itemView.setOnClickListener {
+            this.itemClick?.invoke(item.title)
+        }
+    }
+
+
 }

@@ -40,23 +40,11 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HeaderViewHolder -> holder.apply {
-                categoryTitle.setText(R.string.movie_list_category_title)
-                categoryTitle.setTextColor(Color.WHITE)
-                categoryTitle.setBackgroundResource(R.drawable.category_border_filled)
-                itemView.setOnClickListener {
-                    itemClick?.invoke("Все категории")
-                }
-            }
-            is CategoryViewHolder -> holder.apply {
-                val item = dataset[position - 1]
-                categoryTitle.text = item.title
-                itemView.setOnClickListener {
-                    itemClick?.invoke(item.title)
-                }
+            is HeaderViewHolder -> holder.bind()
+            is CategoryViewHolder -> holder.bind(dataset[position - 1])
             }
         }
-    }
+
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
