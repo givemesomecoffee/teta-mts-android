@@ -2,6 +2,8 @@ package ru.givemesomecoffee.tetamtsandroid
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,55 +28,63 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_movie_list)
 
-        val movieList = findViewById<RecyclerView>(R.id.test)
+        val moviesListView = findViewById<RecyclerView>(R.id.movies_list)
         val manager = GridLayoutManager(this, 2)
-        movieList.layoutManager = manager
-        val model = Movies(MoviesDataSourceImpl())
-        val movies = if (category == 1) getNewList(model) else getFullList(model)
-        movieList.adapter = MovieAdapter(
+        moviesListView.layoutManager = manager
+        val moviesModel = Movies(MoviesDataSourceImpl())
+        val moviesList =
+            if (category != 0) getMoviesListByCategory(moviesModel, category)
+            else getAllMoviesList(moviesModel)
+        moviesListView.adapter = MovieAdapter(
             this,
-            movies,
+            moviesList,
             itemClick = { movieTitle: String ->
                 Toast.makeText(this, movieTitle, Toast.LENGTH_SHORT).show()
             })
-        movieList.addItemDecoration(RecyclerItemDecoration(20, 55, 20))
+        moviesListView.addItemDecoration(RecyclerItemDecoration(20, 55, 20, true))
 
-        val categoryList = findViewById<RecyclerView>(R.id.movie_category_list)
-
-        val categoryModel = Categories(MovieCategoriesDataSourceImpl())
-        categoryList.adapter = CategoryAdapter(
+        val categoriesListView = findViewById<RecyclerView>(R.id.movie_category_list)
+        val categoriesModel = Categories(MovieCategoriesDataSourceImpl())
+        categoriesListView.adapter = CategoryAdapter(
             this,
-            categoryModel.getCategories(),
-            itemClick = { categoryTitle: String ->
-                when (categoryTitle) {
-                    "боевики" -> (movieList.adapter as MovieAdapter).updateMoviesList(
-                        getNewList(model)
+            categoriesModel.getCategories(),
+            itemClick = { categoryId: Int ->
+                when (categoryId) {
+                    0 -> (moviesListView.adapter as MovieAdapter).updateMoviesList(
+                        getAllMoviesList(moviesModel)
                     )
-                    "Все категории" -> (movieList.adapter as MovieAdapter).updateMoviesList(
-                        getFullList(model)
+                    else -> (moviesListView.adapter as MovieAdapter).updateMoviesList(
+                        getMoviesListByCategory(moviesModel, categoryId)
                     )
-                    else -> Toast.makeText(this, categoryTitle, Toast.LENGTH_SHORT).show()
                 }
             }
         )
-
-        categoryList.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
+        categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
     }
 
 
-    private fun getNewList(model: Movies): List<MovieDto> {
-        category = 1
-        return listOf(model.getMovies()[0], model.getMovies()[3])
+    private fun getMoviesListByCategory(model: Movies, id: Int): List<MovieDto> {
+        category = id
+        val list = model.geMoviesByCategory(category)
+        isMoviesListEmpty(list)
+        return list
     }
 
-    private fun getFullList(model: Movies): List<MovieDto> {
+    private fun getAllMoviesList(model: Movies): List<MovieDto> {
         category = 0
-        return model.getMovies()
+        val list = model.getMovies()
+        isMoviesListEmpty(list)
+        return list
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(CATEGORY, category)
+    }
+
+    private fun isMoviesListEmpty(list: List<MovieDto>) {
+        findViewById<TextView>(R.id.empty_movies_list).visibility =
+            if (list.isEmpty()) View.VISIBLE else View.GONE
     }
 }
 

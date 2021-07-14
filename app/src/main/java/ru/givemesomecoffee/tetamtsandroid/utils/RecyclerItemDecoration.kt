@@ -8,7 +8,8 @@ import kotlin.math.roundToInt
 class RecyclerItemDecoration(
     private val spacingRight: Int = 0,
     private val spacingBottom: Int = 0,
-    private val spacingEnd: Int = 0
+    private val spacingEnd: Int = 0,
+    private val isMovieList: Boolean = false
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
@@ -26,9 +27,11 @@ class RecyclerItemDecoration(
         if (position == childCount - 1)
             outRect.right = getDp(spacingEnd, density)
 
+        if (isMovieList && position % 2 != 0) {
+            outRect.left = (parent.measuredWidth / 2) - getDp(150, density)
+            outRect.right = 0
+        }
         outRect.bottom = getDp(spacingBottom, density)
-
-
     }
 
     private fun getDp(spacing: Int, density: Float): Int {

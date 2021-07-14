@@ -1,7 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,7 @@ const val TYPE_HEADER = 0
 class CategoryAdapter(
     context: Context,
     private val dataset: List<CategoryDto>,
-    private val itemClick: ((String) -> Unit)?
+    private val itemClick: ((Int) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -42,9 +41,8 @@ class CategoryAdapter(
         when (holder) {
             is HeaderViewHolder -> holder.bind()
             is CategoryViewHolder -> holder.bind(dataset[position - 1])
-            }
         }
-
+    }
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {

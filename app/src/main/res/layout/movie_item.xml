@@ -6,7 +6,7 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:minHeight="365dp">
-    <!-- TODO:// make contentDesc dynamic -->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/movie_cover_wrapper"
         android:layout_width="@dimen/item_movie_cover_width"
@@ -21,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:importantForAccessibility="no"/>
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -49,12 +50,9 @@
         tools:text="Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя..." />
 
     <RatingBar
-
         android:id="@+id/ratingBar"
         style="@style/MyRatingBar"
         android:layout_width="wrap_content"
-
-
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_15"
         android:layout_marginBottom="@dimen/offset_5"

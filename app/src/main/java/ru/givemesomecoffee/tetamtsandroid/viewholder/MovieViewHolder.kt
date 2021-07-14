@@ -25,7 +25,10 @@ class MovieViewHolder(view: View, private val itemClick: ((String) -> Unit)?) :
         val ageRestriction = item.ageRestriction.toString() + "+"
         movieAge.text = ageRestriction
         val movieRating = item.rateScore
-        ratingBar.rating = movieRating.toFloat()
+        ratingBar.apply {
+            rating = movieRating.toFloat()
+            contentDescription = movieRating.toString()
+        }
         itemView.setOnClickListener {
             itemClick?.invoke(item.title)
         }

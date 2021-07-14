@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.utils.MoviesCallback
@@ -34,6 +33,7 @@ class MovieAdapter(
         val diff = DiffUtil.calculateDiff(callback)
         diff.dispatchUpdatesTo(this)
         this.dataset = newList
+
     }
 
     override fun getItemCount(): Int {
