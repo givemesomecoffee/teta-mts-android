@@ -41,7 +41,12 @@ class MainActivity : AppCompatActivity() {
             itemClick = { movieTitle: String ->
                 Toast.makeText(this, movieTitle, Toast.LENGTH_SHORT).show()
             })
-        moviesListView.addItemDecoration(RecyclerItemDecoration(20, 55, 20, true))
+        moviesListView.addItemDecoration(
+            RecyclerItemDecoration(
+                spacingBottom = 50,
+                isMovieList = true
+            )
+        )
 
         val categoriesListView = findViewById<RecyclerView>(R.id.movie_category_list)
         val categoriesModel = Categories(MovieCategoriesDataSourceImpl())

@@ -39,6 +39,7 @@
 
     <item name="padding_4" type="dimen">4dp</item>
     <item name="padding_10" type="dimen">10dp</item>
+    <item name="padding_3" type = "dimen">3dp</item>
 
     <item name="space_7" type="dimen">7sp</item>
     <item name="space_10" type="dimen">10sp</item>

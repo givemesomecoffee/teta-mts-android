@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey">
-
+<androidx.constraintlayout.widget.Guideline
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_begin="@dimen/offset_20"
+    android:id="@+id/guideline_start"
+    />
     <ImageView
         android:id="@+id/icon_search"
         android:layout_width="wrap_content"
@@ -21,11 +27,10 @@
         android:id="@+id/page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/offset_20"
         android:layout_marginTop="@dimen/offset_22"
         android:text="@string/movie_list_title"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/icon_search" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -37,7 +42,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/movies_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/page_title"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/page_title"
         tools:listitem="@layout/category_item" />
 
@@ -51,7 +56,7 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/button_nav_home"
-        app:layout_constraintStart_toStartOf="@id/movie_category_list"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_category_list"
         tools:listitem="@layout/movie_item" />
 
