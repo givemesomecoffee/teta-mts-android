@@ -1,9 +1,9 @@
 package ru.givemesomecoffee.tetamtsandroid
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +17,8 @@ import ru.givemesomecoffee.tetamtsandroid.model.Movies
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 class MoviesListFragment: Fragment() {
+    private var someFragmentClickListener: SomeFragmentClickListener? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +37,8 @@ class MoviesListFragment: Fragment() {
         moviesListView.adapter = MovieAdapter(
             view.context,
             moviesList,
-            itemClick = { movieTitle: String ->
-                Toast.makeText(view.context, movieTitle, Toast.LENGTH_SHORT).show()
+            itemClick = {  categoryId: Int ->
+                someFragmentClickListener?.onChangeColorButtonClicked(categoryId)
             })
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(
@@ -99,4 +101,24 @@ private fun getAllMoviesList(model: Movies): List<MovieDto> {
         findViewById<TextView>(R.id.empty_movies_list).visibility =
         if (list.isEmpty()) View.VISIBLE else View.GONE
         }*/
+
+    interface SomeFragmentClickListener {
+        fun onChangeColorButtonClicked(id: Int)
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is SomeFragmentClickListener){
+            someFragmentClickListener = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        someFragmentClickListener = null
+    }
+
+
+
 }
