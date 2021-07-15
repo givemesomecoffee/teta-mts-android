@@ -55,7 +55,7 @@
         android:layout_marginEnd="@dimen/offset_20"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/button_nav_home"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_category_list"
         tools:listitem="@layout/movie_item" />
@@ -72,55 +72,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/button_nav_home"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/button_nav_dimen"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_nav_account"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/icon_nav_home"
-        android:layout_width="@dimen/nav_icon_width"
-        android:layout_height="@dimen/nav_icon_height"
-        android:contentDescription="@string/home_title"
-        android:src="@drawable/ic_nav_home"
-        app:layout_constraintBottom_toBottomOf="@id/button_nav_home"
-        app:layout_constraintEnd_toEndOf="@id/button_nav_home"
-        app:layout_constraintStart_toStartOf="@id/button_nav_home"
-        app:layout_constraintTop_toTopOf="@id/button_nav_home" />
-
-    <ImageView
-        android:id="@+id/nav_active_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:importantForAccessibility="no"
-        android:src="@drawable/nav_active_indicator"
-        app:layout_constraintBottom_toBottomOf="@id/button_nav_home"
-        app:layout_constraintEnd_toEndOf="@id/button_nav_home"
-        app:layout_constraintStart_toStartOf="@id/button_nav_home" />
-
-    <View
-        android:id="@+id/button_nav_account"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/button_nav_dimen"
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_nav_home" />
-
-    <ImageView
-        android:id="@+id/icon_nav_account"
-        android:layout_width="@dimen/nav_icon_width"
-        android:layout_height="@dimen/nav_icon_height"
-        android:contentDescription="@string/account_title"
-        android:src="@drawable/ic_nav_account"
-        app:layout_constraintBottom_toBottomOf="@id/button_nav_account"
-        app:layout_constraintEnd_toEndOf="@id/button_nav_account"
-        app:layout_constraintStart_toStartOf="@id/button_nav_account"
-        app:layout_constraintTop_toTopOf="@id/button_nav_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
