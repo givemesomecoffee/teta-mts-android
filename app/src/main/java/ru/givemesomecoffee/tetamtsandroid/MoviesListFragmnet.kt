@@ -1,6 +1,8 @@
 package ru.givemesomecoffee.tetamtsandroid
+
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,32 +19,45 @@ import ru.givemesomecoffee.tetamtsandroid.model.Categories
 import ru.givemesomecoffee.tetamtsandroid.model.Movies
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
-class MoviesListFragment: Fragment() {
+class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
+    private var category = 0
 
     companion object {
-            const val MOVIE_LIST_TAG = "MovieList"
+        const val MOVIE_LIST_TAG = "MovieList"
+        const val CATEGORY = "category_key"
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_movie_list, container, false)
+
+
+        return inflater.inflate(R.layout.activity_movie_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val moviesListView = view.findViewById<RecyclerView>(R.id.movies_list)
         val manager = GridLayoutManager(view.context, 2)
         moviesListView.layoutManager = manager
         val moviesModel = Movies(MoviesDataSourceImpl())
-        val moviesList = moviesModel.getMovies()
-           // if (category != 0) getMoviesListByCategory(moviesModel, category)
-           // else
-           // getAllMoviesList(moviesModel)
+
+        if (savedInstanceState != null) {
+            category = savedInstanceState.getInt(CATEGORY, 0)
+            Log.d("fr1", category.toString())
+        }
+        val moviesList = if (category != 0)
+            getMoviesListByCategory(moviesModel, category)
+        else getAllMoviesList(moviesModel)
 
         moviesListView.adapter = MovieAdapter(
             view.context,
             moviesList,
-            itemClick = {  categoryId: Int ->
-                moviesListFragmentClickListener?.onMovieCardClicked(categoryId)
+            itemClick = { movieId: Int ->
+                moviesListFragmentClickListener?.onMovieCardClicked(movieId)
             })
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(
@@ -68,53 +83,46 @@ class MoviesListFragment: Fragment() {
         )
         categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
 
-
-        return view
-    }
-/*
-    if (savedInstanceState != null) {
-        category = savedInstanceState.getInt(CATEGORY, 0)
     }
 
-*/
-
-
-
-
-
-   private fun getMoviesListByCategory(model: Movies, id: Int): List<MovieDto> {
-      //  category = id
+    private fun getMoviesListByCategory(model: Movies, id: Int): List<MovieDto> {
+        category = id
         val list = model.geMoviesByCategory(id)
-    isMoviesListEmpty(list)
+        isMoviesListEmpty(list)
+        Log.d("fr1", "гетмувис++")
         return list
-        }
+    }
 
-private fun getAllMoviesList(model: Movies): List<MovieDto> {
-       // category = 0
+    private fun getAllMoviesList(model: Movies): List<MovieDto> {
+        category = 0
         val list = model.getMovies()
-       isMoviesListEmpty(list)
+        isMoviesListEmpty(list)
         return list
-        }
+    }
 
-/*        override fun onSaveInstanceState(outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+
         outState.putInt(CATEGORY, category)
-        }*/
+        Log.d("fr1", "123")
+        Log.d("fr1", category.toString())
+        Log.d("fr1", outState.getInt(CATEGORY, 0).toString())
+        Log.d("fr1", "123")
+    }
 
-private fun isMoviesListEmpty(list: List<MovieDto>) {
+    private fun isMoviesListEmpty(list: List<MovieDto>) {
 
-       requireView().findViewById<TextView>(R.id.empty_movies_list).visibility  =
-        if (list.isEmpty()) View.VISIBLE else View.GONE
-        }
+        requireView().findViewById<TextView>(R.id.empty_movies_list).visibility =
+            if (list.isEmpty()) View.VISIBLE else View.GONE
+    }
 
     interface MoviesListFragmentClickListener {
         fun onMovieCardClicked(id: Int)
     }
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MoviesListFragmentClickListener){
+        if (context is MoviesListFragmentClickListener) {
             moviesListFragmentClickListener = context
         }
     }
@@ -123,7 +131,5 @@ private fun isMoviesListEmpty(list: List<MovieDto>) {
         super.onDetach()
         moviesListFragmentClickListener = null
     }
-
-
 
 }

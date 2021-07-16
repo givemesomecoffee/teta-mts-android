@@ -17,7 +17,7 @@ import ru.givemesomecoffee.tetamtsandroid.model.Categories
 import ru.givemesomecoffee.tetamtsandroid.model.Movies
 
 class MovieDetailsFragment : Fragment() {
-    private var someFragmentClickListener: MovieDetailsClickListener? = null
+    private var movieDetailsClickListener: MovieDetailsClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +28,7 @@ class MovieDetailsFragment : Fragment() {
         val id = arguments?.getInt("movie_id")
         val movie = Movies(MoviesDataSourceImpl()).getMovieById(id!!)
         val backButton = view.findViewById<ImageView>(R.id.back_button)
-        backButton.setOnClickListener {  someFragmentClickListener?.onBackStack() }
+        backButton.setOnClickListener {  movieDetailsClickListener?.onBackStack() }
         val imageView = view.findViewById<ImageView>(R.id.movie_cover)
         val request = ImageRequest.Builder(view.context)
             .data(movie.imageUrl)
@@ -77,13 +77,13 @@ class MovieDetailsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MovieDetailsClickListener) {
-            someFragmentClickListener = context
+            movieDetailsClickListener = context
         }
 
         val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    someFragmentClickListener?.onBackStack()
+                    movieDetailsClickListener?.onBackStack()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -91,7 +91,7 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        someFragmentClickListener = null
+        movieDetailsClickListener = null
     }
 
 }

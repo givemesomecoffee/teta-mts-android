@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
                 supportFragmentManager.beginTransaction()
                     .add(R.id.main_container, this, MOVIE_LIST_TAG)
                     .commit()
+                Log.d("test", "1")
             }
         } else {
             moviesListFragment =
