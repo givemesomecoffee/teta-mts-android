@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:id="@+id/movie_details_root"
+   >
 
     <ImageView
         android:id="@+id/movie_cover"
         android:layout_width="match_parent"
         android:layout_height="@dimen/movie_cover_height"
         android:importantForAccessibility="no"
-android:scaleType="matrix"
+        android:scaleType="matrix"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_keyboard_backspace_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/offset_30"
+        android:layout_marginStart="@dimen/offset_20"/>
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/movie_details_guideline"
         android:layout_width="wrap_content"
@@ -242,6 +254,7 @@ android:scaleType="matrix"
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
 
 
 

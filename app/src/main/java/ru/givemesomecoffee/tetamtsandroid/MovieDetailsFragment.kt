@@ -1,24 +1,23 @@
 package ru.givemesomecoffee.tetamtsandroid
 
-import android.graphics.drawable.Drawable
-import android.opengl.Matrix
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import coil.imageLoader
-import coil.load
-import coil.metadata
 import coil.request.ImageRequest
-import coil.request.SuccessResult
-import coil.size.Scale
+import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.model.Categories
 import ru.givemesomecoffee.tetamtsandroid.model.Movies
 
 class MovieDetailsFragment : Fragment() {
+    private var someFragmentClickListener: MovieDetailsClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,76 +28,44 @@ class MovieDetailsFragment : Fragment() {
         val id = arguments?.getInt("movie_id")
         val movie = Movies(MoviesDataSourceImpl()).getMovieById(id!!)
 
+        val backButton = view.findViewById<ImageView>(R.id.back_button)
+        backButton.setOnClickListener { onPause() }
 
         val imageView = view.findViewById<ImageView>(R.id.movie_cover)
-   /*     imageView.load(movie.imageUrl){
-            scale(Scale.FILL) //TODO: не работает
-                .target { drawable ->
-        }*/
 
+        val request = ImageRequest.Builder(view.context)
+            .data(movie.imageUrl)
+            .target(
+                onSuccess = { result ->
+                    imageView.setImageDrawable(result)
+                    val matrix = imageView.imageMatrix;
+                    val imageWidth = imageView.drawable.intrinsicWidth;
+                    val screenWidth = resources.displayMetrics.widthPixels;
+                    val scaleRatio = screenWidth / imageWidth.toFloat();
+                    matrix.postScale(scaleRatio, scaleRatio);
+                    imageView.imageMatrix = matrix;
 
-            val request = ImageRequest.Builder(view.context)
-                .data(movie.imageUrl)
-                .target(
-                    onStart = { placeholder ->
-                        // Handle the placeholder drawable.
-                    },
-                    onSuccess = { result ->
-                   /*     val viewWidth: Float = imageView.width.toFloat()
-                        val viewHeight: Float = imageView.height.toFloat()
-                        val drawableWidth = result.intrinsicWidth
-                        val drawableHeight = result.intrinsicHeight
-
-                        val widthScale = viewWidth / drawableWidth
-                        val heightScale = viewHeight / drawableHeight
-                        val scale = widthScale.coerceAtLeast(heightScale)*/
-                        imageView.setImageDrawable(result)
-            /*            imageView.imageMatrix.postScale(scale, scale)*/
-
-                        val matrix = imageView.imageMatrix;
-                        val imageWidth = imageView.getDrawable().getIntrinsicWidth();
-                       val screenWidth = getResources().getDisplayMetrics().widthPixels;
-                        val scaleRatio = screenWidth / imageWidth.toFloat();
-                        matrix.postScale(scaleRatio, scaleRatio);
-                        imageView.setImageMatrix(matrix);
-
-                    },
-                    onError = { error ->
-                        // Handle the error drawable.
-                    }
-                )
-                .build()
-            view.context.imageLoader.enqueue(request)
-
-
-
-
-
-
-
+                }
+            )
+            .build()
+        view.context.imageLoader.enqueue(request)
 
         view.apply {
-
+            val category =
+                Categories(MovieCategoriesDataSourceImpl()).getCategoryById(movie.categoryId)
             findViewById<TextView>(R.id.movie_category).text =
-                movie.categoryId.toString() //TODO: categories
+                category.title
             findViewById<TextView>(R.id.movie_name).text = movie.title //TODO: rename
             findViewById<TextView>(R.id.movie_description).text = movie.description
-            val ageRestriction = movie.ageRestriction.toString() + "1"
+            val ageRestriction = movie.ageRestriction.toString() + "+"
             findViewById<TextView>(R.id.age_sign).text = ageRestriction
         }
 
-
         return view
     }
-suspend fun getCover(view: View, url: String): Drawable{
-    val request = ImageRequest.Builder(view.context)
-        .data("https://www.example.com/image.jpg")
-        .allowHardware(false) // Disable hardware bitmaps.
-        .build()
-    return (view.context.imageLoader.execute(request) as SuccessResult).drawable
-}
 
     companion object {
+        const val MOVIE_DETAILS_TAG = "MovieDetails"
         fun newInstance(id: Int): MovieDetailsFragment {
             val args = Bundle()
             args.putInt("movie_id", id)
@@ -107,4 +74,38 @@ suspend fun getCover(view: View, url: String): Drawable{
             return fragment
         }
     }
+
+    interface MovieDetailsClickListener {
+        fun onBackStack()
+    }
+
+    override fun onPause() {
+        someFragmentClickListener?.onBackStack()
+        super.onPause()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MovieDetailsClickListener) {
+            someFragmentClickListener = context
+        }
+
+        val callback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    onPause()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, // LifecycleOwner
+            callback
+        )
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        someFragmentClickListener = null
+    }
+
 }

@@ -4,4 +4,5 @@ import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDatasou
 
 data class Categories(private val categoriesDataSource: MovieCategoriesDatasource) {
     fun getCategories() = categoriesDataSource.getCategories()
+    fun getCategoryById(id: Int) = categoriesDataSource.getCategories().first{it.id == id }
 }
