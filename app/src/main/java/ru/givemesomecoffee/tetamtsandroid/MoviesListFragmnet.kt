@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +18,11 @@ import ru.givemesomecoffee.tetamtsandroid.model.Movies
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 class MoviesListFragment: Fragment() {
-    private var someFragmentClickListener: SomeFragmentClickListener? = null
+    private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
 
-
+    companion object {
+            const val MOVIE_LIST_TAG = "MovieList"
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,15 +33,16 @@ class MoviesListFragment: Fragment() {
         val manager = GridLayoutManager(view.context, 2)
         moviesListView.layoutManager = manager
         val moviesModel = Movies(MoviesDataSourceImpl())
-        val moviesList =
+        val moviesList = moviesModel.getMovies()
            // if (category != 0) getMoviesListByCategory(moviesModel, category)
            // else
-            getAllMoviesList(moviesModel)
+           // getAllMoviesList(moviesModel)
+
         moviesListView.adapter = MovieAdapter(
             view.context,
             moviesList,
             itemClick = {  categoryId: Int ->
-                someFragmentClickListener?.onChangeColorButtonClicked(categoryId)
+                moviesListFragmentClickListener?.onMovieCardClicked(categoryId)
             })
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(
@@ -81,14 +85,14 @@ class MoviesListFragment: Fragment() {
    private fun getMoviesListByCategory(model: Movies, id: Int): List<MovieDto> {
       //  category = id
         val list = model.geMoviesByCategory(id)
-      //  isMoviesListEmpty(list)
+    isMoviesListEmpty(list)
         return list
         }
 
 private fun getAllMoviesList(model: Movies): List<MovieDto> {
        // category = 0
         val list = model.getMovies()
-      //  isMoviesListEmpty(list)
+       isMoviesListEmpty(list)
         return list
         }
 
@@ -97,26 +101,27 @@ private fun getAllMoviesList(model: Movies): List<MovieDto> {
         outState.putInt(CATEGORY, category)
         }*/
 
-/*private fun isMoviesListEmpty(list: List<MovieDto>) {
-        findViewById<TextView>(R.id.empty_movies_list).visibility =
-        if (list.isEmpty()) View.VISIBLE else View.GONE
-        }*/
+private fun isMoviesListEmpty(list: List<MovieDto>) {
 
-    interface SomeFragmentClickListener {
-        fun onChangeColorButtonClicked(id: Int)
+       requireView().findViewById<TextView>(R.id.empty_movies_list).visibility  =
+        if (list.isEmpty()) View.VISIBLE else View.GONE
+        }
+
+    interface MoviesListFragmentClickListener {
+        fun onMovieCardClicked(id: Int)
     }
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is SomeFragmentClickListener){
-            someFragmentClickListener = context
+        if (context is MoviesListFragmentClickListener){
+            moviesListFragmentClickListener = context
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        someFragmentClickListener = null
+        moviesListFragmentClickListener = null
     }
 
 
