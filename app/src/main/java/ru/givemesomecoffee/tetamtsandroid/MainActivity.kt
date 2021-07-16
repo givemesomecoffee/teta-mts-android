@@ -16,9 +16,10 @@ import ru.givemesomecoffee.tetamtsandroid.MoviesListFragment.Companion.MOVIE_LIS
 class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentClickListener,
     MovieDetailsFragment.MovieDetailsClickListener {
   //  private var category: Int = 0
-    // TODO: save category state for moviesList(maybe replace fragments????)
+
     // TODO: check num of px refreshed in movie details
-    // TODO: make at least blank view for account tab
+//TODO: backstack of profile fragment
+
     private var moviesListFragment: MoviesListFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,11 +48,19 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
                         null,
                         FragmentManager.POP_BACK_STACK_INCLUSIVE
                     )
+                } else {
+                    supportFragmentManager.beginTransaction()
+                        .add(R.id.main_container, ProfileFragment())
+                        .hide(moviesListFragment!!)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack("profile")
+                        .commit()
                 }
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }
             override fun onTabReselected(tab: TabLayout.Tab?) {
+
             }
         })
     }
