@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.viewholder
+package ru.givemesomecoffee.tetamtsandroid.controller.home
 
 import android.view.View
 import android.widget.ImageView
@@ -6,8 +6,6 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.RoundedCornersTransformation
-import ru.givemesomecoffee.tetamtsandroid.MoviesListFragment
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 

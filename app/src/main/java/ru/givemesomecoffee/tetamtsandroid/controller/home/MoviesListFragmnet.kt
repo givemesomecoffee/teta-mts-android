@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.givemesomecoffee.tetamtsandroid.adapter.CategoryAdapter
-import ru.givemesomecoffee.tetamtsandroid.adapter.MovieAdapter
+import ru.givemesomecoffee.tetamtsandroid.controller.home.CategoryAdapter
+import ru.givemesomecoffee.tetamtsandroid.controller.home.MovieAdapter
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
@@ -33,7 +33,6 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 
         return inflater.inflate(R.layout.activity_movie_list, container, false)
     }

@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.viewholder
+package ru.givemesomecoffee.tetamtsandroid.controller.home
 
 import android.graphics.Color
 import android.view.View

@@ -1,15 +1,13 @@
-package ru.givemesomecoffee.tetamtsandroid.adapter
+package ru.givemesomecoffee.tetamtsandroid.controller.home
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ru.givemesomecoffee.tetamtsandroid.MoviesListFragment
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
-import ru.givemesomecoffee.tetamtsandroid.utils.MoviesCallback
-import ru.givemesomecoffee.tetamtsandroid.viewholder.MovieViewHolder
+import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 
 class MovieAdapter(
     context: Context,
@@ -29,7 +27,7 @@ class MovieAdapter(
     }
 
     fun updateMoviesList(newList: List<MovieDto>) {
-        val callback = MoviesCallback(dataset, newList)
+        val callback = MoviesDiffCallback(dataset, newList)
         val diff = DiffUtil.calculateDiff(callback)
         diff.dispatchUpdatesTo(this)
         this.dataset = newList

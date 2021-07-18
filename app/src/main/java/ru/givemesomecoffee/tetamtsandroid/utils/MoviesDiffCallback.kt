@@ -3,8 +3,8 @@ package ru.givemesomecoffee.tetamtsandroid.utils
 import androidx.recyclerview.widget.DiffUtil
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 
-class MoviesCallback (private val oldList: List<MovieDto>,
-                      private val newList: List<MovieDto>
+class MoviesDiffCallback (private val oldList: List<MovieDto>,
+                          private val newList: List<MovieDto>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

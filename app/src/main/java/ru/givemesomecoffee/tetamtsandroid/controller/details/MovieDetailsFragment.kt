@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid
+package ru.givemesomecoffee.tetamtsandroid.controller.details
 
 import android.content.Context
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import coil.imageLoader
 import coil.request.ImageRequest
+import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.model.Categories
