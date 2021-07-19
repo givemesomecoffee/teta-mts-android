@@ -21,8 +21,6 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -34,7 +32,7 @@ class ProfileFragment : Fragment() {
         val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    profileFragmentClickListener?.customOnBackPressed()
+                    profileFragmentClickListener?.profileOnBackPressed()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -47,7 +45,7 @@ class ProfileFragment : Fragment() {
     }
 
     interface ProfileFragmentClickListener {
-        fun customOnBackPressed()
+        fun profileOnBackPressed()
     }
 
 }

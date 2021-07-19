@@ -10,8 +10,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
 import ru.givemesomecoffee.tetamtsandroid.controller.details.MovieDetailsFragment.Companion.MOVIE_DETAILS_TAG
-import ru.givemesomecoffee.tetamtsandroid.MoviesListFragment.Companion.MOVIE_LIST_TAG
+import ru.givemesomecoffee.tetamtsandroid.controller.home.MoviesListFragment.Companion.MOVIE_LIST_TAG
 import ru.givemesomecoffee.tetamtsandroid.controller.details.MovieDetailsFragment
+import ru.givemesomecoffee.tetamtsandroid.controller.home.MoviesListFragment
 import ru.givemesomecoffee.tetamtsandroid.controller.profile.ProfileFragment
 import ru.givemesomecoffee.tetamtsandroid.controller.profile.ProfileFragment.Companion.PROFILE_TAG
 
@@ -43,7 +44,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (tab.position == 0) {
-                    //TODO: slideToLeft()
                     supportFragmentManager.popBackStack(
                         null,
                         FragmentManager.POP_BACK_STACK_INCLUSIVE
@@ -74,14 +74,11 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
             .add(R.id.main_container, MovieDetailsFragment.newInstance(id), MOVIE_DETAILS_TAG)
             .hide(moviesListFragment!!)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .addToBackStack("test")
+            .addToBackStack("details")
             .commit()
-        Log.d("test2", supportFragmentManager.fragments.toString())
     }
 
-    override fun onBackStack() {
-
-
+    override fun customOnBackPressed() {
         findViewById<TabLayout>(R.id.nav_bottom).visibility = View.VISIBLE
         slideToLeft(findViewById(R.id.movie_details_root), supportFragmentManager.findFragmentByTag(MOVIE_DETAILS_TAG))
         supportFragmentManager.popBackStack()
@@ -101,7 +98,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
 
         if (fragment != null) {
             supportFragmentManager.beginTransaction()
-
                 .show(moviesListFragment!!)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
@@ -112,7 +108,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
         }
     }
 
-    override fun customOnBackPressed() {
+    override fun profileOnBackPressed() {
         slideToLeft(findViewById(R.id.profile_root), supportFragmentManager.findFragmentByTag(PROFILE_TAG))
         findViewById<TabLayout>(R.id.nav_bottom).getTabAt(0)?.select()
     }

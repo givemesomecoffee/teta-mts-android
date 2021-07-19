@@ -1,6 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.controller.details
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,52 +14,14 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.model.Categories
 import ru.givemesomecoffee.tetamtsandroid.model.Movies
+import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
 
 class MovieDetailsFragment : Fragment() {
     private var movieDetailsClickListener: MovieDetailsClickListener? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_movie_details, container, false)
-        val id = arguments?.getInt("movie_id")
-        val movie = Movies(MoviesDataSourceImpl()).getMovieById(id!!)
-        val backButton = view.findViewById<ImageView>(R.id.back_button)
-        backButton.setOnClickListener {  movieDetailsClickListener?.onBackStack() }
-        val imageView = view.findViewById<ImageView>(R.id.movie_cover)
-        val request = ImageRequest.Builder(view.context)
-            .data(movie.imageUrl)
-            .target(
-                onSuccess = { result ->
-                    imageView.setImageDrawable(result)
-                    val matrix = imageView.imageMatrix
-                    val imageWidth = imageView.drawable.intrinsicWidth
-                    val screenWidth = resources.displayMetrics.widthPixels
-                    val scaleRatio = screenWidth / imageWidth.toFloat()
-                    matrix.postScale(scaleRatio, scaleRatio)
-                    imageView.imageMatrix = matrix
-                }
-            )
-            .build()
-        view.context.imageLoader.enqueue(request)
-
-        view.apply {
-            val category =
-                Categories(MovieCategoriesDataSourceImpl()).getCategoryById(movie.categoryId)
-            findViewById<TextView>(R.id.movie_category).text =
-                category.title
-            findViewById<TextView>(R.id.movie_name).text = movie.title //TODO: rename
-            findViewById<TextView>(R.id.movie_description).text = movie.description
-            val ageRestriction = movie.ageRestriction.toString() + "+"
-            findViewById<TextView>(R.id.age_sign).text = ageRestriction
-        }
-        return view
-    }
 
     companion object {
         const val MOVIE_DETAILS_TAG = "MovieDetails"
@@ -72,7 +35,22 @@ class MovieDetailsFragment : Fragment() {
     }
 
     interface MovieDetailsClickListener {
-        fun onBackStack()
+        fun customOnBackPressed()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_movie_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val id = arguments?.getInt("movie_id")
+        val movie = Movies(MoviesDataSourceImpl()).getMovieById(id!!)
+        view.bind(movie)
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onAttach(context: Context) {
@@ -84,7 +62,7 @@ class MovieDetailsFragment : Fragment() {
         val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    movieDetailsClickListener?.onBackStack()
+                    movieDetailsClickListener?.customOnBackPressed()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -95,4 +73,31 @@ class MovieDetailsFragment : Fragment() {
         movieDetailsClickListener = null
     }
 
+    private fun View.bind(movie: MovieDto) {
+        val ageRestriction = movie.ageRestriction.toString() + "+"
+        val movieCover = findViewById<ImageView>(R.id.movie_cover)
+        val category =
+            Categories(MovieCategoriesDataSourceImpl()).getCategoryById(movie.categoryId)
+        val movieCoverImg = ImageRequest.Builder(context)
+            .data(movie.imageUrl)
+            .target(onSuccess = { result -> setImgToView(movieCover, result) })
+            .build()
+        context.imageLoader.enqueue(movieCoverImg)
+
+        findViewById<ImageView>(R.id.back_button).setOnClickListener {
+            movieDetailsClickListener?.customOnBackPressed()
+        }
+        findViewById<TextView>(R.id.movie_category).text = category.title
+        findViewById<TextView>(R.id.movie_title).text = movie.title
+        findViewById<TextView>(R.id.movie_description).text = movie.description
+        findViewById<TextView>(R.id.age_sign).text = ageRestriction
+    }
+
+    private fun setImgToView(movieCover: ImageView, result: Drawable) {
+        movieCover.setImageDrawable(result)
+        setTopCrop(movieCover)
+    }
+
 }
+
+

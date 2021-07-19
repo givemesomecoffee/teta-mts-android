@@ -9,20 +9,20 @@ import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 
-class MovieAdapter(
+class MoviesListAdapter(
     context: Context,
     private var dataset: List<MovieDto>,
     private var itemClick: ((Int) -> Unit)?
-) : RecyclerView.Adapter<MovieViewHolder>() {
+) : RecyclerView.Adapter<MoviesListViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
         val adapterLayout =
             inflater.inflate(R.layout.movie_item, parent, false)
-        return MovieViewHolder(adapterLayout, itemClick)
+        return MoviesListViewHolder(adapterLayout, itemClick)
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MoviesListViewHolder, position: Int) {
         holder.bind(dataset[position])
     }
 
@@ -31,7 +31,6 @@ class MovieAdapter(
         val diff = DiffUtil.calculateDiff(callback)
         diff.dispatchUpdatesTo(this)
         this.dataset = newList
-
     }
 
     override fun getItemCount(): Int {

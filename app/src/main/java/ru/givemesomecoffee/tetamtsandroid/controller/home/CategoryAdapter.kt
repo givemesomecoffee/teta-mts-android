@@ -20,7 +20,7 @@ class CategoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_HEADER -> HeaderViewHolder(
+            TYPE_HEADER -> CategoryHeaderViewHolder(
                 inflater.inflate(R.layout.category_item, parent, false),
                 itemClick
             )
@@ -37,7 +37,7 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HeaderViewHolder -> holder.bind()
+            is CategoryHeaderViewHolder -> holder.bind()
             is CategoryViewHolder -> holder.bind(dataset[position - 1])
         }
     }

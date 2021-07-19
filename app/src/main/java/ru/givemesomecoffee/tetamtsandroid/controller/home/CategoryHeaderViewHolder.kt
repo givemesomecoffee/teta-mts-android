@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
 
-class HeaderViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
+class CategoryHeaderViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
     RecyclerView.ViewHolder(view) {
     private val categoryTitle: TextView = view.findViewById(R.id.category_title)
     fun bind() {
