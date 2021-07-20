@@ -1,4 +1,15 @@
 <resources>
+
+    <!-- accessibility labels -->
+    <string name="navigation_title">navigation</string>
+    <string name="home_title">Home</string>
+    <string name="account_title">Account</string>
+    <string name="rating_img_error">rating img corrupted</string>
+    <string name="movie_rating">rating 4</string>
+    <string name="ic_search_description">search</string>
+    <!-- /accessibility labels -->
+
+
     <string name="app_name">tetamtsandroid</string>
     <string name="age_sign">18+</string>
     <string name="movie_category">Боевики</string>
@@ -11,13 +22,9 @@
     <string name="actor_name2">Холт Маккэллани</string>
     <string name="actor_name1">Джейсон Стэйтем</string>
 
-    <!-- accessibility labels -->
-    <string name="navigation_title">navigation</string>
-    <string name="home_title">Home</string>
-    <string name="account_title">Account</string>
 
-    <string name="rating_img_error">rating img corrupted</string>
-    <string name="movie_rating">rating 4</string>
+    <string name="movie_list_title">Популярное сейчас</string>
+    <string name="movie_list_category_title">Все категории</string>
+    <string name="empty_movies_list">Сейчас здесь нет фильмов, но мы уже отправили режиссёра снимать фильм для вас</string>
 
-    <!-- /accessibility labels -->
 </resources>
