@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.controller.profile
+package ru.givemesomecoffee.tetamtsandroid.view
 
 import android.content.Context
 import android.os.Bundle

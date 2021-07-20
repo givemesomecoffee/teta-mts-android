@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid
+package ru.givemesomecoffee.tetamtsandroid.view
 
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
-import ru.givemesomecoffee.tetamtsandroid.controller.details.MovieDetailsFragment.Companion.MOVIE_DETAILS_TAG
-import ru.givemesomecoffee.tetamtsandroid.controller.home.MoviesListFragment.Companion.MOVIE_LIST_TAG
-import ru.givemesomecoffee.tetamtsandroid.controller.details.MovieDetailsFragment
-import ru.givemesomecoffee.tetamtsandroid.controller.home.MoviesListFragment
-import ru.givemesomecoffee.tetamtsandroid.controller.profile.ProfileFragment
-import ru.givemesomecoffee.tetamtsandroid.controller.profile.ProfileFragment.Companion.PROFILE_TAG
+import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.view.MovieDetailsFragment.Companion.MOVIE_DETAILS_TAG
+import ru.givemesomecoffee.tetamtsandroid.view.MoviesListFragment.Companion.MOVIE_LIST_TAG
+import ru.givemesomecoffee.tetamtsandroid.view.ProfileFragment.Companion.PROFILE_TAG
 
 class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentClickListener,
     MovieDetailsFragment.MovieDetailsClickListener, ProfileFragment.ProfileFragmentClickListener {

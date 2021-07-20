@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.controller.details
+package ru.givemesomecoffee.tetamtsandroid.view
 
 import android.content.Context
 import android.graphics.drawable.Drawable
