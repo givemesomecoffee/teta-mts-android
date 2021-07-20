@@ -11,21 +11,20 @@ const val TYPE_CATEGORY = 1
 const val TYPE_HEADER = 0
 
 class CategoryAdapter(
-    context: Context,
     private val dataset: List<CategoryDto>,
     private val itemClick: ((Int) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_HEADER -> CategoryHeaderViewHolder(
-                inflater.inflate(R.layout.category_item, parent, false),
+                LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false),
                 itemClick
             )
             TYPE_CATEGORY -> CategoryViewHolder(
-                inflater.inflate(
+                LayoutInflater.from(parent.context).inflate(
                     R.layout.category_item,
                     parent,
                     false

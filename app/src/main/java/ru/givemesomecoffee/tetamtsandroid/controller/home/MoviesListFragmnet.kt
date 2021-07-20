@@ -53,7 +53,7 @@ class MoviesListFragment : Fragment() {
         val moviesListView = view.findViewById<RecyclerView>(R.id.movies_list)
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
         val moviesModel = Movies(MoviesDataSourceImpl())
-        moviesListView.adapter = setMoviesListAdapter(view.context, moviesModel)
+        moviesListView.adapter = setMoviesListAdapter(moviesModel)
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(spacingBottom = 50, isMovieList = true)
         )
@@ -61,7 +61,6 @@ class MoviesListFragment : Fragment() {
         val categoriesListView = view.findViewById<RecyclerView>(R.id.movie_category_list)
         val categoriesModel = Categories(MovieCategoriesDataSourceImpl())
         categoriesListView.adapter = CategoryAdapter(
-            view.context,
             categoriesModel.getCategories(),
             itemClick = { categoryId: Int ->
                 updateMoviesListByCategory(categoryId, moviesListView, moviesModel)
@@ -71,14 +70,13 @@ class MoviesListFragment : Fragment() {
 
     }
 
-    private fun setMoviesListAdapter(context: Context, moviesModel: Movies): MoviesListAdapter {
+    private fun setMoviesListAdapter(moviesModel: Movies): MoviesListAdapter {
         val moviesList =
             if (category != 0) getMoviesListByCategory(moviesModel, category) else getAllMoviesList(
                 moviesModel
             )
 
         return MoviesListAdapter(
-            context,
             moviesList,
             itemClick = { movieId: Int ->
                 moviesListFragmentClickListener?.onMovieCardClicked(movieId)

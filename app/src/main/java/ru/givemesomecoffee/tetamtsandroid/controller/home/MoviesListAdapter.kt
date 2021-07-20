@@ -10,15 +10,14 @@ import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 
 class MoviesListAdapter(
-    context: Context,
     private var dataset: List<MovieDto>,
     private var itemClick: ((Int) -> Unit)?
 ) : RecyclerView.Adapter<MoviesListViewHolder>() {
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
         val adapterLayout =
-            inflater.inflate(R.layout.movie_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return MoviesListViewHolder(adapterLayout, itemClick)
     }
 
