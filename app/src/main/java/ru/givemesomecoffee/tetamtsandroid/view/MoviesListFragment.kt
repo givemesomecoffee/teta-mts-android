@@ -15,6 +15,7 @@ import ru.givemesomecoffee.tetamtsandroid.adapter.MoviesListAdapter
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.model.Categories
 import ru.givemesomecoffee.tetamtsandroid.model.Movies
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
@@ -29,18 +30,23 @@ class MoviesListFragment : Fragment() {
     private lateinit var moviesAdapter: MoviesListAdapter
     private lateinit var categoriesAdapter: CategoryAdapter
 
-    companion object {
-        const val MOVIE_LIST_TAG = "MovieList"
-        const val CATEGORY = "category_key"
+    private fun init() {
+        moviesListView = requireView().findViewById(R.id.movies_list)
+        categoriesListView = requireView().findViewById(R.id.movie_category_list)
+        moviesAdapter = setMoviesListAdapter(moviesModel)
+        categoriesAdapter = CategoryAdapter(
+            categoriesModel.getCategories(),
+            itemClick = { categoryId: Int ->
+                updateMoviesListByCategory(categoryId, moviesListView, moviesModel)
+            }
+        )
     }
 
-    interface MoviesListFragmentClickListener {
-        fun onMovieCardClicked(id: Int)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(CATEGORY, category)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MoviesListFragmentClickListener) {
+            moviesListFragmentClickListener = context
+        }
     }
 
     override fun onCreateView(
@@ -53,26 +59,28 @@ class MoviesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        moviesListView = view.findViewById(R.id.movies_list)
-        categoriesListView = view.findViewById(R.id.movie_category_list)
         if (savedInstanceState != null) {
             category = savedInstanceState.getInt(CATEGORY, 0)
         }
+        init()
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
-        moviesAdapter = setMoviesListAdapter(moviesModel)
         moviesListView.adapter = moviesAdapter
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(spacingBottom = 50, isMovieList = true)
         )
-        categoriesAdapter = CategoryAdapter(
-            categoriesModel.getCategories(),
-            itemClick = { categoryId: Int ->
-                updateMoviesListByCategory(categoryId, moviesListView, moviesModel)
-            }
-        )
         categoriesListView.adapter = categoriesAdapter
         categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(CATEGORY, category)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        moviesListFragmentClickListener = null
     }
 
     private fun setMoviesListAdapter(moviesModel: Movies): MoviesListAdapter {
@@ -122,15 +130,8 @@ class MoviesListFragment : Fragment() {
             if (list.isEmpty()) View.VISIBLE else View.GONE
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is MoviesListFragmentClickListener) {
-            moviesListFragmentClickListener = context
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        moviesListFragmentClickListener = null
+    companion object {
+        const val MOVIE_LIST_TAG = "MovieList"
+        const val CATEGORY = "category_key"
     }
 }
