@@ -22,6 +22,12 @@ import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
     private var category = 0
+    private val moviesModel = Movies(MoviesDataSourceImpl())
+    private val categoriesModel = Categories(MovieCategoriesDataSourceImpl())
+    private lateinit var moviesListView: RecyclerView
+    private lateinit var categoriesListView: RecyclerView
+    private lateinit var moviesAdapter: MoviesListAdapter
+    private lateinit var categoriesAdapter: CategoryAdapter
 
     companion object {
         const val MOVIE_LIST_TAG = "MovieList"
@@ -47,26 +53,24 @@ class MoviesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        moviesListView = view.findViewById(R.id.movies_list)
+        categoriesListView = view.findViewById(R.id.movie_category_list)
         if (savedInstanceState != null) {
             category = savedInstanceState.getInt(CATEGORY, 0)
         }
-
-        val moviesListView = view.findViewById<RecyclerView>(R.id.movies_list)
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
-        val moviesModel = Movies(MoviesDataSourceImpl())
-        moviesListView.adapter = setMoviesListAdapter(moviesModel)
+        moviesAdapter = setMoviesListAdapter(moviesModel)
+        moviesListView.adapter = moviesAdapter
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(spacingBottom = 50, isMovieList = true)
         )
-
-        val categoriesListView = view.findViewById<RecyclerView>(R.id.movie_category_list)
-        val categoriesModel = Categories(MovieCategoriesDataSourceImpl())
-        categoriesListView.adapter = CategoryAdapter(
+        categoriesAdapter = CategoryAdapter(
             categoriesModel.getCategories(),
             itemClick = { categoryId: Int ->
                 updateMoviesListByCategory(categoryId, moviesListView, moviesModel)
             }
         )
+        categoriesListView.adapter = categoriesAdapter
         categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
 
     }
