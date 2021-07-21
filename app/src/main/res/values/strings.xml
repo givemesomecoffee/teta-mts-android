@@ -26,5 +26,6 @@
     <string name="movie_list_title">Популярное сейчас</string>
     <string name="movie_list_category_title">Все категории</string>
     <string name="empty_movies_list">Сейчас здесь нет фильмов, но мы уже отправили режиссёра снимать фильм для вас</string>
+    <string name="not_done">UNDER CONSTRUCTION</string>
 
 </resources>

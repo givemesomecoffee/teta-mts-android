@@ -36,6 +36,7 @@ class MovieDetailsFragment : Fragment() {
 
     interface MovieDetailsClickListener {
         fun customOnBackPressed()
+        fun hideNavigation()
     }
 
     override fun onCreateView(
@@ -44,6 +45,7 @@ class MovieDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +68,11 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        movieDetailsClickListener?.hideNavigation()
     }
 
     override fun onDetach() {

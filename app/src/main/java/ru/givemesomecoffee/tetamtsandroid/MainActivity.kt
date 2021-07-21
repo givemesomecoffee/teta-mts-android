@@ -1,7 +1,6 @@
-package ru.givemesomecoffee.tetamtsandroid.view
+package ru.givemesomecoffee.tetamtsandroid
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
-import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.view.MovieDetailsFragment
 import ru.givemesomecoffee.tetamtsandroid.view.MovieDetailsFragment.Companion.MOVIE_DETAILS_TAG
+import ru.givemesomecoffee.tetamtsandroid.view.MoviesListFragment
 import ru.givemesomecoffee.tetamtsandroid.view.MoviesListFragment.Companion.MOVIE_LIST_TAG
+import ru.givemesomecoffee.tetamtsandroid.view.ProfileFragment
 import ru.givemesomecoffee.tetamtsandroid.view.ProfileFragment.Companion.PROFILE_TAG
 
 class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentClickListener,
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
         } else {
             moviesListFragment =
                 supportFragmentManager.findFragmentByTag(MOVIE_LIST_TAG) as? MoviesListFragment
-            Log.d("test", supportFragmentManager.fragments.toString())
         }
 
 
@@ -65,9 +65,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
     }
 
     override fun onMovieCardClicked(id: Int) {
-        val navView = findViewById<TabLayout>(R.id.nav_bottom)
-        slideToBottom(navView)
-        navView.visibility = View.GONE
         supportFragmentManager.beginTransaction()
             .add(R.id.main_container, MovieDetailsFragment.newInstance(id), MOVIE_DETAILS_TAG)
             .hide(moviesListFragment!!)
@@ -82,7 +79,8 @@ class MainActivity : AppCompatActivity(), MoviesListFragment.MoviesListFragmentC
         supportFragmentManager.popBackStack()
     }
 
-    private fun slideToBottom(view: View) {
+    override fun hideNavigation() {
+        val view = findViewById<TabLayout>(R.id.nav_bottom)
         val animate = TranslateAnimation(0F, 0F, 0F, view.height.toFloat())
         animate.duration = 500
         view.startAnimation(animate)
