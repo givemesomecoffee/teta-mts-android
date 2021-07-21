@@ -55,6 +55,26 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun View.bind(movie: MovieDto) {
+        val ageRestriction = movie.ageRestriction.toString() + "+"
+        val movieCover = findViewById<ImageView>(R.id.movie_cover)
+        val category =
+            Categories(MovieCategoriesDataSourceImpl()).getCategoryById(movie.categoryId)
+        val movieCoverImg = ImageRequest.Builder(context)
+            .data(movie.imageUrl)
+            .target(onSuccess = { result -> setImgToView(movieCover, result) })
+            .build()
+        context.imageLoader.enqueue(movieCoverImg)
+
+        findViewById<ImageView>(R.id.back_button).setOnClickListener {
+            movieDetailsClickListener?.customOnBackPressed()
+        }
+        findViewById<TextView>(R.id.movie_category).text = category.title
+        findViewById<TextView>(R.id.movie_title).text = movie.title
+        findViewById<TextView>(R.id.movie_description).text = movie.description
+        findViewById<TextView>(R.id.age_sign).text = ageRestriction
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MovieDetailsClickListener) {
@@ -78,26 +98,6 @@ class MovieDetailsFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         movieDetailsClickListener = null
-    }
-
-    private fun View.bind(movie: MovieDto) {
-        val ageRestriction = movie.ageRestriction.toString() + "+"
-        val movieCover = findViewById<ImageView>(R.id.movie_cover)
-        val category =
-            Categories(MovieCategoriesDataSourceImpl()).getCategoryById(movie.categoryId)
-        val movieCoverImg = ImageRequest.Builder(context)
-            .data(movie.imageUrl)
-            .target(onSuccess = { result -> setImgToView(movieCover, result) })
-            .build()
-        context.imageLoader.enqueue(movieCoverImg)
-
-        findViewById<ImageView>(R.id.back_button).setOnClickListener {
-            movieDetailsClickListener?.customOnBackPressed()
-        }
-        findViewById<TextView>(R.id.movie_category).text = category.title
-        findViewById<TextView>(R.id.movie_title).text = movie.title
-        findViewById<TextView>(R.id.movie_description).text = movie.description
-        findViewById<TextView>(R.id.age_sign).text = ageRestriction
     }
 
     private fun setImgToView(movieCover: ImageView, result: Drawable) {
