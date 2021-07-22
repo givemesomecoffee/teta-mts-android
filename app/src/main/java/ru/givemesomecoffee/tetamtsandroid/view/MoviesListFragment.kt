@@ -6,9 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.adapter.CategoryAdapter
 import ru.givemesomecoffee.tetamtsandroid.adapter.MoviesListAdapter
@@ -19,6 +26,8 @@ import ru.givemesomecoffee.tetamtsandroid.interfaces.MoviesListFragmentClickList
 import ru.givemesomecoffee.tetamtsandroid.model.Categories
 import ru.givemesomecoffee.tetamtsandroid.model.Movies
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
+import java.lang.Exception
+import java.lang.Thread.sleep
 
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
@@ -70,7 +79,10 @@ class MoviesListFragment : Fragment() {
         )
         categoriesListView.adapter = categoriesAdapter
         categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
-
+        getMovies()
+        view.findViewById<SwipeRefreshLayout>(R.id.swipe_container).setOnRefreshListener {
+            getMovies()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -90,7 +102,7 @@ class MoviesListFragment : Fragment() {
             )
 
         return MoviesListAdapter(
-            moviesList,
+            listOf(),
             itemClick = { movieId: Int ->
                 moviesListFragmentClickListener?.onMovieCardClicked(movieId)
             })
@@ -128,6 +140,32 @@ class MoviesListFragment : Fragment() {
     private fun setViewForEmptyList(list: List<MovieDto>) {
         requireView().findViewById<TextView>(R.id.empty_movies_list).visibility =
             if (list.isEmpty()) View.VISIBLE else View.GONE
+    }
+
+    private fun getMovies() {
+        val handler = CoroutineExceptionHandler { _, exception ->
+            Toast.makeText(view?.context, "handled ${exception.message}", Toast.LENGTH_SHORT).show()
+            requireView().findViewById<SwipeRefreshLayout>(R.id.swipe_container).isRefreshing = false
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch(handler) {
+            val listForErrorTest = listOf(100L, 200L, 3000L)
+            val errorMaker = listForErrorTest.random()
+             if (errorMaker > 200L) {
+                    throw Exception("Сервер не отвечает, попробуйте снова")
+              }
+            val list = withContext(Dispatchers.IO) { moviesModel.getMovies() }
+            val list1 = withContext(Dispatchers.IO) { list!!.shuffled().take(10) }
+            withContext(Dispatchers.IO) { sleep(errorMaker) }
+            withContext(Dispatchers.Main) {
+                moviesAdapter.updateMoviesList(
+                    list1
+                )
+            }
+            requireView().findViewById<SwipeRefreshLayout>(R.id.swipe_container).isRefreshing = false
+            // moviesListView.smoothScrollToPosition(0)
+            moviesListView.scrollToPosition(0)
+        }
     }
 
     companion object {
