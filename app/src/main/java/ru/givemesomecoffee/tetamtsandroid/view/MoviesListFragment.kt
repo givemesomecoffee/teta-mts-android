@@ -111,7 +111,7 @@ class MoviesListFragment : Fragment() {
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         val randomFilms = await.shuffled().take(5)
         moviesAdapter?.updateMoviesList(randomFilms)
-        requireView().findViewById<SwipeRefreshLayout>(R.id.swipe_container).isRefreshing =
+        moviesRefreshSwipeView?.isRefreshing =
             false
         moviesListView.scrollToPosition(0)
     }
