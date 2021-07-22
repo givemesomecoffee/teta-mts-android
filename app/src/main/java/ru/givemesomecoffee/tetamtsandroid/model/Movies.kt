@@ -4,6 +4,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSource
 
 data class Movies(private val moviesDataSource: MoviesDataSource) {
+
     fun getMovies() = moviesDataSource.getMovies()
     fun geMoviesByCategory(id: Int): List<MovieDto> {
         return moviesDataSource.getMovies().filter { it.categoryId == id }

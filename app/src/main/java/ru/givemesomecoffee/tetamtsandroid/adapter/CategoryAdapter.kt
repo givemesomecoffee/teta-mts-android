@@ -2,9 +2,13 @@ package ru.givemesomecoffee.tetamtsandroid.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
+import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import ru.givemesomecoffee.tetamtsandroid.utils.CategoriesDiffCallback
+import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 import ru.givemesomecoffee.tetamtsandroid.view.viewholder.CategoryHeaderViewHolder
 import ru.givemesomecoffee.tetamtsandroid.view.viewholder.CategoryViewHolder
 
@@ -12,7 +16,7 @@ const val TYPE_CATEGORY = 1
 const val TYPE_HEADER = 0
 
 class CategoryAdapter(
-    private val dataset: List<CategoryDto>,
+    private var dataset: List<CategoryDto>,
     private val itemClick: ((Int) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -49,5 +53,12 @@ class CategoryAdapter(
 
     override fun getItemCount(): Int {
         return dataset.size + 1
+    }
+
+    fun updateCategoriesList(newList: List<CategoryDto>) {
+        val callback = CategoriesDiffCallback(dataset, newList)
+        val diff = DiffUtil.calculateDiff(callback)
+        diff.dispatchUpdatesTo(this)
+        this.dataset = newList
     }
 }
