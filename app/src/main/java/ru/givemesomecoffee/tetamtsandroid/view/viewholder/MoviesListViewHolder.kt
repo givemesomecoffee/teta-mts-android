@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.viewholder
+package ru.givemesomecoffee.tetamtsandroid.view.viewholder
 
 import android.view.View
 import android.widget.ImageView
@@ -10,8 +10,8 @@ import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 
 
-class MovieViewHolder(view: View, private val itemClick: ((String) -> Unit)?) :
-    RecyclerView.ViewHolder(view) {
+class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
+    RecyclerView.ViewHolder(view){
     private val movieTitle: TextView = view.findViewById(R.id.movie_title)
     private val movieDescription: TextView = view.findViewById(R.id.movie_description)
     private val movieCover: ImageView = view.findViewById(R.id.movie_cover)
@@ -30,7 +30,7 @@ class MovieViewHolder(view: View, private val itemClick: ((String) -> Unit)?) :
             contentDescription = movieRating.toString()
         }
         itemView.setOnClickListener {
-            itemClick?.invoke(item.title)
+            itemClick?.invoke(item.id)
         }
     }
 }

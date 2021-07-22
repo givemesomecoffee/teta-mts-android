@@ -6,6 +6,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 class MoviesDataSourceImpl : MoviesDataSource {
     override fun getMovies() = listOf(
         MovieDto(
+            id = 0,
             title = "Гнев человеческий",
             description = "Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя...",
             rateScore = 3,
@@ -14,6 +15,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             categoryId = 1
         ),
         MovieDto(
+            id = 1,
             title = "Мортал Комбат",
             description = "Боец смешанных единоборств Коул Янг не раз соглашался проиграть за деньги. Он не знает о своем наследии...",
             rateScore = 5,
@@ -22,6 +24,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             categoryId = 1
         ),
         MovieDto(
+            id = 2,
             title = "Упс... Приплыли!",
             description = "От Великого потопа зверей спас ковчег. Но спустя полгода скитаний они готовы сбежать с него куда угодно...",
             rateScore = 5,
@@ -30,6 +33,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             categoryId = 6
         ),
         MovieDto(
+            id = 3,
             title = "The Box",
             description = "Уличный музыкант знакомится с музыкальным продюсером, и они вдвоём отправляются в путешествие...",
             rateScore = 4,
@@ -38,6 +42,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             categoryId = 3
         ),
         MovieDto(
+            id = 4,
             title = "Сага о Дэнни Эрнандесе",
             description = "Tekashi69 или Сикснайн — знаменитый бруклинский рэпер с радужными волосами — прогремел...",
             rateScore = 2,
@@ -46,6 +51,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             categoryId = 4
         ),
         MovieDto(
+            id = 5,
             title = "Пчелка Майя",
             description = "Когда упрямая пчелка Майя и ее лучший друг Вилли спасают принцессу-муравьишку, начинается сказочное...",
             rateScore = 4,
@@ -54,6 +60,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             categoryId = 6
         ),
         MovieDto(
+            id = 6,
             title = "Круэлла",
             description = "Невероятно одаренная мошенница по имени Эстелла решает сделать себе имя в мире моды.",
             rateScore = 4,
@@ -62,6 +69,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             categoryId = 7
         ),
         MovieDto(
+            id = 7,
             title = "Чёрная вдова",
             description = "Чёрной Вдове придется вспомнить о том, что было в её жизни задолго до присоединения к команде Мстителей",
             rateScore = 3,

@@ -2,21 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:id="@+id/profile_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey">
 
     <TextView
-        android:id="@+id/category_title"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_border"
-        android:paddingStart="@dimen/padding_10"
-        android:paddingTop="@dimen/padding_4"
-        android:paddingEnd="@dimen/padding_10"
-        android:paddingBottom="@dimen/padding_3"
-        android:textSize="@dimen/space_10"
+        android:text="@string/not_done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/lorem" />
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="346dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
