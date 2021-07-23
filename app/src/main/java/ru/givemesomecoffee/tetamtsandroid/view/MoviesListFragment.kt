@@ -24,7 +24,7 @@ class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
     var category = 0
     private lateinit var moviesListView: RecyclerView
-    private lateinit var categoriesListView: RecyclerView
+    lateinit var categoriesListView: RecyclerView
     private var moviesAdapter: MoviesListAdapter? = null
     private var categoriesAdapter: CategoryAdapter? = null
     private var emptyListView: TextView? = null
@@ -100,6 +100,7 @@ class MoviesListFragment : Fragment() {
             itemClick = { categoryId: Int ->
                 moviesListPresenter.updateMoviesListByCategory(categoryId)
             })
+
     }
 
     fun onGetDataFailure(message: String?) {

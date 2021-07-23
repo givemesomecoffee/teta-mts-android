@@ -3,7 +3,6 @@ package ru.givemesomecoffee.tetamtsandroid.view
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,14 +36,14 @@ class MovieDetailsFragment : Fragment() {
     var refresh: SwipeRefreshLayout? = null
 
 
-    fun init() {
+    private fun init() {
         movieCover = view?.findViewById(R.id.movie_cover)
         backButton = view?.findViewById(R.id.back_button)
         categoryTitle = view?.findViewById(R.id.movie_category)
         movieTitle = view?.findViewById(R.id.movie_title)
         movieDescription = view?.findViewById(R.id.movie_description)
         ageSign = view?.findViewById(R.id.age_sign)
-        refresh = view?.findViewById<SwipeRefreshLayout>(R.id.swipe_container)
+        refresh = view?.findViewById(R.id.swipe_container)
     }
 
     override fun onAttach(context: Context) {
@@ -83,11 +82,6 @@ class MovieDetailsFragment : Fragment() {
         }
 
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        movieDetailsClickListener?.hideNavigation()
     }
 
     override fun onDetach() {

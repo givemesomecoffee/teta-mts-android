@@ -11,15 +11,16 @@ import ru.givemesomecoffee.tetamtsandroid.model.Movies
 import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
 import ru.givemesomecoffee.tetamtsandroid.view.MoviesListFragment
 import java.lang.Exception
-import java.lang.Thread.sleep
+
 
 class MoviesListPresenter(private val view: MoviesListFragment) {
 
     private val categoriesHandler = CoroutineExceptionHandler { _, _ ->
         view.onGetDataFailure("Что-то пошло не так")
-        view.viewLifecycleOwner.lifecycleScope.launch() {
-            withContext(Dispatchers.IO) {delay(5000L)}
-            withContext(Dispatchers.Main) {updateCategories()}
+
+        view.viewLifecycleOwner.lifecycleScope.launch {
+            withContext(Dispatchers.IO) { delay(5000L) }
+            withContext(Dispatchers.Main) { updateCategories() }
 
         }
     }
@@ -34,6 +35,7 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
         view.viewLifecycleOwner.lifecycleScope.launch(moviesHandler) {
             withContext(Dispatchers.Main) { view.setNewMoviesList(getMoviesAsync().await()) }
         }
+
     }
 
     private fun getMoviesAsync(): Deferred<List<MovieDto>> {
@@ -45,7 +47,7 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
     }
 
     private fun getMovies(): List<MovieDto> {
-        if (simulateNetwork() == 500){
+        if (simulateNetwork() == 500) {
             throw Exception("Ошибка. Попробуйте обновить страницу")
         }
         moviesModel = Movies(MoviesDataSourceImpl())
@@ -57,6 +59,7 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
         view.viewLifecycleOwner.lifecycleScope.launch(categoriesHandler) {
             withContext(Dispatchers.Main) {
                 view.setNewCategoriesList(getCategoriesAsync().await())
+                view.categoriesListView.scrollToPosition(0)
             }
         }
     }
@@ -64,7 +67,7 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
     private fun getCategoriesAsync(): Deferred<List<CategoryDto>> {
         return view.viewLifecycleOwner.lifecycleScope.async(categoriesHandler) {
             withContext(Dispatchers.IO) {
-                if (simulateNetwork() == 500){
+                if (simulateNetwork() == 500) {
                     throw Exception("Что-то пошло не так")
                 }
                 Categories(

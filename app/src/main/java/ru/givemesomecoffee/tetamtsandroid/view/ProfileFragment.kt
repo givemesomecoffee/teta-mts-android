@@ -22,6 +22,7 @@ class ProfileFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     profileFragmentClickListener?.profileOnBackPressed()
+
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)

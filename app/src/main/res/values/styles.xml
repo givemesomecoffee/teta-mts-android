@@ -4,5 +4,7 @@
         <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
         <item name="android:minHeight">13dp</item>
         <item name="android:maxHeight">13dp</item>
+        <item name="android:minWidth">13dp</item>
+        <item name="android:maxWidth">13dp</item>
     </style>
 </resources>

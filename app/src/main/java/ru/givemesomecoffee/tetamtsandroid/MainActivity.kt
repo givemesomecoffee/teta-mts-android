@@ -1,13 +1,10 @@
 package ru.givemesomecoffee.tetamtsandroid
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import com.google.android.material.tabs.TabLayout
 import ru.givemesomecoffee.tetamtsandroid.interfaces.MovieDetailsClickListener
 import ru.givemesomecoffee.tetamtsandroid.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.interfaces.ProfileFragmentClickListener
@@ -24,13 +21,16 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private var moviesListFragment: MoviesListFragment? = null
     private var profileFragment: ProfileFragment? = null
     private var movieDetailsFragment: MovieDetailsFragment? = null
-    private lateinit var navigationTabs: TabLayout
+    private var homeNav: View? = null
+    private var accountNav: View? = null
     private val rootViewId = R.id.main_container
-    private val rootDetailsId = R.id.movie_details_root
-    private val rootProfileId = R.id.profile_root
+    private lateinit var homeIndicator: View
+    private lateinit var accountIndicator: View
+    private var accountSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("test", "0")
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
@@ -48,8 +48,12 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             profileFragment =
                 supportFragmentManager.findFragmentByTag(PROFILE_TAG) as? ProfileFragment
         }
-        navigationTabs = findViewById(R.id.nav_bottom)
-        createTabListener()
+        accountNav = findViewById(R.id.button_nav_account)
+        homeNav = findViewById(R.id.button_nav_home)
+        homeIndicator = findViewById(R.id.home_active_indicator)
+        accountIndicator = findViewById(R.id.account_active_indicator)
+        accountSelected = false
+        setNavigationClickListeners(homeNav!!, accountNav!!)
     }
 
     override fun onMovieCardClicked(id: Int) {
@@ -58,78 +62,74 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             supportFragmentManager.beginTransaction()
                 .add(rootViewId, this, MOVIE_DETAILS_TAG)
                 .hide(moviesListFragment!!)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack("details")
+                .addToBackStack(MOVIE_DETAILS_TAG)
                 .commit()
         }
     }
 
     override fun moviesDetailsOnBackPressed() {
-        navigationTabs.visibility = View.VISIBLE
-        slideToLeft(findViewById(rootDetailsId), movieDetailsFragment)
+        setHomeActive()
+        showPrevFragment()
         supportFragmentManager.popBackStack()
-    }
 
-    override fun hideNavigation() {
-        val animate = TranslateAnimation(0F, 0F, 0F, navigationTabs.height.toFloat())
-        animate.duration = 500
-        navigationTabs.startAnimation(animate)
-        navigationTabs.visibility = View.GONE
     }
 
     override fun profileOnBackPressed() {
-        slideToLeft(
-            findViewById(rootProfileId),
-            profileFragment
-        )
-        navigationTabs.getTabAt(0)?.select()
+        setHomeActive()
+        showPrevFragment()
+        supportFragmentManager.popBackStack()
+
     }
 
-    private fun slideToLeft(view: View, fragment: Fragment?) {
-        val animate = TranslateAnimation(0F, (-view.width).toFloat(), 0F, 0F)
-        animate.duration = 500
-        view.startAnimation(animate)
-        if (fragment != null) {
-            supportFragmentManager.beginTransaction()
-                .show(moviesListFragment!!)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit()
-            supportFragmentManager.beginTransaction()
-                .remove(fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit()
+    private fun setNavigationClickListeners(homeNav: View, accountNav: View) {
+        homeNav.setOnClickListener {
+            supportFragmentManager.popBackStack(
+                null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+            setHomeActive()
+        }
+        accountNav.setOnClickListener {
+            if (!accountSelected) {
+                profileFragment = ProfileFragment()
+                profileFragment?.apply {
+                    supportFragmentManager.beginTransaction()
+                        .add(rootViewId, this, PROFILE_TAG)
+                        .hide(moviesListFragment!!)
+                        .addToBackStack(PROFILE_TAG)
+                        .commit()
+                }
+                if (movieDetailsFragment?.isVisible == true) {
+                    supportFragmentManager.beginTransaction()
+                        .hide(movieDetailsFragment!!)
+                        .commit()
+                }
+
+                setAccountActive()
+            }
         }
     }
 
-    private fun createTabListener() {
-        navigationTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position == 0) {
-                    supportFragmentManager.popBackStack(
-                        null,
-                        FragmentManager.POP_BACK_STACK_INCLUSIVE
-                    )
-                } else {
-                    profileFragment = ProfileFragment()
-                    profileFragment?.apply {
-                        supportFragmentManager.beginTransaction()
-                            .add(rootViewId, this, PROFILE_TAG)
-                            .hide(moviesListFragment!!)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .addToBackStack("profile")
-                            .commit()
-                    }
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-        })
+    private fun setAccountActive() {
+        homeIndicator.visibility = View.INVISIBLE
+        accountIndicator.visibility = View.VISIBLE
+        accountSelected = true
     }
 
+    private fun setHomeActive() {
+        accountIndicator.visibility = View.INVISIBLE
+        homeIndicator.visibility = View.VISIBLE
+        accountSelected = false
+    }
+
+    private fun showPrevFragment() {
+        Log.d("test",supportFragmentManager.backStackEntryCount.toString() )
+        val fragment =
+            if (supportFragmentManager.backStackEntryCount == 1) moviesListFragment else movieDetailsFragment
+        supportFragmentManager.beginTransaction()
+            .show(fragment!!)
+            .commit()
+    }
 }
 
 

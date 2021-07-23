@@ -6,9 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
-import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.utils.CategoriesDiffCallback
-import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 import ru.givemesomecoffee.tetamtsandroid.view.viewholder.CategoryHeaderViewHolder
 import ru.givemesomecoffee.tetamtsandroid.view.viewholder.CategoryViewHolder
 
