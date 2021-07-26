@@ -14,7 +14,6 @@ class MoviesListAdapter(
     private var itemClick: ((Int) -> Unit)?
 ) : RecyclerView.Adapter<MoviesListViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
         val adapterLayout =
             LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
@@ -25,14 +24,14 @@ class MoviesListAdapter(
         holder.bind(dataset[position])
     }
 
+    override fun getItemCount(): Int {
+        return dataset.size
+    }
+
     fun updateMoviesList(newList: List<MovieDto>) {
         val callback = MoviesDiffCallback(dataset, newList)
         val diff = DiffUtil.calculateDiff(callback)
         diff.dispatchUpdatesTo(this)
         this.dataset = newList
-    }
-
-    override fun getItemCount(): Int {
-        return dataset.size
     }
 }

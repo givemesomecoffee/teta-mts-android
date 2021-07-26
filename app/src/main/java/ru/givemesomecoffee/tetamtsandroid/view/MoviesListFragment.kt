@@ -38,7 +38,7 @@ class MoviesListFragment : Fragment() {
         categoriesListView = requireView().findViewById(R.id.movie_category_list)
         emptyListView = requireView().findViewById(R.id.empty_movies_list)
         moviesRefreshSwipeView = requireView().findViewById(R.id.swipe_container)
-        errorHandlerView = requireView().findViewById(R.id.loadingHandler)
+        errorHandlerView = requireView().findViewById(R.id.error_handler)
         moviesAdapter = setMoviesListAdapter()
         moviesListView.adapter = moviesAdapter
         categoriesAdapter = setCategoryAdapter()
@@ -67,7 +67,6 @@ class MoviesListFragment : Fragment() {
         if (savedInstanceState != null) {
             category = savedInstanceState.getInt(CATEGORY, 0)
         }
-
         init()
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
         moviesListView.addItemDecoration(
@@ -103,7 +102,6 @@ class MoviesListFragment : Fragment() {
             itemClick = { categoryId: Int ->
                 moviesListPresenter.updateMoviesListByCategory(categoryId)
             })
-
     }
 
     fun onGetDataFailure(message: String?) {
@@ -114,10 +112,8 @@ class MoviesListFragment : Fragment() {
     fun setNewMoviesList(await: List<MovieDto>) {
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
-        val randomFilms = await.shuffled().take(5)
-        moviesAdapter?.updateMoviesList(randomFilms)
-        moviesRefreshSwipeView?.isRefreshing =
-            false
+        moviesAdapter?.updateMoviesList(await.shuffled().take(5))
+        moviesRefreshSwipeView?.isRefreshing = false
         moviesListView.scrollToPosition(0)
     }
 

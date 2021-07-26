@@ -3,7 +3,6 @@ package ru.givemesomecoffee.tetamtsandroid.view
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +41,6 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var errorHandlerView: TextView
     private var movie: MovieDto? = null
 
-
     private fun init() {
         movieCover = requireView().findViewById(R.id.movie_cover)
         categoryTitle = view?.findViewById(R.id.movie_category)
@@ -50,7 +48,7 @@ class MovieDetailsFragment : Fragment() {
         movieDescription = view?.findViewById(R.id.movie_description)
         ageSign = view?.findViewById(R.id.age_sign)
         refreshWrapper = view?.findViewById(R.id.swipe_container)
-        errorHandlerView = requireView().findViewById(R.id.loadingHandler)
+        errorHandlerView = requireView().findViewById(R.id.error_handler)
     }
 
     override fun onAttach(context: Context) {
@@ -87,9 +85,14 @@ class MovieDetailsFragment : Fragment() {
         collectData(movieId)
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        movieDetailsClickListener = null
+    }
+
     private fun collectData(id: Int?) {
         viewLifecycleOwner.lifecycleScope.launch() {
-            movieDetailsPresenter.getSampleResponse(id)
+            movieDetailsPresenter.getMovie(id)
                 .catch { e -> onGetDataFailure(e.message) }
                 .collect {
                     when (it) {
@@ -101,16 +104,10 @@ class MovieDetailsFragment : Fragment() {
         refreshWrapper?.isRefreshing = false
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        movieDetailsClickListener = null
-    }
-
     private fun setImgToView(result: Drawable) {
         movieCover.setImageDrawable(result)
         setTopCrop(movieCover)
     }
-
 
     private fun bindData(movie: MovieDto) {
         this.movie = movie
@@ -127,16 +124,14 @@ class MovieDetailsFragment : Fragment() {
             .memoryCachePolicy(CachePolicy.DISABLED)
             .target(onSuccess = { result -> setImgToView(result) })
             .build()
-
         requireView().context.imageLoader.enqueue(movieCoverImg)
     }
 
-    fun onGetDataFailure(message: String?) {
+    private fun onGetDataFailure(message: String?) {
         Toast.makeText(view?.context, message, Toast.LENGTH_SHORT).show()
         if (movie == null) {
             errorHandlerView.visibility = View.VISIBLE
         }
-
     }
 
     companion object {

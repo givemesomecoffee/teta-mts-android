@@ -13,35 +13,22 @@ import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
 import ru.givemesomecoffee.tetamtsandroid.view.MoviesListFragment
 import java.lang.Exception
 
-
 class MoviesListPresenter(private val view: MoviesListFragment) {
+    private var moviesModel: Movies? = null
 
     private val categoriesHandler = CoroutineExceptionHandler { _, _ ->
         view.onGetDataFailure("Что-то пошло не так")
-
         view.viewLifecycleOwner.lifecycleScope.launch {
             withContext(Dispatchers.IO) { delay(5000L) }
             withContext(Dispatchers.Main) { updateCategories() }
-
         }
     }
+
     private val moviesHandler = CoroutineExceptionHandler { _, exception ->
         view.onGetDataFailure(exception.message)
         if (view.moviesList == null) {
             view.errorHandlerView.visibility = View.VISIBLE
         }
-    }
-    private var moviesModel: Movies? = null
-    private var categoryModel: Categories? = null
-
-
-    fun updateMoviesListByCategory(categoryId: Int) {
-        view.errorHandlerView.visibility = View.INVISIBLE
-        view.category = categoryId
-        view.viewLifecycleOwner.lifecycleScope.launch(moviesHandler) {
-            withContext(Dispatchers.Main) { view.setNewMoviesList(getMoviesAsync().await()) }
-        }
-
     }
 
     private fun getMoviesAsync(): Deferred<List<MovieDto>> {
@@ -62,15 +49,6 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
 
     }
 
-    fun updateCategories() {
-        view.viewLifecycleOwner.lifecycleScope.launch(categoriesHandler) {
-            withContext(Dispatchers.Main) {
-                view.setNewCategoriesList(getCategoriesAsync().await())
-                view.categoriesListView.scrollToPosition(0)
-            }
-        }
-    }
-
     private fun getCategoriesAsync(): Deferred<List<CategoryDto>> {
         return view.viewLifecycleOwner.lifecycleScope.async(categoriesHandler) {
             withContext(Dispatchers.IO) {
@@ -81,6 +59,23 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
                     MovieCategoriesDataSourceImpl()
                 ).getCategories()
             }
+        }
+    }
+
+    fun updateCategories() {
+        view.viewLifecycleOwner.lifecycleScope.launch(categoriesHandler) {
+            withContext(Dispatchers.Main) {
+                view.setNewCategoriesList(getCategoriesAsync().await())
+                view.categoriesListView.scrollToPosition(0)
+            }
+        }
+    }
+
+    fun updateMoviesListByCategory(categoryId: Int) {
+        view.errorHandlerView.visibility = View.INVISIBLE
+        view.category = categoryId
+        view.viewLifecycleOwner.lifecycleScope.launch(moviesHandler) {
+            withContext(Dispatchers.Main) { view.setNewMoviesList(getMoviesAsync().await()) }
         }
     }
 

@@ -64,18 +64,17 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/loadingHandler"
+        android:id="@+id/error_handler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/swipe_container"
-        android:visibility="invisible"
         android:layout_marginStart="@dimen/offset_20"
         android:layout_marginEnd="@dimen/offset_20"
-        android:text="Ошибка при загрузке. Потяните вниз, чтобы обновить страницу"
+        android:text="@string/errorHolderText"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/swipe_container"
         app:layout_constraintEnd_toEndOf="@id/swipe_container"
         app:layout_constraintStart_toStartOf="@id/swipe_container"
-        app:layout_constraintTop_toTopOf="@id/swipe_container"
-        />
+        app:layout_constraintTop_toTopOf="@id/swipe_container" />
 
 
     <TextView

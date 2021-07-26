@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     val rootViewId = R.id.main_container
     private lateinit var navigationPresenter: NavigationPresenter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

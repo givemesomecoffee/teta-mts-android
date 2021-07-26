@@ -17,35 +17,6 @@ class NavigationPresenter(
     private val accountIndicator: View = root.findViewById(R.id.account_active_indicator)
     private var accountSelected = false
 
-    fun setNavigationClickListeners() {
-        homeNavView.setOnClickListener {
-            supportFragmentManager.popBackStack(
-                null,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE
-            )
-            setHomeActive()
-        }
-        accountNavView.setOnClickListener {
-            if (!accountSelected) {
-                root.profileFragment = ProfileFragment()
-                root.profileFragment?.apply {
-                    supportFragmentManager.beginTransaction()
-                        .add(root.rootViewId, this, ProfileFragment.PROFILE_TAG)
-                        .hide(root.moviesListFragment!!)
-                        .addToBackStack(ProfileFragment.PROFILE_TAG)
-                        .commit()
-                }
-                if (root.movieDetailsFragment?.isVisible == true) {
-                    supportFragmentManager.beginTransaction()
-                        .hide(root.movieDetailsFragment!!)
-                        .commit()
-                }
-
-                setAccountActive()
-            }
-        }
-    }
-
     private fun setAccountActive() {
         homeIndicator.visibility = View.INVISIBLE
         accountIndicator.visibility = View.VISIBLE
@@ -88,7 +59,34 @@ class NavigationPresenter(
         setHomeActive()
         showPrevFragment()
         supportFragmentManager.popBackStack()
+    }
 
+    fun setNavigationClickListeners() {
+        homeNavView.setOnClickListener {
+            supportFragmentManager.popBackStack(
+                null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+            setHomeActive()
+        }
+        accountNavView.setOnClickListener {
+            if (!accountSelected) {
+                root.profileFragment = ProfileFragment()
+                root.profileFragment?.apply {
+                    supportFragmentManager.beginTransaction()
+                        .add(root.rootViewId, this, ProfileFragment.PROFILE_TAG)
+                        .hide(root.moviesListFragment!!)
+                        .addToBackStack(ProfileFragment.PROFILE_TAG)
+                        .commit()
+                }
+                if (root.movieDetailsFragment?.isVisible == true) {
+                    supportFragmentManager.beginTransaction()
+                        .hide(root.movieDetailsFragment!!)
+                        .commit()
+                }
+                setAccountActive()
+            }
+        }
     }
 
 }

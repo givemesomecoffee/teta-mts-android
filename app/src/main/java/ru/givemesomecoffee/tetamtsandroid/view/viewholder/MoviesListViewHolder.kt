@@ -11,7 +11,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 
 
 class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
-    RecyclerView.ViewHolder(view){
+    RecyclerView.ViewHolder(view) {
     private val movieTitle: TextView = view.findViewById(R.id.movie_title)
     private val movieDescription: TextView = view.findViewById(R.id.movie_description)
     private val movieCover: ImageView = view.findViewById(R.id.movie_cover)
@@ -22,15 +22,11 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
         movieTitle.text = item.title
         movieDescription.text = item.description
         movieCover.load(item.imageUrl)
-        val ageRestriction = item.ageRestriction.toString() + "+"
-        movieAge.text = ageRestriction
-        val movieRating = item.rateScore
+        movieAge.text = item.ageRestrictionText
         ratingBar.apply {
-            rating = movieRating.toFloat()
-            contentDescription = movieRating.toString()
+            rating = item.rateScore.toFloat()
+            contentDescription = item.rateScore.toString()
         }
-        itemView.setOnClickListener {
-            itemClick?.invoke(item.id)
-        }
+        itemView.setOnClickListener { itemClick?.invoke(item.id) }
     }
 }
