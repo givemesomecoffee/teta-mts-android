@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         navigationPresenter.onMovieCardClicked(id)
     }
 
-    override fun moviesDetailsOnBackPressed() {
+    override fun movieDetailsOnBackPressed() {
         navigationPresenter.moviesDetailsOnBackPressed()
     }
 

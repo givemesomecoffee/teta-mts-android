@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.presenter
 
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
@@ -26,11 +27,16 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
     }
     private val moviesHandler = CoroutineExceptionHandler { _, exception ->
         view.onGetDataFailure(exception.message)
+        if (view.moviesList == null) {
+            view.errorHandlerView.visibility = View.VISIBLE
+        }
     }
     private var moviesModel: Movies? = null
     private var categoryModel: Categories? = null
 
+
     fun updateMoviesListByCategory(categoryId: Int) {
+        view.errorHandlerView.visibility = View.INVISIBLE
         view.category = categoryId
         view.viewLifecycleOwner.lifecycleScope.launch(moviesHandler) {
             withContext(Dispatchers.Main) { view.setNewMoviesList(getMoviesAsync().await()) }
@@ -53,6 +59,7 @@ class MoviesListPresenter(private val view: MoviesListFragment) {
         moviesModel = Movies(MoviesDataSourceImpl())
         return if (view.category == 0) moviesModel!!.getMovies()
         else moviesModel!!.geMoviesByCategory(view.category)
+
     }
 
     fun updateCategories() {

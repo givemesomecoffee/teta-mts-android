@@ -14,30 +14,29 @@
         android:layout_marginEnd="@dimen/offset_20"
         android:contentDescription="@string/ic_search_description"
         android:src="@drawable/ic_search"
-        app:layout_constraintEnd_toEndOf="@id/edges"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/page_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/offset_20"
         android:layout_marginTop="@dimen/offset_22"
         android:text="@string/movie_list_title"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/edges"
+        app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/icon_search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movie_category_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/offset_20"
+
         android:layout_marginTop="@dimen/offset_12"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/edges"
+        app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/page_title"
         tools:listitem="@layout/category_item" />
 
@@ -46,8 +45,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/edges"
-        app:layout_constraintStart_toStartOf="@id/edges"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_category_list">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -64,13 +63,19 @@
             tools:listitem="@layout/movie_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <View
-        android:id="@+id/edges"
-        android:layout_width="360dp"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/loadingHandler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/swipe_container"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="@dimen/offset_20"
+        android:layout_marginEnd="@dimen/offset_20"
+        android:text="Ошибка при загрузке. Потяните вниз, чтобы обновить страницу"
+        app:layout_constraintEnd_toEndOf="@id/swipe_container"
+        app:layout_constraintStart_toStartOf="@id/swipe_container"
+        app:layout_constraintTop_toTopOf="@id/swipe_container"
+        />
 
 
     <TextView
@@ -85,4 +90,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

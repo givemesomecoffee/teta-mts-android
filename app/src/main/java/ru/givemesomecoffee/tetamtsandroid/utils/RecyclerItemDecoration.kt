@@ -41,17 +41,17 @@ class RecyclerItemDecoration(
             val rect =  (parent.measuredWidth / 2) - getDp(150, density)
 
            if (position % 2 != 0) {
-               outRect.left = getDp(10, density)
-              outRect.right = getDp(20, density)
-  /*              outRect.left = rect/3
-                outRect.right = rect - outRect.left*/
+/*               outRect.left = getDp(10, density)
+              outRect.right = getDp(20, density)*/
+              outRect.left = rect/3
+                outRect.right = rect - outRect.left
           } else {
 
 
-               outRect.right = getDp(10, density)
-               outRect.left = getDp(20, density)
-             /*  outRect.right = rect/3
-               outRect.left = rect - outRect.right*/
+              /* outRect.right = getDp(10, density)
+               outRect.left = getDp(20, density)*/
+               outRect.right = rect/3
+               outRect.left = rect - outRect.right
 
           }
             outRect.bottom = getDp(spacingBottom, density)

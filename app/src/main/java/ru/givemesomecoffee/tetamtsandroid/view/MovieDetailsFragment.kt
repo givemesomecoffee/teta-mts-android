@@ -3,47 +3,54 @@ package ru.givemesomecoffee.tetamtsandroid.view
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.imageLoader
+import coil.request.CachePolicy
 import coil.request.ImageRequest
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.interfaces.MovieDetailsClickListener
 import ru.givemesomecoffee.tetamtsandroid.presenter.MovieDetailsPresenter
+import ru.givemesomecoffee.tetamtsandroid.presenter.State
 import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
 
 class MovieDetailsFragment : Fragment() {
-
     var movieDetailsClickListener: MovieDetailsClickListener? = null
-    lateinit var movie: MovieDto
-    lateinit var category: CategoryDto
     private var backButton: ImageView? = null
     private var categoryTitle: TextView? = null
     private var movieTitle: TextView? = null
     private var movieDescription: TextView? = null
-    private var movieCover: ImageView? = null
+    private lateinit var movieCover: ImageView
     private var ageSign: TextView? = null
     private var movieDetailsPresenter = MovieDetailsPresenter(this)
-    var refresh: SwipeRefreshLayout? = null
+    var refreshWrapper: SwipeRefreshLayout? = null
+    var movieId: Int? = null
+    private lateinit var errorHandlerView: TextView
+    private var movie: MovieDto? = null
 
 
     private fun init() {
-        movieCover = view?.findViewById(R.id.movie_cover)
-        backButton = view?.findViewById(R.id.back_button)
+        movieCover = requireView().findViewById(R.id.movie_cover)
         categoryTitle = view?.findViewById(R.id.movie_category)
         movieTitle = view?.findViewById(R.id.movie_title)
         movieDescription = view?.findViewById(R.id.movie_description)
         ageSign = view?.findViewById(R.id.age_sign)
-        refresh = view?.findViewById(R.id.swipe_container)
+        refreshWrapper = view?.findViewById(R.id.swipe_container)
+        errorHandlerView = requireView().findViewById(R.id.loadingHandler)
     }
 
     override fun onAttach(context: Context) {
@@ -54,7 +61,7 @@ class MovieDetailsFragment : Fragment() {
         val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    movieDetailsClickListener?.moviesDetailsOnBackPressed()
+                    movieDetailsClickListener?.movieDetailsOnBackPressed()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -69,19 +76,29 @@ class MovieDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        init()
-        val id = arguments?.getInt("movie_id")
-        movieDetailsPresenter.getData(id)
+        view.findViewById<View>(R.id.movie_details_scroll)?.visibility = View.INVISIBLE
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<SwipeRefreshLayout>(R.id.swipe_container).setOnRefreshListener {
-            movieDetailsPresenter.getData(id)
-        }
+        init()
+        movieId = arguments?.getInt("movie_id")
+        refreshWrapper?.setOnRefreshListener { collectData(movieId) }
         backButton?.setOnClickListener {
-            movieDetailsClickListener?.moviesDetailsOnBackPressed()
-
+            movieDetailsClickListener?.movieDetailsOnBackPressed()
         }
+        collectData(movieId)
+    }
 
-
+    private fun collectData(id: Int?) {
+        viewLifecycleOwner.lifecycleScope.launch() {
+            movieDetailsPresenter.getSampleResponse(id)
+                .catch { e -> onGetDataFailure(e.message) }
+                .collect {
+                    when (it) {
+                        is State.DataState<*> -> bindData(it.data as MovieDto)
+                        is State.LoadingState -> refreshWrapper?.isRefreshing = true
+                    }
+                }
+        }
+        refreshWrapper?.isRefreshing = false
     }
 
     override fun onDetach() {
@@ -90,28 +107,36 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setImgToView(result: Drawable) {
-        movieCover?.setImageDrawable(result)
-        setTopCrop(movieCover!!)
+        movieCover.setImageDrawable(result)
+        setTopCrop(movieCover)
     }
 
 
-
-
-    fun bindData() {
-        val ageRestriction = movie.ageRestriction.toString() + "+"
-        categoryTitle?.text = category.title
+    private fun bindData(movie: MovieDto) {
+        this.movie = movie
+        errorHandlerView.visibility = View.INVISIBLE
+        view?.findViewById<View>(R.id.group)?.visibility = View.VISIBLE
+        view?.findViewById<View>(R.id.movie_details_scroll)?.visibility = View.VISIBLE
+        categoryTitle?.text = movie.categoryTitle
         movieTitle?.text = movie.title
         movieDescription?.text = movie.description
-        ageSign?.text = ageRestriction
+        ageSign?.text = movie.ageRestrictionText
+        view?.findViewById<RatingBar>(R.id.ratingBar)?.rating = movie.rateScore.toFloat()
         val movieCoverImg = ImageRequest.Builder(requireView().context)
             .data(movie.imageUrl)
+            .memoryCachePolicy(CachePolicy.DISABLED)
             .target(onSuccess = { result -> setImgToView(result) })
             .build()
+
         requireView().context.imageLoader.enqueue(movieCoverImg)
     }
 
     fun onGetDataFailure(message: String?) {
         Toast.makeText(view?.context, message, Toast.LENGTH_SHORT).show()
+        if (movie == null) {
+            errorHandlerView.visibility = View.VISIBLE
+        }
+
     }
 
     companion object {

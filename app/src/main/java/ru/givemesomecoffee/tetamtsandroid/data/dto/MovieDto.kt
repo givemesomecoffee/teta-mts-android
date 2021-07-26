@@ -8,4 +8,7 @@ data class MovieDto(
     val ageRestriction: Int,
     val imageUrl: String,
     val categoryId: Int
-)
+) {
+    var categoryTitle: String? = null
+    val ageRestrictionText: String = "$ageRestriction+"
+}

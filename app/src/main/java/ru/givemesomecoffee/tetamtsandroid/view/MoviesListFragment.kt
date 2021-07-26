@@ -30,12 +30,15 @@ class MoviesListFragment : Fragment() {
     private var emptyListView: TextView? = null
     private var moviesRefreshSwipeView: SwipeRefreshLayout? = null
     private var moviesListPresenter: MoviesListPresenter = MoviesListPresenter(this)
+    lateinit var errorHandlerView: TextView
+    var moviesList: List<MovieDto>? = null
 
     private fun init() {
         moviesListView = requireView().findViewById(R.id.movies_list)
         categoriesListView = requireView().findViewById(R.id.movie_category_list)
         emptyListView = requireView().findViewById(R.id.empty_movies_list)
         moviesRefreshSwipeView = requireView().findViewById(R.id.swipe_container)
+        errorHandlerView = requireView().findViewById(R.id.loadingHandler)
         moviesAdapter = setMoviesListAdapter()
         moviesListView.adapter = moviesAdapter
         categoriesAdapter = setCategoryAdapter()
@@ -109,6 +112,7 @@ class MoviesListFragment : Fragment() {
     }
 
     fun setNewMoviesList(await: List<MovieDto>) {
+        moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         val randomFilms = await.shuffled().take(5)
         moviesAdapter?.updateMoviesList(randomFilms)
