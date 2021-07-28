@@ -12,7 +12,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.NavigationPrese
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     MovieDetailsClickListener, ProfileFragmentClickListener, NavigationMainActivityContract.View {
 
-    private val navigationClickListeners: NavigationMainActivityContract =
+    private val navigationController: NavigationMainActivityContract =
         NavigationPresenter(this, supportFragmentManager)
     private lateinit var homeNavView: View
     private lateinit var accountNavView: View
@@ -31,24 +31,24 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         setContentView(R.layout.activity_main)
         init()
         if (savedInstanceState == null) {
-            navigationClickListeners.init()
+            navigationController.init()
         } else {
-            navigationClickListeners.recoverFragments()
+            navigationController.recoverFragments()
         }
-        homeNavView.setOnClickListener { navigationClickListeners.onHomeClicked() }
-        accountNavView.setOnClickListener { navigationClickListeners.onAccountClicked() }
+        homeNavView.setOnClickListener { navigationController.onHomeClicked() }
+        accountNavView.setOnClickListener { navigationController.onAccountClicked() }
     }
 
     override fun onMovieCardClicked(id: Int) {
-        navigationClickListeners.onMovieCardClicked(id)
+        navigationController.onMovieCardClicked(id)
     }
 
     override fun movieDetailsOnBackPressed() {
-        navigationClickListeners.onBackPressed()
+        navigationController.onBackPressed()
     }
 
     override fun profileOnBackPressed() {
-        navigationClickListeners.onBackPressed()
+        navigationController.onBackPressed()
     }
 
     override fun setAccountActive() {

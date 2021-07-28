@@ -14,7 +14,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.CategoryAdapter
 import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.MoviesListAdapter
-import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
@@ -23,16 +22,16 @@ import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
-    var category = 0
+    private var moviesListPresenter: MoviesListPresenter = MoviesListPresenter(this)
     private lateinit var moviesListView: RecyclerView
-    lateinit var categoriesListView: RecyclerView
+    private lateinit var categoriesListView: RecyclerView
     private var moviesAdapter: MoviesListAdapter? = null
     private var categoriesAdapter: CategoryAdapter? = null
     private var emptyListView: TextView? = null
     private var moviesRefreshSwipeView: SwipeRefreshLayout? = null
-    private var moviesListPresenter: MoviesListPresenter = MoviesListPresenter(this)
-    lateinit var errorHandlerView: TextView
-    var moviesList: List<MovieUi>? = null
+    private lateinit var errorHandlerView: TextView
+    private var moviesList: List<MovieUi>? = null
+    private var category = 0
 
     private fun init() {
         moviesListView = requireView().findViewById(R.id.movies_list)
