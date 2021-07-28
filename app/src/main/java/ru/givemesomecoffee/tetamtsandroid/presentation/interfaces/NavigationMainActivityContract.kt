@@ -7,4 +7,10 @@ interface NavigationMainActivityContract {
     fun onHomeClicked()
     fun onAccountClicked()
     fun onBackPressed()
+
+    interface View{
+        fun setHomeActive()
+        fun setAccountActive()
+    }
 }
+

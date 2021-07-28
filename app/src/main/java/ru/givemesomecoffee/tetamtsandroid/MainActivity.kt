@@ -10,7 +10,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmen
 import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.NavigationPresenter
 
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
-    MovieDetailsClickListener, ProfileFragmentClickListener {
+    MovieDetailsClickListener, ProfileFragmentClickListener, NavigationMainActivityContract.View {
 
     private val navigationClickListeners: NavigationMainActivityContract =
         NavigationPresenter(this, supportFragmentManager)
@@ -51,12 +51,12 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         navigationClickListeners.onBackPressed()
     }
 
-    fun setAccountActive() {
+    override fun setAccountActive() {
         homeIndicator.visibility = View.INVISIBLE
         accountIndicator.visibility = View.VISIBLE
     }
 
-    fun setHomeActive() {
+    override fun setHomeActive() {
         accountIndicator.visibility = View.INVISIBLE
         homeIndicator.visibility = View.VISIBLE
     }

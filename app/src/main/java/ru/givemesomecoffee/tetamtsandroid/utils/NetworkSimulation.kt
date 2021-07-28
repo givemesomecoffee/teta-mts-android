@@ -1,8 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid.utils
 
-fun simulateNetwork(): Int {
+import java.lang.Exception
+
+fun simulateNetwork() {
     val listForErrorTest = listOf(200, 200, 500, 200)
     val serverAnswer = listForErrorTest.random()
     Thread.sleep(200L)
-    return serverAnswer
+    if (serverAnswer == 500) {
+        throw Exception("Ошибка. Попробуйте обновить страницу")
+    }
 }

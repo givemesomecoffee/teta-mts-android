@@ -45,7 +45,6 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/offset_32"
             android:background="@color/grey"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/movie_details_guideline">
@@ -129,14 +128,7 @@
                     tools:text="@string/movie_description" />
 
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="actors_section_title, actors_section_scroll" />
-
-                <TextView
+                  <TextView
                     android:id="@+id/actors_section_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

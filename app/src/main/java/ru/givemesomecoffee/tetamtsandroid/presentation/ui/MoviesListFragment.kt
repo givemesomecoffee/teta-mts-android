@@ -14,8 +14,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.CategoryAdapter
 import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.MoviesListAdapter
-import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MoviesListPresenter
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
@@ -31,7 +32,7 @@ class MoviesListFragment : Fragment() {
     private var moviesRefreshSwipeView: SwipeRefreshLayout? = null
     private var moviesListPresenter: MoviesListPresenter = MoviesListPresenter(this)
     lateinit var errorHandlerView: TextView
-    var moviesList: List<MovieDto>? = null
+    var moviesList: List<MovieUi>? = null
 
     private fun init() {
         moviesListView = requireView().findViewById(R.id.movies_list)
@@ -74,6 +75,7 @@ class MoviesListFragment : Fragment() {
         )
         categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
         moviesRefreshSwipeView?.setOnRefreshListener {
+            errorHandlerView.visibility = View.INVISIBLE
             moviesListPresenter.updateMoviesListByCategory(category)
         }
     }
@@ -99,26 +101,34 @@ class MoviesListFragment : Fragment() {
     private fun setCategoryAdapter(): CategoryAdapter {
         return CategoryAdapter(
             listOf(),
-            itemClick = { categoryId: Int ->
-                moviesListPresenter.updateMoviesListByCategory(categoryId)
-            })
+            itemClick = { categoryId: Int -> onCategoryClicked(categoryId) })
+    }
+
+    private fun onCategoryClicked(categoryId: Int) {
+        errorHandlerView.visibility = View.INVISIBLE
+        category = categoryId
+        moviesListPresenter.updateMoviesListByCategory(categoryId)
     }
 
     fun onGetDataFailure(message: String?) {
-        Toast.makeText(view?.context, "$message", Toast.LENGTH_SHORT).show()
         moviesRefreshSwipeView?.isRefreshing = false
+        if (moviesList == null) {
+            errorHandlerView.visibility = View.VISIBLE
+        }
+        Toast.makeText(view?.context, "$message", Toast.LENGTH_SHORT).show()
     }
 
-    fun setNewMoviesList(await: List<MovieDto>) {
+    fun setNewMoviesList(await: List<MovieUi>) {
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
-        moviesAdapter?.updateMoviesList(await.shuffled().take(5))
+        moviesAdapter?.updateMoviesList(await)
         moviesRefreshSwipeView?.isRefreshing = false
         moviesListView.scrollToPosition(0)
     }
 
-    fun setNewCategoriesList(await: List<CategoryDto>) {
+    fun setNewCategoriesList(await: List<CategoryUi>) {
         categoriesAdapter?.updateCategoriesList(await)
+        categoriesListView.scrollToPosition(0)
     }
 
     companion object {

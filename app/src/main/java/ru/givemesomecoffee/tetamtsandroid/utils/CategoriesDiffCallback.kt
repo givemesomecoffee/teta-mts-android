@@ -1,11 +1,11 @@
 package ru.givemesomecoffee.tetamtsandroid.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 
-class CategoriesDiffCallback (
-    private val oldList: List<CategoryDto>,
-    private val newList: List<CategoryDto>
+class CategoriesDiffCallback(
+    private val oldList: List<CategoryUi>,
+    private val newList: List<CategoryUi>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.utils.CategoriesDiffCallback
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewholder.CategoryHeaderViewHolder
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewholder.CategoryViewHolder
@@ -14,7 +14,7 @@ const val TYPE_CATEGORY = 1
 const val TYPE_HEADER = 0
 
 class CategoryAdapter(
-    private var dataset: List<CategoryDto>,
+    private var dataset: List<CategoryUi>,
     private val itemClick: ((Int) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -53,7 +53,7 @@ class CategoryAdapter(
         return dataset.size + 1
     }
 
-    fun updateCategoriesList(newList: List<CategoryDto>) {
+    fun updateCategoriesList(newList: List<CategoryUi>) {
         val callback = CategoriesDiffCallback(dataset, newList)
         val diff = DiffUtil.calculateDiff(callback)
         diff.dispatchUpdatesTo(this)

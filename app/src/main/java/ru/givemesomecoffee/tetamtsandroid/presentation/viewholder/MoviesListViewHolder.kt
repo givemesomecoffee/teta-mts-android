@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
 
 class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
@@ -18,13 +18,13 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
     private val movieAge: TextView = view.findViewById(R.id.age_sign)
     private val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
 
-    fun bind(item: MovieDto) {
+    fun bind(item: MovieUi) {
         movieTitle.text = item.title
         movieDescription.text = item.description
         movieCover.load(item.imageUrl)
-        movieAge.text = item.ageRestrictionText
+        movieAge.text = item.ageRestriction
         ratingBar.apply {
-            rating = item.rateScore.toFloat()
+            rating = item.rateScore
             contentDescription = item.rateScore.toString()
         }
         itemView.setOnClickListener { itemClick?.invoke(item.id) }

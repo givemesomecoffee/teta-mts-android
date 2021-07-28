@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewholder.MoviesListViewHolder
-import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 
 class MoviesListAdapter(
-    private var dataset: List<MovieDto>,
+    private var dataset: List<MovieUi>,
     private var itemClick: ((Int) -> Unit)?
 ) : RecyclerView.Adapter<MoviesListViewHolder>() {
 
@@ -28,7 +28,7 @@ class MoviesListAdapter(
         return dataset.size
     }
 
-    fun updateMoviesList(newList: List<MovieDto>) {
+    fun updateMoviesList(newList: List<MovieUi>) {
         val callback = MoviesDiffCallback(dataset, newList)
         val diff = DiffUtil.calculateDiff(callback)
         diff.dispatchUpdatesTo(this)
