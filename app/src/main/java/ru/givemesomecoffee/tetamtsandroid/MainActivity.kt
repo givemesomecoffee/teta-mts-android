@@ -1,60 +1,64 @@
 package ru.givemesomecoffee.tetamtsandroid
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import ru.givemesomecoffee.tetamtsandroid.interfaces.MovieDetailsClickListener
-import ru.givemesomecoffee.tetamtsandroid.interfaces.MoviesListFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.interfaces.ProfileFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.presenter.NavigationPresenter
-import ru.givemesomecoffee.tetamtsandroid.view.MovieDetailsFragment
-import ru.givemesomecoffee.tetamtsandroid.view.MovieDetailsFragment.Companion.MOVIE_DETAILS_TAG
-import ru.givemesomecoffee.tetamtsandroid.view.MoviesListFragment
-import ru.givemesomecoffee.tetamtsandroid.view.MoviesListFragment.Companion.MOVIE_LIST_TAG
-import ru.givemesomecoffee.tetamtsandroid.view.ProfileFragment
-import ru.givemesomecoffee.tetamtsandroid.view.ProfileFragment.Companion.PROFILE_TAG
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MovieDetailsClickListener
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.NavigationMainActivityContract
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
+import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.NavigationPresenter
 
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     MovieDetailsClickListener, ProfileFragmentClickListener {
 
-    var moviesListFragment: MoviesListFragment? = null
-    var profileFragment: ProfileFragment? = null
-    var movieDetailsFragment: MovieDetailsFragment? = null
-    val rootViewId = R.id.main_container
-    private lateinit var navigationPresenter: NavigationPresenter
+    private val navigationClickListeners: NavigationMainActivityContract =
+        NavigationPresenter(this, supportFragmentManager)
+    private lateinit var homeNavView: View
+    private lateinit var accountNavView: View
+    private lateinit var homeIndicator: View
+    private lateinit var accountIndicator: View
+
+    private fun init() {
+        homeNavView = findViewById(R.id.button_nav_home)
+        accountNavView = findViewById(R.id.button_nav_account)
+        homeIndicator = findViewById(R.id.home_active_indicator)
+        accountIndicator = findViewById(R.id.account_active_indicator)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        init()
         if (savedInstanceState == null) {
-            moviesListFragment = MoviesListFragment()
-            moviesListFragment?.apply {
-                supportFragmentManager.beginTransaction()
-                    .add(rootViewId, this, MOVIE_LIST_TAG)
-                    .commit()
-            }
+            navigationClickListeners.init()
         } else {
-            moviesListFragment =
-                supportFragmentManager.findFragmentByTag(MOVIE_LIST_TAG) as? MoviesListFragment
-            movieDetailsFragment =
-                supportFragmentManager.findFragmentByTag(MOVIE_DETAILS_TAG) as? MovieDetailsFragment
-            profileFragment =
-                supportFragmentManager.findFragmentByTag(PROFILE_TAG) as? ProfileFragment
+            navigationClickListeners.recoverFragments()
         }
-        navigationPresenter = NavigationPresenter(this, supportFragmentManager)
-        navigationPresenter.setNavigationClickListeners()
+        homeNavView.setOnClickListener { navigationClickListeners.onHomeClicked() }
+        accountNavView.setOnClickListener { navigationClickListeners.onAccountClicked() }
     }
 
     override fun onMovieCardClicked(id: Int) {
-        navigationPresenter.onMovieCardClicked(id)
+        navigationClickListeners.onMovieCardClicked(id)
     }
 
     override fun movieDetailsOnBackPressed() {
-        navigationPresenter.moviesDetailsOnBackPressed()
+        navigationClickListeners.onBackPressed()
     }
 
     override fun profileOnBackPressed() {
-        navigationPresenter.profileOnBackPressed()
+        navigationClickListeners.onBackPressed()
+    }
+
+    fun setAccountActive() {
+        homeIndicator.visibility = View.INVISIBLE
+        accountIndicator.visibility = View.VISIBLE
+    }
+
+    fun setHomeActive() {
+        accountIndicator.visibility = View.INVISIBLE
+        homeIndicator.visibility = View.VISIBLE
     }
 
 }

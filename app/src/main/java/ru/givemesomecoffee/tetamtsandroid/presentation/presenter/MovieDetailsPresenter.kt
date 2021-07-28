@@ -1,12 +1,12 @@
-package ru.givemesomecoffee.tetamtsandroid.presenter
+package ru.givemesomecoffee.tetamtsandroid.presentation.presenter
 
 import kotlinx.coroutines.flow.flow
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
-import ru.givemesomecoffee.tetamtsandroid.model.Categories
-import ru.givemesomecoffee.tetamtsandroid.model.Movies
+import ru.givemesomecoffee.tetamtsandroid.data.model.Categories
+import ru.givemesomecoffee.tetamtsandroid.data.model.Movies
 import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
-import ru.givemesomecoffee.tetamtsandroid.view.MovieDetailsFragment
+import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
 import java.lang.Exception
 
 class MovieDetailsPresenter(val view: MovieDetailsFragment) {

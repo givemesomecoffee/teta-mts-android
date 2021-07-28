@@ -42,4 +42,6 @@ class RecyclerItemDecoration(
     private fun getDp(spacing: Int, density: Float): Int {
         return (spacing * density).roundToInt()
     }
+
+    //TODO: search for moving dimensions into values, seems like bad idea :C
 }

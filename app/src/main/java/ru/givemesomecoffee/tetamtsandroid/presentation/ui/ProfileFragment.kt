@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.view
+package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.interfaces.ProfileFragmentClickListener
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
 
 class ProfileFragment : Fragment() {
     private var profileFragmentClickListener: ProfileFragmentClickListener? = null

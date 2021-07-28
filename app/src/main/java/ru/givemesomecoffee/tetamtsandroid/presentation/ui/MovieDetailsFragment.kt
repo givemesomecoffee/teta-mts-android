@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.view
+package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
-import ru.givemesomecoffee.tetamtsandroid.interfaces.MovieDetailsClickListener
-import ru.givemesomecoffee.tetamtsandroid.presenter.MovieDetailsPresenter
-import ru.givemesomecoffee.tetamtsandroid.presenter.State
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MovieDetailsClickListener
+import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MovieDetailsPresenter
+import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.State
 import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
 
 class MovieDetailsFragment : Fragment() {

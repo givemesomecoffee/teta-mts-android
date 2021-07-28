@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.view
+package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.adapter.CategoryAdapter
-import ru.givemesomecoffee.tetamtsandroid.adapter.MoviesListAdapter
+import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.CategoryAdapter
+import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.MoviesListAdapter
 import ru.givemesomecoffee.tetamtsandroid.data.dto.CategoryDto
 import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
-import ru.givemesomecoffee.tetamtsandroid.interfaces.MoviesListFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.presenter.MoviesListPresenter
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
+import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MoviesListPresenter
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 class MoviesListFragment : Fragment() {

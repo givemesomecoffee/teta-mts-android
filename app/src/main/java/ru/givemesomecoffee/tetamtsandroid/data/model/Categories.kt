@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.model
+package ru.givemesomecoffee.tetamtsandroid.data.model
 
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDatasource
 

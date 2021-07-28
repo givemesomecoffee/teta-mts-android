@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.presenter
+package ru.givemesomecoffee.tetamtsandroid.presentation.presenter
 
 sealed class State<out T> {
     object LoadingState : State<Nothing>()
