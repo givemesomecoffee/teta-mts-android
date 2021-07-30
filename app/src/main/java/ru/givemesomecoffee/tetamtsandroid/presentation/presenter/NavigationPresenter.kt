@@ -1,12 +1,14 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.presenter
 
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.findNavController
 import ru.givemesomecoffee.tetamtsandroid.MainActivity
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.NavigationMainActivityContract
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragment
+//import ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragmentDirections
 
 class NavigationPresenter(
     private val root: MainActivity,
@@ -15,7 +17,6 @@ class NavigationPresenter(
     private var moviesListFragment: MoviesListFragment? = null
     private var profileFragment: ProfileFragment? = null
     private var movieDetailsFragment: MovieDetailsFragment? = null
-    private val rootViewId = R.id.main_container
     private var accountSelected = false
 
     private fun showPrevFragment() {
@@ -27,12 +28,6 @@ class NavigationPresenter(
     }
 
     override fun init() {
-        moviesListFragment = MoviesListFragment()
-        moviesListFragment?.apply {
-            supportFragmentManager.beginTransaction()
-                .add(rootViewId, this, MoviesListFragment.MOVIE_LIST_TAG)
-                .commit()
-        }
     }
 
     override fun onHomeClicked() {
@@ -40,28 +35,10 @@ class NavigationPresenter(
             null,
             FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
-        root.setHomeActive()
         accountSelected = false
     }
 
     override fun onAccountClicked() {
-        if (!accountSelected) {
-            profileFragment = ProfileFragment()
-            profileFragment?.apply {
-                supportFragmentManager.beginTransaction()
-                    .add(rootViewId, this, ProfileFragment.PROFILE_TAG)
-                    .hide(moviesListFragment!!)
-                    .addToBackStack(ProfileFragment.PROFILE_TAG)
-                    .commit()
-            }
-            if (movieDetailsFragment?.isVisible == true) {
-                supportFragmentManager.beginTransaction()
-                    .hide(movieDetailsFragment!!)
-                    .commit()
-            }
-            root.setAccountActive()
-            accountSelected = true
-        }
     }
 
     override fun recoverFragments() {
@@ -73,22 +50,7 @@ class NavigationPresenter(
             supportFragmentManager.findFragmentByTag(ProfileFragment.PROFILE_TAG) as? ProfileFragment
     }
 
-
     override fun onMovieCardClicked(id: Int) {
-        movieDetailsFragment = MovieDetailsFragment.newInstance(id)
-        movieDetailsFragment?.apply {
-            supportFragmentManager.beginTransaction()
-                .add(rootViewId, this, MovieDetailsFragment.MOVIE_DETAILS_TAG)
-                .hide(moviesListFragment!!)
-                .addToBackStack(MovieDetailsFragment.MOVIE_DETAILS_TAG)
-                .commit()
-        }
     }
 
-    override fun onBackPressed() {
-        root.setHomeActive()
-        accountSelected = false
-        showPrevFragment()
-        supportFragmentManager.popBackStack()
-    }
 }

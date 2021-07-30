@@ -1,9 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,27 +9,19 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.imageLoader
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
-import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MovieDetailsClickListener
-import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MovieDetailsPresenter
-import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.State
+import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MovieDetailsViewModel
 import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
 
 class MovieDetailsFragment : Fragment() {
-    private var movieDetailsClickListener: MovieDetailsClickListener? = null
-    private val movieDetailsPresenter = MovieDetailsPresenter(this)
-    private var backButton: ImageView? = null
     private var categoryTitle: TextView? = null
     private var movieTitle: TextView? = null
     private var movieDescription: TextView? = null
@@ -43,7 +33,7 @@ class MovieDetailsFragment : Fragment() {
     private var movie: MovieUi? = null
     private var refreshWrapper: SwipeRefreshLayout? = null
     private var movieId: Int? = null
-
+    private val viewModel: MovieDetailsViewModel by viewModels()
 
     private fun init() {
         movieCover = requireView().findViewById(R.id.movie_cover)
@@ -55,20 +45,7 @@ class MovieDetailsFragment : Fragment() {
         errorHandlerView = requireView().findViewById(R.id.error_handler)
         movieDetailsHolder = requireView().findViewById(R.id.movie_details_scroll)
         ratingBar = requireView().findViewById(R.id.ratingBar)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is MovieDetailsClickListener) {
-            movieDetailsClickListener = context
-        }
-        val callback =
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    movieDetailsClickListener?.movieDetailsOnBackPressed()
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
     }
 
     override fun onCreateView(
@@ -83,31 +60,9 @@ class MovieDetailsFragment : Fragment() {
         init()
         movieDetailsHolder?.visibility = View.INVISIBLE
         super.onViewCreated(view, savedInstanceState)
-        movieId = arguments?.getInt("movie_id")
-        refreshWrapper?.setOnRefreshListener { collectData(movieId) }
-        backButton?.setOnClickListener {
-            movieDetailsClickListener?.movieDetailsOnBackPressed()
-        }
-        collectData(movieId)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        movieDetailsClickListener = null
-    }
-
-    private fun collectData(id: Int?) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            movieDetailsPresenter.getMovie(id)
-                .catch { e -> onGetDataFailure(e) }
-                .collect {
-                    when (it) {
-                        is State.DataState<*> -> bindData(it.data as MovieUi)
-                        is State.LoadingState -> refreshWrapper?.isRefreshing = true
-                    }
-                }
-        }
-
+        movieId = arguments?.getInt("id")
+        refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId, this) }
+        viewModel.getMovie(movieId, this)
     }
 
     private fun setImgToView(result: Drawable) {
@@ -133,10 +88,10 @@ class MovieDetailsFragment : Fragment() {
         refreshWrapper?.isRefreshing = false
     }
 
-    private fun onGetDataFailure(message: Throwable) {
+    fun onGetDataFailure(message: Throwable) {
         refreshWrapper?.isRefreshing = false
         Toast.makeText(view?.context, "Ошибка. Обновите страницу", Toast.LENGTH_SHORT).show()
-        Log.d("test", message.stackTraceToString())
+        //Log.d("test", message.stackTraceToString())
         if (movie == null) {
             errorHandlerView.visibility = View.VISIBLE
         }
@@ -146,7 +101,7 @@ class MovieDetailsFragment : Fragment() {
         const val MOVIE_DETAILS_TAG = "MovieDetails"
         fun newInstance(id: Int): MovieDetailsFragment {
             val args = Bundle()
-            args.putInt("movie_id", id)
+            args.putInt("id", id)
             val fragment = MovieDetailsFragment()
             fragment.arguments = args
             return fragment

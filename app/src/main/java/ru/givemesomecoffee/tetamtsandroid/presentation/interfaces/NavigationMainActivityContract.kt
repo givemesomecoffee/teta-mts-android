@@ -6,7 +6,6 @@ interface NavigationMainActivityContract {
     fun onMovieCardClicked(id: Int)
     fun onHomeClicked()
     fun onAccountClicked()
-    fun onBackPressed()
 
     interface View{
         fun setHomeActive()

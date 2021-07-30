@@ -1,62 +1,76 @@
 package ru.givemesomecoffee.tetamtsandroid
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MovieDetailsClickListener
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.NavigationMainActivityContract
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.NavigationPresenter
 
-class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
-    MovieDetailsClickListener, ProfileFragmentClickListener, NavigationMainActivityContract.View {
+import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
+
+
+class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener {
 
     private val navigationController: NavigationMainActivityContract =
         NavigationPresenter(this, supportFragmentManager)
-    private lateinit var homeNavView: View
-    private lateinit var accountNavView: View
+    private lateinit var navController: NavController
     private lateinit var homeIndicator: View
     private lateinit var accountIndicator: View
 
+
     private fun init() {
-        homeNavView = findViewById(R.id.button_nav_home)
-        accountNavView = findViewById(R.id.button_nav_account)
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
         homeIndicator = findViewById(R.id.home_active_indicator)
         accountIndicator = findViewById(R.id.account_active_indicator)
+        val test: View = findViewById(R.id.button_nav_account)
+        val home: View = findViewById(R.id.button_nav_home)
+        val action1 = NavGraphDirections.actionGlobalProfileFragment()
+        test.setOnClickListener {
+            if (navController.currentDestination?.label.toString() != "ProfileFragment")
+                navController.navigate(action1)
+        }
+        val action = NavGraphDirections.actionGlobalMoviesListFragment()
+        home.setOnClickListener {
+            navController.navigate(action)
+        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            Log.d("ds123", destination.label.toString())
+            if (destination.label == "MovieDetailsFragment" || destination.label == "MoviesListFragment") {
+                setHomeActive()
+            } else {
+                setAccountActive()
+            }
+        }
+
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
-        if (savedInstanceState == null) {
-            navigationController.init()
-        } else {
-            navigationController.recoverFragments()
-        }
-        homeNavView.setOnClickListener { navigationController.onHomeClicked() }
-        accountNavView.setOnClickListener { navigationController.onAccountClicked() }
     }
 
     override fun onMovieCardClicked(id: Int) {
-        navigationController.onMovieCardClicked(id)
+        val action =
+            MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(id = id)
+        navController.navigate(action)
     }
 
-    override fun movieDetailsOnBackPressed() {
-        navigationController.onBackPressed()
-    }
-
-    override fun profileOnBackPressed() {
-        navigationController.onBackPressed()
-    }
-
-    override fun setAccountActive() {
+    private fun setAccountActive() {
         homeIndicator.visibility = View.INVISIBLE
         accountIndicator.visibility = View.VISIBLE
     }
 
-    override fun setHomeActive() {
+    private fun setHomeActive() {
         accountIndicator.visibility = View.INVISIBLE
         homeIndicator.visibility = View.VISIBLE
     }

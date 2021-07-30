@@ -2,12 +2,15 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,12 +20,14 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.MoviesListAdapter
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MoviesListPresenter
+import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MovieDetailsViewModel
+import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MoviesListViewModel
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
+
 
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
-    private var moviesListPresenter: MoviesListPresenter = MoviesListPresenter(this)
+    //private var moviesListViewModel: MoviesListViewModel = MoviesListViewModel(this)
     private lateinit var moviesListView: RecyclerView
     private lateinit var categoriesListView: RecyclerView
     private var moviesAdapter: MoviesListAdapter? = null
@@ -32,8 +37,11 @@ class MoviesListFragment : Fragment() {
     private lateinit var errorHandlerView: TextView
     private var moviesList: List<MovieUi>? = null
     private var category = 0
+    private val viewModel: MoviesListViewModel by viewModels()
 
     private fun init() {
+        Log.d("test", "i was born")
+        Log.d("test", MoviesListFragment.toString())
         moviesListView = requireView().findViewById(R.id.movies_list)
         categoriesListView = requireView().findViewById(R.id.movie_category_list)
         emptyListView = requireView().findViewById(R.id.empty_movies_list)
@@ -43,8 +51,12 @@ class MoviesListFragment : Fragment() {
         moviesListView.adapter = moviesAdapter
         categoriesAdapter = setCategoryAdapter()
         categoriesListView.adapter = categoriesAdapter
-        moviesListPresenter.updateMoviesListByCategory(category)
-        moviesListPresenter.updateCategories()
+      //  moviesListViewModel.updateMoviesListByCategory(category, this)
+        viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
+        viewModel.categories.observe(viewLifecycleOwner, Observer(::setNewCategoriesList))
+        viewModel.updateCategories(this)
+        viewModel.updateMoviesListByCategory(0, this)
+
     }
 
     override fun onAttach(context: Context) {
@@ -75,7 +87,7 @@ class MoviesListFragment : Fragment() {
         categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
         moviesRefreshSwipeView?.setOnRefreshListener {
             errorHandlerView.visibility = View.INVISIBLE
-            moviesListPresenter.updateMoviesListByCategory(category)
+            viewModel.updateMoviesListByCategory(category, this)
         }
     }
 
@@ -106,7 +118,7 @@ class MoviesListFragment : Fragment() {
     private fun onCategoryClicked(categoryId: Int) {
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
-        moviesListPresenter.updateMoviesListByCategory(categoryId)
+        viewModel.updateMoviesListByCategory(categoryId, this)
     }
 
     fun onGetDataFailure(message: String?) {

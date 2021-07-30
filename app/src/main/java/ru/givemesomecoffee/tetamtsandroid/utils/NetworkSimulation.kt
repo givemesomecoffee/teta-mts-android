@@ -7,6 +7,6 @@ fun simulateNetwork() {
     val serverAnswer = listForErrorTest.random()
     Thread.sleep(200L)
     if (serverAnswer == 500) {
-        throw Exception("Ошибка. Попробуйте обновить страницу")
+       throw Exception("Ошибка. Попробуйте обновить страницу")
     }
 }
