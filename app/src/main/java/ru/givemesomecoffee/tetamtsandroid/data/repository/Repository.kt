@@ -43,12 +43,10 @@ class Repository {
     }
 
     fun getMovie(id: Int): MovieUi {
-        simulateNetwork()
         return getAllMoviesList().first { it.id == id }
     }
 
     fun getCategoryTitle(id: Int): String {
-        simulateNetwork()
         if (categoriesDataset != null){
             return categoriesDataset!!.first{it.id == id}.title
         }
