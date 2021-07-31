@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener {
     private lateinit var homeIndicator: View
     private lateinit var accountIndicator: View
 
-
     private fun init() {
-
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -49,9 +47,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener {
                 setAccountActive()
             }
         }
-
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -88,6 +88,7 @@ class MoviesListFragment : Fragment() {
         moviesRefreshSwipeView?.setOnRefreshListener {
             errorHandlerView.visibility = View.INVISIBLE
             viewModel.updateMoviesListByCategory(category, this)
+            moviesRefreshSwipeView?.isRefreshing = false
         }
     }
 
