@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.CategoryAdapter
-import ru.givemesomecoffee.tetamtsandroid.presentation.adapter.MoviesListAdapter
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryAdapter
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.MoviesListAdapter
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MovieDetailsViewModel
-import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MoviesListViewModel
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MoviesListViewModel
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 

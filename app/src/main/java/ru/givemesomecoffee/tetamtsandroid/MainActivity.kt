@@ -8,16 +8,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.NavigationMainActivityContract
-import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.NavigationPresenter
+import ru.givemesomecoffee.tetamtsandroid.presentation.navigation.NavigationPresenter
 
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
 
 
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener {
 
-    private val navigationController: NavigationMainActivityContract =
-        NavigationPresenter(this, supportFragmentManager)
     private lateinit var navController: NavController
     private lateinit var homeIndicator: View
     private lateinit var accountIndicator: View

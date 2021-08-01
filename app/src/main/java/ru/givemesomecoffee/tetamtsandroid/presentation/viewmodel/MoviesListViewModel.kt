@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.presentation.presenter
+package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData

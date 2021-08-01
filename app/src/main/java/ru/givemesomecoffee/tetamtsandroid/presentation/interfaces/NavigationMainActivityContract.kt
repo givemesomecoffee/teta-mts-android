@@ -1,15 +1,9 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.interfaces
 
 interface NavigationMainActivityContract {
-    fun init()
-    fun recoverFragments()
-    fun onMovieCardClicked(id: Int)
-    fun onHomeClicked()
-    fun onAccountClicked()
+    fun openMovieCard(id: Int)
+    fun backToHomeTab()
 
-    interface View{
-        fun setHomeActive()
-        fun setAccountActive()
-    }
+    interface View
 }
 

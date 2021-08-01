@@ -1,11 +1,11 @@
-package ru.givemesomecoffee.tetamtsandroid.presentation.adapter
+package ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.presentation.viewholder.MoviesListViewHolder
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.MoviesListViewHolder
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 

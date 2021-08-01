@@ -22,34 +22,37 @@
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nav_host_fragment"
+        app:menu="@menu/nav"
+    android:elevation="0dp"
         app:itemHorizontalTranslationEnabled="false"
         app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nav_host_fragment"
-        app:menu="@menu/nav" />
+     />
 
+<View
+    android:layout_height="2dp"
+    android:layout_width="0dp"
+    android:id="@+id/nav_profile_indicator"
+    app:layout_constraintStart_toEndOf="@id/nav_home_indicator"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+android:elevation="8dp"
+android:visibility="invisible"
+    android:background="@color/black"
+    />
     <View
-        android:id="@+id/nav_profile_indicator"
-        android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@color/black"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/nav_home_indicator" />
-
-    <View
+        android:layout_width="0dp"
         android:id="@+id/nav_home_indicator"
-        android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:background="@color/black"
-
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/nav_profile_indicator"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/black"
 
-        />
+     />
 </androidx.constraintlayout.widget.ConstraintLayout>

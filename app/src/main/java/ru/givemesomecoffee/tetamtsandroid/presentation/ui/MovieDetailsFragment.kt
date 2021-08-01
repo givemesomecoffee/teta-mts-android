@@ -18,7 +18,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
-import ru.givemesomecoffee.tetamtsandroid.presentation.presenter.MovieDetailsViewModel
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModel
 import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
 
 class MovieDetailsFragment : Fragment() {
