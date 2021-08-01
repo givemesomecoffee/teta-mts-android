@@ -18,23 +18,29 @@ class RecyclerItemDecoration(
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val childCount = state.itemCount
-        val position = parent.getChildAdapterPosition(view)
         val density = parent.context.resources.displayMetrics.density
+        val position = parent.getChildAdapterPosition(view)
+        val childCount = state.itemCount
 
-        outRect.right = getDp(spacingRight, density)
-
-        if (position == childCount - 1)
-            outRect.right = getDp(spacingEnd, density)
-
-        if (isMovieList && position % 2 != 0) {
-            outRect.left = (parent.measuredWidth / 2) - getDp(150, density)
-            outRect.right = 0
+        if (isMovieList) {
+            val rect = (parent.measuredWidth / 2) - getDp(150, density)
+            if (position % 2 != 0) {
+                outRect.left = rect / 3
+                outRect.right = rect - outRect.left
+            } else {
+                outRect.right = rect / 3
+                outRect.left = rect - outRect.right
+            }
+            outRect.bottom = getDp(spacingBottom, density)
+        } else {
+            outRect.right = getDp(spacingRight, density)
+            if (position == childCount - 1)
+                outRect.right = getDp(spacingEnd, density)
         }
-        outRect.bottom = getDp(spacingBottom, density)
     }
 
     private fun getDp(spacing: Int, density: Float): Int {
         return (spacing * density).roundToInt()
     }
+
 }

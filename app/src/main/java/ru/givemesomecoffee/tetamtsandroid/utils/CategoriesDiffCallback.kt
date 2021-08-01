@@ -1,10 +1,11 @@
 package ru.givemesomecoffee.tetamtsandroid.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 
-class MoviesDiffCallback(private val oldList: List<MovieUi>,
-                         private val newList: List<MovieUi>
+class CategoriesDiffCallback(
+    private val oldList: List<CategoryUi>,
+    private val newList: List<CategoryUi>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

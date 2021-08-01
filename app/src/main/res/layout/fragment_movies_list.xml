@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/grey">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/offset_20" />
-
     <ImageView
         android:id="@+id/icon_search"
         android:layout_width="wrap_content"
@@ -31,35 +24,58 @@
         android:layout_marginTop="@dimen/offset_22"
         android:text="@string/movie_list_title"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/icon_search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movie_category_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="@dimen/offset_12"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/movies_list"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toBottomOf="@id/page_title"
         tools:listitem="@layout/category_item" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/movies_list"
-        android:layout_width="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/offset_20"
-        android:layout_marginTop="@dimen/offset_15"
-        android:layout_marginEnd="@dimen/offset_20"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/movie_category_list"
-        tools:listitem="@layout/movie_item" />
+        app:layout_constraintTop_toBottomOf="@id/movie_category_list">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/movies_list"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/offset_15"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_category_list"
+            tools:listitem="@layout/movie_item" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/error_handler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset_20"
+        android:layout_marginEnd="@dimen/offset_20"
+        android:text="@string/errorHolderText"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/swipe_container"
+        app:layout_constraintEnd_toEndOf="@id/swipe_container"
+        app:layout_constraintStart_toStartOf="@id/swipe_container"
+        app:layout_constraintTop_toTopOf="@id/swipe_container" />
+
 
     <TextView
         android:id="@+id/empty_movies_list"
@@ -74,4 +90,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

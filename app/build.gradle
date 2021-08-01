@@ -45,4 +45,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "io.coil-kt:coil-base:$coil_version"
     implementation "io.coil-kt:coil:$coil_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
 }
