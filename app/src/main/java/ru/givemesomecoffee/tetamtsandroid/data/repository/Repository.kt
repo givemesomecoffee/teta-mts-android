@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
+import android.util.Log
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
@@ -11,6 +12,7 @@ import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
 class Repository {
     private var categoriesDataset: List<CategoryUi>? = null
     private var moviesDataset: List<MovieUi>? = null
+    private var movieUi: MovieUi? = null
 
     private fun setNewCategoriesDataset() {
         simulateNetwork()
@@ -18,40 +20,49 @@ class Repository {
             CategoriesMapper().toCategoryUi(MovieCategoriesDataSourceImpl().getCategories())
     }
 
-    private fun setNewMoviesDataset() {
+    private fun setNewMoviesDataset(id: Int = 0) {
         simulateNetwork()
-        moviesDataset = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies())
-    }
-
-    private fun getAllMoviesList(): List<MovieUi> {
-        setNewMoviesDataset()
-        return moviesDataset!!
+        var temp = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies())
+        temp = if (id == 0) {
+            temp.shuffled().take(5)
+        } else {
+            temp.filter { it.categoryId == id }
+        }
+        moviesDataset = temp
     }
 
     fun getCategoriesList(): List<CategoryUi> {
-        setNewCategoriesDataset()
+        if (categoriesDataset == null) {
+            setNewCategoriesDataset()
+        }
         return categoriesDataset!!
     }
 
-    fun getMoviesList(id: Int): List<MovieUi> {
-        setNewMoviesDataset()
-        return if (id == 0) {
-            moviesDataset!!.shuffled().take(5)
-        } else {
-            moviesDataset!!.filter { it.categoryId == id }
-        }
+    fun getMoviesList(id: Int = 0, restore: Boolean = false): List<MovieUi> {
+     if ( !restore || moviesDataset == null){
+         Log.d("test", moviesDataset.toString())
+         setNewMoviesDataset(id)
+     }
+        return moviesDataset!!
     }
 
-    fun getMovie(id: Int): MovieUi {
-        return getAllMoviesList().first { it.id == id }
+    fun getMovie(id: Int, restore: Boolean = false): MovieUi {
+        if (!restore || movieUi == null) {
+            setMovie(id)
+        }
+        return movieUi!!
+    }
+
+    private fun setMovie(id: Int) {
+        simulateNetwork()
+        movieUi = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies().first{it.id == id})
     }
 
     fun getCategoryTitle(id: Int): String {
-        if (categoriesDataset != null){
-            return categoriesDataset!!.first{it.id == id}.title
+        if (categoriesDataset != null) {
+            return categoriesDataset!!.first { it.id == id }.title
         }
         return getCategoriesList().first { it.id == id }.title
     }
-
 
 }

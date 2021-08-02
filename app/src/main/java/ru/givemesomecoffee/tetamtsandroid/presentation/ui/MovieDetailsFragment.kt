@@ -62,7 +62,7 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         movieId = arguments?.getInt("id")
         refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId, this) }
-        viewModel.getMovie(movieId, this)
+        viewModel.getMovie(movieId, this, true)
     }
 
     private fun setImgToView(result: Drawable) {

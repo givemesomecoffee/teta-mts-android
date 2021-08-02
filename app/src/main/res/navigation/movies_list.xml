@@ -9,8 +9,7 @@
         android:label="MoviesListFragment" >
         <action
             android:id="@+id/action_moviesListFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 
     <fragment

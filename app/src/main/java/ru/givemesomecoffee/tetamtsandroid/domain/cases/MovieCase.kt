@@ -1,13 +1,14 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.cases
 
-import android.util.Log
 import ru.givemesomecoffee.tetamtsandroid.data.repository.Repository
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
 class MovieCase {
-    fun getMovieById(id: Int): MovieUi {
-        val repository = Repository()
-        val movie = repository.getMovie(id)
+    private val repository = Repository()
+
+    fun getMovieById(id: Int, restore: Boolean = false): MovieUi {
+
+        val movie = repository.getMovie(id, restore)
         movie.category = repository.getCategoryTitle(movie.categoryId)
         return movie
     }

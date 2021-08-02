@@ -19,7 +19,7 @@ class ProfileFragment : Fragment() {
         if (context is ProfileFragmentClickListener) {
             profileFragmentClickListener = context
         }
-      val callback =
+    val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     profileFragmentClickListener?.profileOnBackPressed()
@@ -34,10 +34,6 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDetach() {

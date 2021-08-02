@@ -7,7 +7,11 @@ class MoviesMapper {
 
     fun toMovieUi(list: List<MovieDto>): List<MovieUi> {
         return list.map {
-            MovieUi(it)
+            toMovieUi(it)
         }
+    }
+
+    fun toMovieUi(movie: MovieDto): MovieUi{
+        return MovieUi(movie)
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -54,7 +55,7 @@ class MoviesListFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
         viewModel.categories.observe(viewLifecycleOwner, Observer(::setNewCategoriesList))
         viewModel.updateCategories(this)
-        viewModel.updateMoviesListByCategory(0, this)
+        viewModel.updateMoviesListByCategory(0, this, true)
 
     }
 
@@ -105,7 +106,7 @@ class MoviesListFragment : Fragment() {
         return MoviesListAdapter(
             listOf(),
             itemClick = { movieId: Int ->
-                moviesListFragmentClickListener?.onMovieCardClicked(movieId)
+               moviesListFragmentClickListener?.onMovieCardClicked(movieId)
             })
     }
 

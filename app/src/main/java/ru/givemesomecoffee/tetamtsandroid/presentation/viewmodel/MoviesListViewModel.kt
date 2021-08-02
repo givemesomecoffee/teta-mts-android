@@ -33,9 +33,9 @@ class MoviesListViewModel: ViewModel() {
         }
     }
 
-    fun updateMoviesListByCategory(categoryId: Int, view: MoviesListFragment) {
+    fun updateMoviesListByCategory(categoryId: Int, view: MoviesListFragment, restore: Boolean = false) {
         view.viewLifecycleOwner.lifecycleScope.launch(moviesHandler) {
-            withContext(Dispatchers.IO) { _data.postValue(domain.getMoviesList(categoryId)) }
+            withContext(Dispatchers.IO) { _data.postValue(domain.getMoviesList(categoryId, restore)) }
         }
     }
 

@@ -15,15 +15,16 @@ class MovieDetailsViewModel : ViewModel() {
     private val _data = MutableLiveData<MovieUi>()
 
 
-    fun getMovie(id: Int?, view: MovieDetailsFragment) {
+    fun getMovie(id: Int?, view: MovieDetailsFragment, restore: Boolean = false) {
         val handler = CoroutineExceptionHandler { _, throwable ->
             view.onGetDataFailure(throwable)
         }
-        viewModelScope.launch(handler) {
-            withContext(Dispatchers.IO) { _data.postValue(domain.getMovieById(id!!)) }
+        viewModelScope.launch() {
+            withContext(Dispatchers.IO) { _data.postValue(domain.getMovieById(id!!, restore)) }
         }
     }
-    interface ErrorHandler{
+
+    interface ErrorHandler {
         fun onGetDataFailure(e: Throwable)
     }
 
