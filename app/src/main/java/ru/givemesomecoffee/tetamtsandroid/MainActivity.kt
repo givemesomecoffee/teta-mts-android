@@ -3,21 +3,15 @@ package ru.givemesomecoffee.tetamtsandroid
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.presentation.navigation.NavigationPresenter
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
 
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
@@ -54,7 +48,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     }
 
     override fun profileOnBackPressed() {
-        if (navController.backQueue.size > 1) {
+/*        if (navController.backQueue.size > 1) {
             navController.popBackStack()
         }
         val builder = NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true)
@@ -64,7 +58,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             saveState = false
         )
         val options = builder.build()
-        navController.navigate(navController.graph.findStartDestination().id, null, options)
+        navController.navigate(navController.graph.findStartDestination().id, null, options)*/
     }
 
 
