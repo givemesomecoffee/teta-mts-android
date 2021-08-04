@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.navigation
 
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
+
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -14,8 +14,16 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDire
 class NavigationPresenter(
     mainActivity: MainActivity
 ) : NavigationMainActivityContract{
-    var navController: NavController
+    lateinit var navController: NavController
+    override fun openMovieCard(id: Int) {
+        TODO("Not yet implemented")
+    }
 
+    override fun backToHomeTab() {
+        TODO("Not yet implemented")
+    }
+
+/*
 
     init{
         val navHostFragment = mainActivity.supportFragmentManager
@@ -47,6 +55,7 @@ class NavigationPresenter(
         navController.navigate(navController.graph.findStartDestination().id, null, options)
     }
 
+*/
 
 
 }

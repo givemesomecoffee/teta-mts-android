@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.givemesomecoffee.tetamtsandroid.presentation.extensions.TestNavigator
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
@@ -28,6 +29,11 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        Log.d("test", navController.navigatorProvider.toString())
+        navController.currentBackStackEntry
+        navController.navigatorProvider.addNavigator(TestNavigator(this, fragmentManager = navHostFragment.childFragmentManager, R.id.nav_host_fragment, navController.currentDestination!!))
+        navController.setGraph(R.navigation.nav_graph_multi)
+        Log.d("test", navController.currentBackStackEntry.toString())
         bottomNavigationBar = findViewById(R.id.nav)
         setupMenuItemCustomView()
         bottomNavigationBar.itemIconTintList = null
@@ -59,6 +65,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         )
         val options = builder.build()
         navController.navigate(navController.graph.findStartDestination().id, null, options)*/
+        navController.navigatorProvider.getNavigator<TestNavigator>("fragment").popBackStack()
     }
 
 

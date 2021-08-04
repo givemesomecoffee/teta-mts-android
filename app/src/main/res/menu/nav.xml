@@ -4,11 +4,13 @@
     <item
         android:id="@+id/movies_list"
         android:title="domoi"
+
         />
 
     <item
         android:enabled="true"
         android:id="@+id/profile"
+
         android:title="profile"
 
        />
