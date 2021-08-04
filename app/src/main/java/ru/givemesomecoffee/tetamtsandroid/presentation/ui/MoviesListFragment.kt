@@ -114,6 +114,7 @@ class MoviesListFragment : Fragment() {
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
         viewModel.updateMoviesListByCategory(categoryId)
+        moviesListView.scrollToPosition(0)
     }
 
     private fun onGetDataFailure(message: String?) {
