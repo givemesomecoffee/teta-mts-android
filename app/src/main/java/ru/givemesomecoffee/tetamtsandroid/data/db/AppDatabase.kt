@@ -26,9 +26,6 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private const val DATABASE_NAME = "Films.db"
 
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
         val instance: AppDatabase by lazy {
             Room.databaseBuilder(
                 MoviesApplication.appContext,
@@ -38,8 +35,6 @@ abstract class AppDatabase : RoomDatabase() {
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build()
-
-
         }
 
         private val callback = object : RoomDatabase.Callback() {
@@ -48,14 +43,9 @@ abstract class AppDatabase : RoomDatabase() {
                 instance.MovieDao().insertAll(MoviesDataSourceImpl().getMovies())
                 instance.CategoryDao().insertAll(MovieCategoriesDataSourceImpl().getCategories())
             }
-
-
         }
 
-
     }
-
-
 }
 
 
