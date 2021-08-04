@@ -2,7 +2,6 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,13 +19,12 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.MoviesList
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MoviesListViewModel
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
-
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
-    //private var moviesListViewModel: MoviesListViewModel = MoviesListViewModel(this)
     private lateinit var moviesListView: RecyclerView
     private lateinit var categoriesListView: RecyclerView
     private var moviesAdapter: MoviesListAdapter? = null
@@ -40,8 +37,6 @@ class MoviesListFragment : Fragment() {
     private val viewModel: MoviesListViewModel by viewModels()
 
     private fun init() {
-        Log.d("test", "i was born")
-        Log.d("test", MoviesListFragment.toString())
         moviesListView = requireView().findViewById(R.id.movies_list)
         categoriesListView = requireView().findViewById(R.id.movie_category_list)
         emptyListView = requireView().findViewById(R.id.empty_movies_list)
@@ -51,12 +46,11 @@ class MoviesListFragment : Fragment() {
         moviesListView.adapter = moviesAdapter
         categoriesAdapter = setCategoryAdapter()
         categoriesListView.adapter = categoriesAdapter
-      //  moviesListViewModel.updateMoviesListByCategory(category, this)
         viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
         viewModel.categories.observe(viewLifecycleOwner, Observer(::setNewCategoriesList))
-        viewModel.updateCategories(this)
-        viewModel.updateMoviesListByCategory(0, this, true)
-
+        viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
+        viewModel.updateCategories()
+        viewModel.updateMoviesListByCategory(category, true)
     }
 
     override fun onAttach(context: Context) {
@@ -76,6 +70,7 @@ class MoviesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         if (savedInstanceState != null) {
             category = savedInstanceState.getInt(CATEGORY, 0)
         }
@@ -87,8 +82,7 @@ class MoviesListFragment : Fragment() {
         categoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
         moviesRefreshSwipeView?.setOnRefreshListener {
             errorHandlerView.visibility = View.INVISIBLE
-            viewModel.updateMoviesListByCategory(category, this)
-            moviesRefreshSwipeView?.isRefreshing = false
+            viewModel.updateMoviesListByCategory(category)
         }
     }
 
@@ -106,7 +100,7 @@ class MoviesListFragment : Fragment() {
         return MoviesListAdapter(
             listOf(),
             itemClick = { movieId: Int ->
-               moviesListFragmentClickListener?.onMovieCardClicked(movieId)
+                moviesListFragmentClickListener?.onMovieCardClicked(movieId)
             })
     }
 
@@ -119,10 +113,10 @@ class MoviesListFragment : Fragment() {
     private fun onCategoryClicked(categoryId: Int) {
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
-        viewModel.updateMoviesListByCategory(categoryId, this)
+        viewModel.updateMoviesListByCategory(categoryId)
     }
 
-    fun onGetDataFailure(message: String?) {
+    private fun onGetDataFailure(message: String?) {
         moviesRefreshSwipeView?.isRefreshing = false
         if (moviesList == null) {
             errorHandlerView.visibility = View.VISIBLE
@@ -130,21 +124,27 @@ class MoviesListFragment : Fragment() {
         Toast.makeText(view?.context, "$message", Toast.LENGTH_SHORT).show()
     }
 
-    fun setNewMoviesList(await: List<MovieUi>) {
+    private fun setNewMoviesList(await: List<MovieUi>) {
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)
-        moviesRefreshSwipeView?.isRefreshing = false
         moviesListView.scrollToPosition(0)
     }
 
-    fun setNewCategoriesList(await: List<CategoryUi>) {
+    private fun setNewCategoriesList(await: List<CategoryUi>) {
         categoriesAdapter?.updateCategoriesList(await)
         categoriesListView.scrollToPosition(0)
     }
 
+    private fun onLoading(loadingState: LoadingState?) {
+        when (loadingState?.status) {
+            LoadingState.Status.FAILED -> onGetDataFailure(loadingState.msg)
+            LoadingState.Status.RUNNING -> moviesRefreshSwipeView?.isRefreshing = true
+            LoadingState.Status.SUCCESS -> moviesRefreshSwipeView?.isRefreshing = false
+        }
+    }
+
     companion object {
-        const val MOVIE_LIST_TAG = "MovieList"
         const val CATEGORY = "category_key"
     }
 }

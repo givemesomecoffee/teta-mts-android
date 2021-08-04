@@ -1,35 +1,25 @@
 package ru.givemesomecoffee.tetamtsandroid
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
-import ru.givemesomecoffee.tetamtsandroid.presentation.navigation.NavigationPresenter
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
 
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     ProfileFragmentClickListener {
     private lateinit var bottomNavigationBar: BottomNavigationView
-   // private var navigation: NavigationPresenter = NavigationPresenter(this)
     private lateinit var navController: NavController
-    //TODO: Clean ALL the mess
-    //TODO: check style (requireView and view?
-    //TODO: rename profile to account or vice versa
-    //TODO: change logic of repository (should use saved state if there is, should make new variables only on init and refresh)
-    //TODO: check number of pixels refreshed in bottom nav view :C
+
     private fun init() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -42,13 +32,11 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.multistack)
+        setContentView(R.layout.activity_main)
         init()
     }
 
     override fun onMovieCardClicked(id: Int) {
-      Log.d("movieCard", navController.currentDestination.toString())
-        Log.d("tag", navController.toString())
         val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(id)
         navController.navigate(action)
     }
@@ -67,7 +55,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         navController.navigate(navController.graph.findStartDestination().id, null, options)
     }
 
-
     private fun setupMenuItemCustomView() {
         val firstItemViewLayout = LayoutInflater.from(this)
             .inflate(
@@ -82,7 +69,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         val bottomNavigationMenuView: BottomNavigationMenuView =
             bottomNavigationBar.getChildAt(0) as BottomNavigationMenuView
         val firstItemView = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
-        Log.d("test", firstItemView.isSelected.toString())
         firstItemView.addView(firstItemViewLayout)
         val lastItemView = bottomNavigationMenuView.getChildAt(1) as BottomNavigationItemView
         lastItemView.addView(lastItemViewLayout)

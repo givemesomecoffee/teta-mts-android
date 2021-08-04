@@ -3,7 +3,7 @@
     <!-- accessibility labels -->
     <string name="navigation_title">navigation</string>
     <string name="home_title">Home</string>
-    <string name="account_title">Account</string>
+    <string name="profile_title">Account</string>
     <string name="rating_img_error">rating img corrupted</string>
     <string name="movie_rating">rating 4</string>
     <string name="ic_search_description">search</string>
@@ -26,5 +26,6 @@
     <string name="empty_movies_list">Сейчас здесь нет фильмов, но мы уже отправили режиссёра снимать фильм для вас</string>
     <string name="not_done">UNDER CONSTRUCTION</string>
     <string name="errorHolderText">Ошибка при загрузке. Потяните вниз, чтобы обновить страницу</string>
+    <string name="movies_point_title">Movies</string>
 
 </resources>

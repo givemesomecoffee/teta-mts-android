@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import ru.givemesomecoffee.tetamtsandroid.R
@@ -19,7 +18,7 @@ class ProfileFragment : Fragment() {
         if (context is ProfileFragmentClickListener) {
             profileFragmentClickListener = context
         }
-    val callback =
+        val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     profileFragmentClickListener?.profileOnBackPressed()
@@ -28,6 +27,7 @@ class ProfileFragment : Fragment() {
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,10 +39,6 @@ class ProfileFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         profileFragmentClickListener = null
-    }
-
-    companion object {
-        const val PROFILE_TAG = "Profile"
     }
 
 }

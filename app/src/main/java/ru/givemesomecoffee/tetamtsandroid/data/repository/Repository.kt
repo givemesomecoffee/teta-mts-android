@@ -1,6 +1,5 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import android.util.Log
 import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
@@ -31,6 +30,12 @@ class Repository {
         moviesDataset = temp
     }
 
+    private fun setMovie(id: Int) {
+        simulateNetwork()
+        movieUi = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies().first{it.id == id})
+    }
+
+
     fun getCategoriesList(): List<CategoryUi> {
         if (categoriesDataset == null) {
             setNewCategoriesDataset()
@@ -40,7 +45,6 @@ class Repository {
 
     fun getMoviesList(id: Int = 0, restore: Boolean = false): List<MovieUi> {
      if ( !restore || moviesDataset == null){
-         Log.d("test", moviesDataset.toString())
          setNewMoviesDataset(id)
      }
         return moviesDataset!!
@@ -51,11 +55,6 @@ class Repository {
             setMovie(id)
         }
         return movieUi!!
-    }
-
-    private fun setMovie(id: Int) {
-        simulateNetwork()
-        movieUi = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies().first{it.id == id})
     }
 
     fun getCategoryTitle(id: Int): String {

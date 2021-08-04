@@ -18,6 +18,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModel
 import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
 
@@ -37,15 +38,16 @@ class MovieDetailsFragment : Fragment() {
 
     private fun init() {
         movieCover = requireView().findViewById(R.id.movie_cover)
-        categoryTitle = view?.findViewById(R.id.movie_category)
-        movieTitle = view?.findViewById(R.id.movie_title)
-        movieDescription = view?.findViewById(R.id.movie_description)
-        ageSign = view?.findViewById(R.id.age_sign)
-        refreshWrapper = view?.findViewById(R.id.swipe_container)
+        categoryTitle = requireView().findViewById(R.id.movie_category)
+        movieTitle = requireView().findViewById(R.id.movie_title)
+        movieDescription = requireView().findViewById(R.id.movie_description)
+        ageSign = requireView().findViewById(R.id.age_sign)
+        refreshWrapper = requireView().findViewById(R.id.swipe_container)
         errorHandlerView = requireView().findViewById(R.id.error_handler)
         movieDetailsHolder = requireView().findViewById(R.id.movie_details_scroll)
         ratingBar = requireView().findViewById(R.id.ratingBar)
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
+        viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
     }
 
     override fun onCreateView(
@@ -57,12 +59,12 @@ class MovieDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
         movieDetailsHolder?.visibility = View.INVISIBLE
-        super.onViewCreated(view, savedInstanceState)
         movieId = arguments?.getInt("id")
-        refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId, this) }
-        viewModel.getMovie(movieId, this, true)
+        refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId) }
+        viewModel.getMovie(movieId, true)
     }
 
     private fun setImgToView(result: Drawable) {
@@ -85,28 +87,22 @@ class MovieDetailsFragment : Fragment() {
             .target(onSuccess = { result -> setImgToView(result) })
             .build()
         requireView().context.imageLoader.enqueue(movieCoverImg)
-        refreshWrapper?.isRefreshing = false
     }
 
-    fun onGetDataFailure(message: Throwable) {
+    private fun onGetDataFailure(message: String?) {
         refreshWrapper?.isRefreshing = false
-        Toast.makeText(view?.context, "Ошибка. Обновите страницу", Toast.LENGTH_SHORT).show()
-        //Log.d("test", message.stackTraceToString())
+        Toast.makeText(view?.context, message, Toast.LENGTH_SHORT).show()
         if (movie == null) {
             errorHandlerView.visibility = View.VISIBLE
         }
     }
 
-    companion object {
-        const val MOVIE_DETAILS_TAG = "MovieDetails"
-        fun newInstance(id: Int): MovieDetailsFragment {
-            val args = Bundle()
-            args.putInt("id", id)
-            val fragment = MovieDetailsFragment()
-            fragment.arguments = args
-            return fragment
+    private fun onLoading(loadingState: LoadingState?) {
+        when (loadingState?.status) {
+            LoadingState.Status.FAILED -> onGetDataFailure(loadingState.msg)
+            LoadingState.Status.RUNNING -> refreshWrapper?.isRefreshing = true
+            LoadingState.Status.SUCCESS -> refreshWrapper?.isRefreshing = false
         }
     }
 }
-
 
