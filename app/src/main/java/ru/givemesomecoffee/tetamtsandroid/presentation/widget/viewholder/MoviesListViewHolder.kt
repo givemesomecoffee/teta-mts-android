@@ -10,7 +10,7 @@ import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
 
-class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
+class MoviesListViewHolder(view: View, private val itemClick: ((Long) -> Unit)?) :
     RecyclerView.ViewHolder(view) {
     private val movieTitle: TextView = view.findViewById(R.id.movie_title)
     private val movieDescription: TextView = view.findViewById(R.id.movie_description)
@@ -27,6 +27,6 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
             rating = item.rateScore
             contentDescription = item.rateScore.toString()
         }
-        itemView.setOnClickListener { itemClick?.invoke(item.id) }
+        itemView.setOnClickListener { itemClick?.invoke(item.id!!) }
     }
 }

@@ -6,10 +6,7 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 class MovieCase {
     private val repository = Repository()
 
-    fun getMovieById(id: Int, restore: Boolean = false): MovieUi {
-
-        val movie = repository.getMovie(id, restore)
-        movie.category = repository.getCategoryTitle(movie.categoryId)
-        return movie
+    fun getMovieById(id: Long, restore: Boolean = false): MovieUi {
+        return repository.getMovie(id, restore)
     }
 }

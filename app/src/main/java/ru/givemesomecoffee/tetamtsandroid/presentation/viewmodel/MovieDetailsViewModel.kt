@@ -16,7 +16,7 @@ class MovieDetailsViewModel : ViewModel() {
     val loadingState: LiveData<LoadingState> get() = _loadingState
     private val _loadingState = MutableLiveData<LoadingState>()
 
-    fun getMovie(id: Int?, restore: Boolean = false) {
+    fun getMovie(id: Long?, restore: Boolean = false) {
         viewModelScope.launch {
             try {
                 _loadingState.value = LOADING

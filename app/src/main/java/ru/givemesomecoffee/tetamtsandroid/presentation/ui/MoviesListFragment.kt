@@ -98,10 +98,10 @@ class MoviesListFragment : Fragment() {
 
     private fun setMoviesListAdapter(): MoviesListAdapter {
         return MoviesListAdapter(
-            listOf(),
-            itemClick = { movieId: Int ->
-                moviesListFragmentClickListener?.onMovieCardClicked(movieId)
-            })
+            listOf()
+        ) { movieId: Long ->
+            moviesListFragmentClickListener?.onMovieCardClicked(movieId)
+        }
     }
 
     private fun setCategoryAdapter(): CategoryAdapter {

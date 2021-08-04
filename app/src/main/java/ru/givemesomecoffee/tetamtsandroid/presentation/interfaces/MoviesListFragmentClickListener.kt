@@ -1,5 +1,5 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.interfaces
 
 interface MoviesListFragmentClickListener {
-        fun onMovieCardClicked(id: Int)
+        fun onMovieCardClicked(id: Long)
 }

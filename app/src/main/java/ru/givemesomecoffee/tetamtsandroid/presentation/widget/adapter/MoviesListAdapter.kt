@@ -11,7 +11,7 @@ import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 
 class MoviesListAdapter(
     private var dataset: List<MovieUi>,
-    private var itemClick: ((Int) -> Unit)?
+    private var itemClick: ((Long) -> Unit)?
 ) : RecyclerView.Adapter<MoviesListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {

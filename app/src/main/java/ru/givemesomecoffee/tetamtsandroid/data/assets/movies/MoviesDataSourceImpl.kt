@@ -1,11 +1,11 @@
-package ru.givemesomecoffee.tetamtsandroid.data.movies
+package ru.givemesomecoffee.tetamtsandroid.data.assets.movies
 
-import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
 
 
 class MoviesDataSourceImpl : MoviesDataSource {
     override fun getMovies() = listOf(
-        MovieDto(
+        Movie(
             id = 0,
             title = "Гнев человеческий",
             description = "Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя...",
@@ -14,7 +14,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5JP9X5tCZ6qz7DYMabLmrQirlWh.jpg",
             categoryId = 1
         ),
-        MovieDto(
+        Movie(
             id = 1,
             title = "Мортал Комбат",
             description = "Боец смешанных единоборств Коул Янг не раз соглашался проиграть за деньги. Он не знает о своем наследии...",
@@ -23,7 +23,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/pMIixvHwsD5RZxbvgsDSNkpKy0R.jpg",
             categoryId = 1
         ),
-        MovieDto(
+        Movie(
             id = 2,
             title = "Упс... Приплыли!",
             description = "От Великого потопа зверей спас ковчег. Но спустя полгода скитаний они готовы сбежать с него куда угодно...",
@@ -32,7 +32,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/546RNYy9Wi5wgboQ7EtD6i0DY5D.jpg",
             categoryId = 6
         ),
-        MovieDto(
+        Movie(
             id = 3,
             title = "The Box",
             description = "Уличный музыкант знакомится с музыкальным продюсером, и они вдвоём отправляются в путешествие...",
@@ -41,7 +41,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/fq3DSw74fAodrbLiSv0BW1Ya4Ae.jpg",
             categoryId = 3
         ),
-        MovieDto(
+        Movie(
             id = 4,
             title = "Сага о Дэнни Эрнандесе",
             description = "Tekashi69 или Сикснайн — знаменитый бруклинский рэпер с радужными волосами — прогремел...",
@@ -50,7 +50,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5xXGQLVtTAExHY92DHD9ewGmKxf.jpg",
             categoryId = 4
         ),
-        MovieDto(
+        Movie(
             id = 5,
             title = "Пчелка Майя",
             description = "Когда упрямая пчелка Майя и ее лучший друг Вилли спасают принцессу-муравьишку, начинается сказочное...",
@@ -59,7 +59,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xltjMeLlxywym14NEizl0metO10.jpg",
             categoryId = 6
         ),
-        MovieDto(
+        Movie(
             id = 6,
             title = "Круэлла",
             description = "Невероятно одаренная мошенница по имени Эстелла решает сделать себе имя в мире моды.",
@@ -68,7 +68,7 @@ class MoviesDataSourceImpl : MoviesDataSource {
             imageUrl = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/hUfyYGP9Xf6cHF9y44JXJV3NxZM.jpg",
             categoryId = 7
         ),
-        MovieDto(
+        Movie(
             id = 7,
             title = "Чёрная вдова",
             description = "Чёрной Вдове придется вспомнить о том, что было в её жизни задолго до присоединения к команде Мстителей",

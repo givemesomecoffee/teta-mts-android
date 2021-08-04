@@ -33,7 +33,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var errorHandlerView: TextView
     private var movie: MovieUi? = null
     private var refreshWrapper: SwipeRefreshLayout? = null
-    private var movieId: Int? = null
+    private var movieId: Long? = null
     private val viewModel: MovieDetailsViewModel by viewModels()
 
     private fun init() {
@@ -62,7 +62,7 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         movieDetailsHolder?.visibility = View.INVISIBLE
-        movieId = arguments?.getInt("id")
+        movieId = arguments?.getLong("id")
         refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId) }
         viewModel.getMovie(movieId, true)
     }
