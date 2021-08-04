@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private lateinit var bottomNavigationBar: BottomNavigationView
     private lateinit var navController: NavController
 
+
+    //TODO: Room
+    //TODO: SqLite
+    //TODO: Retrofit + OkHttp
     private fun init() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
