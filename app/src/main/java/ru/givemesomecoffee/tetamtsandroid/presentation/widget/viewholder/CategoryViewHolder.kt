@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.presentation.viewholder
+package ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder
 
 import android.view.View
 import android.widget.TextView

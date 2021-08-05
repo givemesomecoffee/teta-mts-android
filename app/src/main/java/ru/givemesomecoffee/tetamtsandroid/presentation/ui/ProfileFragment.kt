@@ -41,8 +41,4 @@ class ProfileFragment : Fragment() {
         profileFragmentClickListener = null
     }
 
-    companion object {
-        const val PROFILE_TAG = "Profile"
-    }
-
 }

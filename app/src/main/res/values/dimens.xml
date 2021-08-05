@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_margin">6dp</dimen>
+    <dimen name="default_size">10dp</dimen>
+    <dimen name="indicator_height">2dp</dimen>
+    <dimen name="offset_51">51dp</dimen>
+    <dimen name="nav_icon_size">24dp</dimen>
+    <dimen name="nav_height">48dp</dimen>
+
+
+</resources>

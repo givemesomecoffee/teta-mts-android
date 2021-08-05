@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/moviesListFragment">
+
+    <fragment
+        android:id="@+id/moviesListFragment"
+        android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragment"
+        android:label="MoviesListFragment" >
+        <action
+            android:id="@+id/action_moviesListFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragment"
+        android:label="ProfileFragment" />
+
+
+
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment"
+
+        />
+    <action
+        android:id="@+id/action_global_moviesListFragment"
+        app:destination="@id/moviesListFragment"
+        app:popUpTo="@id/moviesListFragment"
+        app:popUpToInclusive="true" />
+
+</navigation>
