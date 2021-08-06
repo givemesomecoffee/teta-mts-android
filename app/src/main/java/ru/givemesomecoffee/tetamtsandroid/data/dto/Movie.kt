@@ -1,6 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.dto
 
-data class MovieDto(
+data class Movie(
     val id: Int,
     val title: String,
     val description: String,

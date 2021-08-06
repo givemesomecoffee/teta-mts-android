@@ -7,9 +7,6 @@ class MovieCase {
     private val repository = Repository()
 
     fun getMovieById(id: Int): MovieUi {
-
-        val movie = repository.getMovie(id)
-        movie.category = repository.getCategoryTitle(movie.categoryId)
-        return movie
+        return repository.getMovie(id)
     }
 }

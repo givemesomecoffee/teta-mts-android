@@ -1,14 +1,15 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.entity
 
-import ru.givemesomecoffee.tetamtsandroid.data.dto.MovieDto
+import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
 
-class MovieUi(movieDto: MovieDto) {
-    val title: String = movieDto.title
-    val description: String = movieDto.description
-    val rateScore: Float = movieDto.rateScore.toFloat()
-    val ageRestriction: String = movieDto.ageRestriction.toString() + "+"
-    val imageUrl: String = movieDto.imageUrl
-    val id: Int = movieDto.id
-    val categoryId = movieDto.categoryId
+
+class MovieUi(movie: Movie) {
+    val title: String = movie.title
+    val description: String = movie.description
+    val rateScore: Float = movie.rateScore.toFloat()
+    val ageRestriction: String = movie.ageRestriction.toString() + "+"
+    val imageUrl: String = movie.imageUrl
+    val id: Int? = movie.id
+    val categoryId = movie.categoryId
     var category: String? = null
 }

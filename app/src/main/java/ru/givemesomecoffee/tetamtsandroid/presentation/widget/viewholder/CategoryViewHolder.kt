@@ -12,6 +12,6 @@ class CategoryViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
 
     fun bind(item: CategoryUi) {
         categoryTitle.text = item.title
-        itemView.setOnClickListener { this.itemClick?.invoke(item.id) }
+        itemView.setOnClickListener { item.id?.let { it1 -> this.itemClick?.invoke(it1) } }
     }
 }

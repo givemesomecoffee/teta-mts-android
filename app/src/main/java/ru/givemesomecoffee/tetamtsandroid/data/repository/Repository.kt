@@ -1,34 +1,37 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.App
+import ru.givemesomecoffee.tetamtsandroid.data.assets.categories.CategoriesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
-import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.assets.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.db.AppDatabase
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
 
 class Repository {
+    private val db = App.db
 
     private fun getNewCategoriesDataset(): List<CategoryUi> {
         simulateNetwork()
-        return CategoriesMapper().toCategoryUi(MovieCategoriesDataSourceImpl().getCategories())
+        return CategoriesMapper().toCategoryUi(db.CategoryDao().getAll())
     }
 
     private fun getNewMoviesDataset(id: Int = 0): List<MovieUi> {
         simulateNetwork()
-        var temp = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies())
-        temp = if (id == 0) {
-            temp.shuffled().take(5)
+        return  if (id == 0) {
+            MoviesMapper().toMovieUi(db.MovieDao().getAll()).shuffled().take(5)
         } else {
-            temp.filter { it.categoryId == id }
+            MoviesMapper().toMovieUi(db.MovieDao().getMoviesByCategory(id))
         }
-        return temp
     }
 
     fun getMovie(id: Int): MovieUi {
         simulateNetwork()
-      return MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies().first{it.id == id})
+      val movie =  MoviesMapper().toMovieUi(db.MovieDao().getMovieById(id))
+        movie.category = getCategoryTitle(movie.categoryId)
+        return movie
     }
 
 
@@ -41,7 +44,7 @@ class Repository {
     }
 
     fun getCategoryTitle(id: Int): String {
-        return getCategoriesList().first { it.id == id }.title
+        return db.CategoryDao().getCategoryById(id).title
     }
 
 }

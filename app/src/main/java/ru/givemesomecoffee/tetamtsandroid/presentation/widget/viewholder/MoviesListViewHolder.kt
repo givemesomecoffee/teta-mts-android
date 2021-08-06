@@ -27,6 +27,6 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
             rating = item.rateScore
             contentDescription = item.rateScore.toString()
         }
-        itemView.setOnClickListener { itemClick?.invoke(item.id) }
+        itemView.setOnClickListener { item.id?.let { it1 -> itemClick?.invoke(it1) } }
     }
 }
