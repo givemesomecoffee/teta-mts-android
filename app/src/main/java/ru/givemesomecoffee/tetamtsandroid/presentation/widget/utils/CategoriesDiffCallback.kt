@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.utils
+package ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi

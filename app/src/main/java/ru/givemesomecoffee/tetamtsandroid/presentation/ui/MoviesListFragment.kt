@@ -21,7 +21,7 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MoviesListViewModel
-import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
 
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null

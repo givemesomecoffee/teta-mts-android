@@ -15,6 +15,4 @@ class MoviesListCases {
         return repository.getCategoriesList()
     }
 
-
-
 }

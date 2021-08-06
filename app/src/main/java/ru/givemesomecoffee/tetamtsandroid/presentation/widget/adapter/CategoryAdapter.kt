@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
-import ru.givemesomecoffee.tetamtsandroid.utils.CategoriesDiffCallback
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.CategoriesDiffCallback
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.CategoryHeaderViewHolder
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.CategoryViewHolder
 
