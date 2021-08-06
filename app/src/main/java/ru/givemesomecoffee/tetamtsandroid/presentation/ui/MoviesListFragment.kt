@@ -2,6 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,8 +50,6 @@ class MoviesListFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
         viewModel.categories.observe(viewLifecycleOwner, Observer(::setNewCategoriesList))
         viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
-        viewModel.updateCategories()
-        viewModel.updateMoviesListByCategory(category, true)
     }
 
     override fun onAttach(context: Context) {
@@ -74,6 +73,7 @@ class MoviesListFragment : Fragment() {
         if (savedInstanceState != null) {
             category = savedInstanceState.getInt(CATEGORY, 0)
         }
+        viewModel.init()
         init()
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
         moviesListView.addItemDecoration(
@@ -111,10 +111,11 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun onCategoryClicked(categoryId: Int) {
+        moviesListView.scrollToPosition(0)
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
         viewModel.updateMoviesListByCategory(categoryId)
-        moviesListView.scrollToPosition(0)
+
     }
 
     private fun onGetDataFailure(message: String?) {
@@ -129,7 +130,7 @@ class MoviesListFragment : Fragment() {
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)
-        moviesListView.scrollToPosition(0)
+        moviesListView.scrollToPosition(0) // scroll position loss on restore :C
     }
 
     private fun setNewCategoriesList(await: List<CategoryUi>) {

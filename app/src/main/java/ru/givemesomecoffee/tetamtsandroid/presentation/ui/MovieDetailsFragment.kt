@@ -63,8 +63,8 @@ class MovieDetailsFragment : Fragment() {
         init()
         movieDetailsHolder?.visibility = View.INVISIBLE
         movieId = arguments?.getInt("id")
+        viewModel.init(movieId)
         refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId) }
-        viewModel.getMovie(movieId, true)
     }
 
     private fun setImgToView(result: Drawable) {

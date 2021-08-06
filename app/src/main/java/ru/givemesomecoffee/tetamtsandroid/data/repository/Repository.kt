@@ -9,17 +9,13 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
 
 class Repository {
-    private var categoriesDataset: List<CategoryUi>? = null
-    private var moviesDataset: List<MovieUi>? = null
-    private var movieUi: MovieUi? = null
 
-    private fun setNewCategoriesDataset() {
+    private fun getNewCategoriesDataset(): List<CategoryUi> {
         simulateNetwork()
-        categoriesDataset =
-            CategoriesMapper().toCategoryUi(MovieCategoriesDataSourceImpl().getCategories())
+        return CategoriesMapper().toCategoryUi(MovieCategoriesDataSourceImpl().getCategories())
     }
 
-    private fun setNewMoviesDataset(id: Int = 0) {
+    private fun getNewMoviesDataset(id: Int = 0): List<MovieUi> {
         simulateNetwork()
         var temp = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies())
         temp = if (id == 0) {
@@ -27,40 +23,24 @@ class Repository {
         } else {
             temp.filter { it.categoryId == id }
         }
-        moviesDataset = temp
+        return temp
     }
 
-    private fun setMovie(id: Int) {
+    fun getMovie(id: Int): MovieUi {
         simulateNetwork()
-        movieUi = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies().first{it.id == id})
+      return MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies().first{it.id == id})
     }
 
 
     fun getCategoriesList(): List<CategoryUi> {
-        if (categoriesDataset == null) {
-            setNewCategoriesDataset()
-        }
-        return categoriesDataset!!
+        return  getNewCategoriesDataset()
     }
 
-    fun getMoviesList(id: Int = 0, restore: Boolean = false): List<MovieUi> {
-     if ( !restore || moviesDataset == null){
-         setNewMoviesDataset(id)
-     }
-        return moviesDataset!!
-    }
-
-    fun getMovie(id: Int, restore: Boolean = false): MovieUi {
-        if (!restore || movieUi == null) {
-            setMovie(id)
-        }
-        return movieUi!!
+    fun getMoviesList(id: Int = 0): List<MovieUi> {
+        return getNewMoviesDataset(id)
     }
 
     fun getCategoryTitle(id: Int): String {
-        if (categoriesDataset != null) {
-            return categoriesDataset!!.first { it.id == id }.title
-        }
         return getCategoriesList().first { it.id == id }.title
     }
 

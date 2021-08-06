@@ -7,8 +7,8 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 class MoviesListCases {
     private val repository: Repository = Repository()
 
-    fun getMoviesList(id: Int = 0, restore: Boolean = false): List<MovieUi> {
-        return repository.getMoviesList(id, restore)
+    fun getMoviesList(id: Int = 0): List<MovieUi> {
+        return repository.getMoviesList(id)
     }
 
     fun getCategoriesList(): List<CategoryUi>{
