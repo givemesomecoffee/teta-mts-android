@@ -16,11 +16,11 @@ class MoviesListViewModel : ViewModel() {
     val loadingState: LiveData<LoadingState> get() = _loadingState
     private val _loadingState = MutableLiveData<LoadingState>()
 
-     fun init(){
-        if(categories.value == null)
-        updateCategories()
-          if(data.value == null)
-          updateMoviesListByCategory()
+    fun init() {
+        if (categories.value == null)
+            updateCategories()
+        if (data.value == null)
+            updateMoviesListByCategory()
     }
 
     private val categoriesHandler = CoroutineExceptionHandler { _, e ->
@@ -34,21 +34,24 @@ class MoviesListViewModel : ViewModel() {
     }
 
     private fun updateCategories() {
-        viewModelScope.launch {
+        viewModelScope.launch(categoriesHandler) {
             withContext(Dispatchers.IO) { _categories.postValue(domain.getCategoriesList()) }
         }
     }
 
     fun updateMoviesListByCategory(categoryId: Int = 0) {
         viewModelScope.launch {
-            try {
-                _loadingState.value = LoadingState.LOADING
-                withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
+                Log.d("test", Thread.currentThread().toString())
+                try {
+                    _loadingState.postValue(LoadingState.LOADING)
+
                     _data.postValue(domain.getMoviesList(categoryId))
+
+                    _loadingState.postValue(LoadingState.LOADED)
+                } catch (e: Exception) {
+                    _loadingState.postValue(LoadingState.error(e.message))
                 }
-                _loadingState.value = LoadingState.LOADED
-            } catch (e: Exception) {
-                _loadingState.value = LoadingState.error(e.message)
             }
         }
     }

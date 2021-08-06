@@ -54,6 +54,7 @@ abstract class AppDatabase : RoomDatabase() {
             //
 
             if (isSetup) {
+                Log.d("room", "i m in init")
                 temp.MovieDao().setAll(MoviesDataSourceImpl().getMovies())
                 temp.CategoryDao()
                     .insertAll(CategoriesDataSourceImpl().getCategories())

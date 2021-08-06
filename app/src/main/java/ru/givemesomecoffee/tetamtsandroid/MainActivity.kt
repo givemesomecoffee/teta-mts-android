@@ -1,6 +1,8 @@
 package ru.givemesomecoffee.tetamtsandroid
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -33,7 +35,10 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.d("test", Thread.currentThread().toString())
+        Log.d("test", "im inflated")
         init()
+
     }
 
     override fun onMovieCardClicked(id: Int) {
