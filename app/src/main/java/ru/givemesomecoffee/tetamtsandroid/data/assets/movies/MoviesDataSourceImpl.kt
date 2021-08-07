@@ -3,8 +3,8 @@ package ru.givemesomecoffee.tetamtsandroid.data.assets.movies
 import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
 
 
-class MoviesDataSourceImpl : MoviesDataSource {
-    override fun getMovies(): List<Movie> = listOf(
+class MoviesDataSourceImpl {
+    fun getMovies(): List<Movie> = listOf(
        Movie(
             id = 0,
             title = "Гнев человеческий",

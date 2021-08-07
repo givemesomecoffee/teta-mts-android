@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.*
 import ru.givemesomecoffee.tetamtsandroid.data.db.AppDatabase
+import ru.givemesomecoffee.tetamtsandroid.di.ServiceLocator
 
 class App : Application() {
     override fun onCreate() {
@@ -26,6 +27,7 @@ class App : Application() {
     companion object {
         lateinit  var appContext: Context
         lateinit var db: AppDatabase
+        val repository get() = ServiceLocator.provideRepository()
     }
 }
 

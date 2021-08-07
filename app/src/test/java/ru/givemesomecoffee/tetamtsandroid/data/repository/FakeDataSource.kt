@@ -1,13 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
+import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
 import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
-import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDataSourse
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import java.lang.Exception
-import java.util.ArrayList
 
-class FakeDataSource(var movies: MutableList<Movie>? = mutableListOf()) : MoviesDatasource {
-    override fun getAll(): List<Movie> {
+class FakeDataSource(var movies: MutableList<Movie>? = mutableListOf()) : LocalDatasource {
+    override fun getAllMovies(): List<Movie> {
         movies?.let { return (it) }
         throw Exception("im null")
     }
@@ -20,7 +19,19 @@ class FakeDataSource(var movies: MutableList<Movie>? = mutableListOf()) : Movies
         TODO("Not yet implemented")
     }
 
-    override fun setAll(list: List<Movie>) {
+    override fun setAllMovies(list: List<Movie>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllCategories(): List<Category> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCategoryById(id: Int): Category {
+        TODO("Not yet implemented")
+    }
+
+    override fun insertAllCategories(list: List<Category>) {
         TODO("Not yet implemented")
     }
 }
