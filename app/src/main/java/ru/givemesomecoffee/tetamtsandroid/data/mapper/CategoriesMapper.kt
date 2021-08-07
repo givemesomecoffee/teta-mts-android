@@ -1,6 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 
 class CategoriesMapper() {

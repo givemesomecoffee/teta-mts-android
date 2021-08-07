@@ -1,14 +1,16 @@
 package ru.givemesomecoffee.tetamtsandroid.data.local
 
-import ru.givemesomecoffee.tetamtsandroid.data.dao.CategoryDao
-import ru.givemesomecoffee.tetamtsandroid.data.dao.MovieDao
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.CategoryDao
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.MovieDao
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 
-class LocalDatasourceImpl internal constructor(
-    private val moviesDao: MovieDao,
-    private val categoriesDao: CategoryDao
-) : LocalDatasource {
+class LocalDatasourceImpl : LocalDatasource {
+    val db = AppDatabase.getInstance()
+    private val moviesDao: MovieDao = db.MovieDao()
+    private val categoriesDao: CategoryDao = db.CategoryDao()
+
     override fun getAllMovies(): List<Movie> {
        return  moviesDao.getAll()
     }

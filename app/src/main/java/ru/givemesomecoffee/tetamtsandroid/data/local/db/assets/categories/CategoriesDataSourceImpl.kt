@@ -1,6 +1,6 @@
-package ru.givemesomecoffee.tetamtsandroid.data.assets.categories
+package ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.categories
 
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 
 
 class CategoriesDataSourceImpl  {

@@ -1,6 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.entity
 
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 
 class CategoryUi(category: Category) {
     val id = category.id

@@ -1,6 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.entity
 
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 
 
 class MovieUi(movie: Movie) {

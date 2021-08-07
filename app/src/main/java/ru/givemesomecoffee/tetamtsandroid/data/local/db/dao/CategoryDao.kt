@@ -1,9 +1,9 @@
-package ru.givemesomecoffee.tetamtsandroid.data.dao
+package ru.givemesomecoffee.tetamtsandroid.data.local.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 
 @Dao
 interface CategoryDao {

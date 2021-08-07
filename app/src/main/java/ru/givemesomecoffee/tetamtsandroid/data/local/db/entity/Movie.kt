@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.entity
+package ru.givemesomecoffee.tetamtsandroid.data.local.db.entity
 
 
 import androidx.room.ColumnInfo

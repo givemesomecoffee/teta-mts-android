@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import java.lang.Exception
 

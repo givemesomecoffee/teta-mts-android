@@ -1,6 +1,5 @@
-package ru.givemesomecoffee.tetamtsandroid
+package ru.givemesomecoffee.tetamtsandroid.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections

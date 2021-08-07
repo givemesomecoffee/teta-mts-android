@@ -3,8 +3,8 @@ package ru.givemesomecoffee.tetamtsandroid.data.repository
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import ru.givemesomecoffee.tetamtsandroid.data.assets.movies.MoviesDataSourceImpl
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 

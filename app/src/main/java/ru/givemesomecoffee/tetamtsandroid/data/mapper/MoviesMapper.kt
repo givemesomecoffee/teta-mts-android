@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
 
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
 class MoviesMapper {

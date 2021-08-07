@@ -1,6 +1,6 @@
-package ru.givemesomecoffee.tetamtsandroid.data.assets.movies
+package ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.movies
 
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 
 
 class MoviesDataSourceImpl {

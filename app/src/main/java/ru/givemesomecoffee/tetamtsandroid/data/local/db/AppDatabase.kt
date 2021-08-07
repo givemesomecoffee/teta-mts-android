@@ -1,19 +1,17 @@
-package ru.givemesomecoffee.tetamtsandroid.data.db
+package ru.givemesomecoffee.tetamtsandroid.data.local.db
 
-import android.content.Context
 import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import ru.givemesomecoffee.tetamtsandroid.App
-import ru.givemesomecoffee.tetamtsandroid.data.assets.categories.CategoriesDataSourceImpl
-import ru.givemesomecoffee.tetamtsandroid.data.dao.MovieDao
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Movie
-import ru.givemesomecoffee.tetamtsandroid.data.assets.movies.MoviesDataSourceImpl
-import ru.givemesomecoffee.tetamtsandroid.data.dao.CategoryDao
-import ru.givemesomecoffee.tetamtsandroid.data.entity.Category
-import java.util.concurrent.Executors
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.categories.CategoriesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.MovieDao
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.CategoryDao
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 
 @Database(
     entities = [Movie::class, Category::class], version = 1

@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.di
 
 
-import ru.givemesomecoffee.tetamtsandroid.data.db.AppDatabase
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.repository.Repository
 
@@ -16,9 +16,7 @@ object ServiceLocator {
     }
 
     private fun createRepository(): Repository {
-        val db = AppDatabase.getInstance()
-        return Repository(LocalDatasourceImpl(db.MovieDao(), db.CategoryDao()))
+        return Repository(LocalDatasourceImpl())
     }
 
-    //TODO: move db instance here
 }
