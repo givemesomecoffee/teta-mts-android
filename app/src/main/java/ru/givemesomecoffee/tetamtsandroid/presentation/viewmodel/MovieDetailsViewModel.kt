@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -9,7 +10,7 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState.Companion.LOADED
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState.Companion.LOADING
 
-class MovieDetailsViewModel : ViewModel() {
+class MovieDetailsViewModel: ViewModel() {
     private val domain: MovieCase = MovieCase()
     val data: LiveData<MovieUi> get() = _data
     private val _data = MutableLiveData<MovieUi>()

@@ -89,11 +89,13 @@ class MoviesListFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(CATEGORY, category)
+        Log.d("list", "saved")
     }
 
     override fun onDetach() {
         super.onDetach()
         moviesListFragmentClickListener = null
+        Log.d("list", "detached")
     }
 
     private fun setMoviesListAdapter(): MoviesListAdapter {
@@ -145,8 +147,19 @@ class MoviesListFragment : Fragment() {
             LoadingState.Status.SUCCESS -> moviesRefreshSwipeView?.isRefreshing = false
         }
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("list", " view destroyed")
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("list", "destroyed")
+    }
 
-    companion object {
+
+
+
+        companion object {
         const val CATEGORY = "category_key"
     }
 }

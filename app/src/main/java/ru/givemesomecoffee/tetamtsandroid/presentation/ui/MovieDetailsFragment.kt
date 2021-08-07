@@ -2,6 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,6 +104,27 @@ class MovieDetailsFragment : Fragment() {
             LoadingState.Status.RUNNING -> refreshWrapper?.isRefreshing = true
             LoadingState.Status.SUCCESS -> refreshWrapper?.isRefreshing = false
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("test", " view destroyed")
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("test", "destroyed")
+    }
+
+
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("test", "detached")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("test", "saved")
     }
 }
 
