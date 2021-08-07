@@ -14,15 +14,11 @@ class Repository(
     private val localDatasource: LocalDatasource
 ) {
     private suspend fun getNewCategoriesDataset(): List<CategoryUi> {
-        Log.d("testcategories", "categories")
-        Log.d("testcategories", Thread.currentThread().toString())
-        Log.d("testcategories", coroutineContext.toString())
         simulateNetwork()
         return CategoriesMapper().toCategoryUi(localDatasource.getAllCategories())
     }
 
     private fun getNewMoviesDataset(id: Int = 0): List<MovieUi> {
-
         return if (id == 0) {
             MoviesMapper().toMovieUi(localDatasource.getAllMovies())
         } else {
@@ -32,11 +28,10 @@ class Repository(
 
     fun getMovie(id: Int): MovieUi {
         //  simulateNetwork()
-        val movie = MoviesMapper().toMovieUi(localDatasource.getMovieById(id))
-        movie.category = getCategoryTitle(movie.categoryId)
-        return movie
+        val movie = localDatasource.getMovieById(id)
+        val category = getCategoryTitle(movie.categoryId)
+        return MoviesMapper().toMovieUi(movie, category)
     }
-
 
     suspend fun getCategoriesList(): List<CategoryUi> {
         return getNewCategoriesDataset()

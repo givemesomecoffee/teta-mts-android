@@ -12,8 +12,17 @@ class MoviesMapper {
         }
     }
 
-    fun toMovieUi(movie: Movie): MovieUi{
-        return MovieUi(movie)
+    fun toMovieUi(movie: Movie, categoryTitle: String? = null): MovieUi{
+        return MovieUi(
+            id = movie.id!!,
+            title = movie.title,
+            description = movie.description,
+            categoryId = movie.categoryId,
+            ageRestriction = movie.ageRestriction.toString() + "+",
+            imageUrl = movie.imageUrl,
+            rateScore = movie.rateScore.toFloat(),
+            category = categoryTitle
+        )
     }
 
 }

@@ -2,7 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.domain.entity
 
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 
-class CategoryUi(category: Category) {
-    val id = category.id
-    val title = category.title
-}
+data class CategoryUi(
+    val id: Int,
+    val title: String
+)

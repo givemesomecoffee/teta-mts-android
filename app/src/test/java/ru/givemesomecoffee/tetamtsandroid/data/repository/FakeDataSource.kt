@@ -5,33 +5,26 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import java.lang.Exception
 
-class FakeDataSource(var movies: MutableList<Movie>? = mutableListOf()) : LocalDatasource {
+class FakeDataSource(val movies: List<Movie>, val categories:List<Category>) : LocalDatasource {
     override fun getAllMovies(): List<Movie> {
-        movies?.let { return (it) }
-        throw Exception("im null")
+    return movies
+
     }
 
     override fun getMoviesByCategory(categoryId: Int): List<Movie> {
-        TODO("Not yet implemented")
+        return movies.filter { it.categoryId == categoryId } ?: throw Exception()
     }
 
     override fun getMovieById(id: Int): Movie {
-        TODO("Not yet implemented")
-    }
-
-    override fun setAllMovies(list: List<Movie>) {
-        TODO("Not yet implemented")
+        return movies.first { it.id == id } ?: throw Exception()
     }
 
     override fun getAllCategories(): List<Category> {
-        TODO("Not yet implemented")
+        return categories
     }
 
     override fun getCategoryById(id: Int): Category {
-        TODO("Not yet implemented")
+        return categories.first { it.id == id }
     }
 
-    override fun insertAllCategories(list: List<Category>) {
-        TODO("Not yet implemented")
-    }
 }

@@ -6,8 +6,8 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 class CategoriesMapper() {
 
     fun toCategoryUi(list: List<Category>): List<CategoryUi> {
-        return list.map{
-            CategoryUi(it)
+        return list.map {
+            CategoryUi(id = it.id!!, title = it.title)
         }
     }
 }

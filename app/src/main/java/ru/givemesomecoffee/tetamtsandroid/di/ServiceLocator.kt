@@ -16,7 +16,8 @@ object ServiceLocator {
     }
 
     private fun createRepository(): Repository {
-        return Repository(LocalDatasourceImpl())
+        val db = AppDatabase.getInstance()
+        return Repository(LocalDatasourceImpl(db))
     }
 
 }

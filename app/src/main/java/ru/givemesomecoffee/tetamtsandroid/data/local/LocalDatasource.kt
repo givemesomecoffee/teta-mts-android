@@ -11,14 +11,8 @@ interface LocalDatasource {
 
     fun getMovieById(id: Int): Movie
 
-    fun setAllMovies(list: List<Movie>)
-
     fun getAllCategories(): List<Category>
 
-
     fun getCategoryById(id: Int): Category
-
-
-    fun insertAllCategories(list: List<Category>)
 
 }
