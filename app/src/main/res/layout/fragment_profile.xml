@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_15"
-                android:hint="Имя"
+                app:hintTextColor="#4D000000"
                 app:boxBackgroundColor="@color/grey"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_personal_data">
@@ -95,6 +95,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Имя"
                     android:background="@null" />
             </com.google.android.material.textfield.TextInputLayout>
 
