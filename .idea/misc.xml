@@ -6,10 +6,14 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/fragment_movie_details.xml" value="0.3546875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/fragment_movies_list.xml" value="0.3546875" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/last_nav_item_menu.xml" value="0.3546875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/movie_item.xml" value="0.3546875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/multistack.xml" value="0.5" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/layout/profile_menu_item.xml" value="0.25" />
         <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/menu/nav.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/menu/profile_app.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/tetamtsandroid/app/src/main/res/menu/profile_settings.xml" value="0.19322916666666667" />
       </map>
     </option>
   </component>

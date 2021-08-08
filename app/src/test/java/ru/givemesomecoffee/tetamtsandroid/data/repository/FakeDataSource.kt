@@ -5,7 +5,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import java.lang.Exception
 
-class FakeDataSource(val movies: List<Movie>, val categories:List<Category>) : LocalDatasource {
+class FakeDataSource(private val movies: List<Movie>, private val categories:List<Category>) : LocalDatasource {
     override fun getAllMovies(): List<Movie> {
     return movies
 

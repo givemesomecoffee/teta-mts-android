@@ -16,8 +16,6 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE id == :id")
     fun getMovieById(id: Int): Movie
 
-
-
     @Insert
     fun setAll(list: List<Movie>)
 }

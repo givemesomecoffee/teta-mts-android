@@ -1,14 +1,11 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import android.util.Log
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
-import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
-import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
+import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
-import kotlin.coroutines.coroutineContext
 
 class Repository(
     private val localDatasource: LocalDatasource
@@ -26,6 +23,10 @@ class Repository(
         }
     }
 
+    private fun getCategoryTitle(id: Int): String {
+        return localDatasource.getCategoryById(id).title
+    }
+
     fun getMovie(id: Int): MovieUi {
         //  simulateNetwork()
         val movie = localDatasource.getMovieById(id)
@@ -41,8 +42,6 @@ class Repository(
         return getNewMoviesDataset(id)
     }
 
-    private fun getCategoryTitle(id: Int): String {
-        return localDatasource.getCategoryById(id).title
-    }
+
 
 }

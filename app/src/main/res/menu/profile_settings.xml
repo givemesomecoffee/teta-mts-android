@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profile_notifications_and_sound"
+        android:title="Уведомления и звуки"
+        app:actionLayout="@layout/profile_menu_item" />
+
+    <item
+        android:id="@+id/profile_security"
+        android:title="Конфедициальность"
+        app:actionLayout="@layout/profile_menu_item" />
+
+    <item
+        android:id="@+id/profile_theme"
+        android:title="Тема"
+        app:actionLayout="@layout/profile_menu_item" />
+
+    <item
+        android:id="@+id/profile_language"
+        android:title="Язык"
+        app:actionLayout="@layout/profile_menu_item" />
+
+    <item
+        android:id="@+id/profile_data_and_storage"
+        android:title="Данные и память"
+        app:actionLayout="@layout/profile_menu_item" />
+</menu>
