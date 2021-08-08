@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "movies")
 data class Movie (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "movieId")
     val id: Int? = null,
 
     @ColumnInfo(name = "title")

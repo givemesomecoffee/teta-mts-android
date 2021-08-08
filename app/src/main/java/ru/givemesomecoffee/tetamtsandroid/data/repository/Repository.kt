@@ -31,7 +31,7 @@ class Repository(
     fun getMovie(id: Int): MovieUi {
         //  simulateNetwork()
         val movie = localDatasource.getMovieById(id)
-        val category = getCategoryTitle(movie.categoryId)
+        val category = getCategoryTitle(movie.movie.categoryId)
         return MoviesMapper().toMovieUi(movie, category)
     }
 

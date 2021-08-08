@@ -138,82 +138,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/movie_description" />
 
-                <HorizontalScrollView
-                    android:id="@+id/actors_section_scroll"
-                    android:layout_width="wrap_content"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/actors_section"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/offset_16"
                     android:scrollbars="none"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/actors_section_title">
+                    app:layout_constraintTop_toBottomOf="@id/actors_section_title"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/actor_item"
+                    android:layout_marginBottom="@dimen/offset_46"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/offset_46">
-
-                        <ImageView
-                            android:id="@+id/actor_photo1"
-                            android:layout_width="@dimen/actor_photo_width"
-                            android:layout_height="@dimen/actor_photo_height"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/img_actor1"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/offset_12"
-                            android:text="@string/actor_name1"
-                            android:textSize="@dimen/space_12"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@id/actor_photo1"
-                            app:layout_constraintTop_toBottomOf="@id/actor_photo1" />
-
-                        <ImageView
-                            android:id="@+id/actor_photo2"
-                            android:layout_width="@dimen/actor_photo_width"
-                            android:layout_height="@dimen/actor_photo_height"
-                            android:layout_marginStart="@dimen/offset_10"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/img_actor2"
-                            app:layout_constraintStart_toEndOf="@id/actor_photo1"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/offset_12"
-                            android:text="@string/actor_name2"
-                            android:textSize="@dimen/space_12"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@id/actor_photo2"
-                            app:layout_constraintTop_toBottomOf="@id/actor_photo2" />
-
-                        <ImageView
-                            android:id="@+id/actor_photo3"
-                            android:layout_width="@dimen/actor_photo_width"
-                            android:layout_height="@dimen/actor_photo_height"
-                            android:layout_marginStart="@dimen/offset_10"
-                            android:importantForAccessibility="no"
-                            android:scaleType="fitStart"
-                            android:src="@drawable/img_actor3"
-                            app:layout_constraintStart_toEndOf="@id/actor_photo2"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/offset_12"
-                            android:text="@string/actor_name3"
-                            android:textSize="@dimen/space_12"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@id/actor_photo3"
-                            app:layout_constraintTop_toBottomOf="@id/actor_photo3" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </HorizontalScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

@@ -24,3 +24,4 @@ import androidx.room.Relation
         )
         val categories: List<Category>
     )
+

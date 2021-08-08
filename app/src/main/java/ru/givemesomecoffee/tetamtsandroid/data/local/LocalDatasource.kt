@@ -2,6 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local
 
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
 
 interface LocalDatasource {
@@ -10,7 +11,7 @@ interface LocalDatasource {
 
     fun getMoviesByCategory(categoryId: Int): List<Movie>
 
-    fun getMovieById(id: Int): Movie
+    fun getMovieById(id: Int): MovieWithActors
 
     fun getAllCategories(): List<Category>
 

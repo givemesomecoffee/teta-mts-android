@@ -6,6 +6,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.UserDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
 
 class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
@@ -22,7 +23,7 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
       return   moviesDao.getMoviesByCategory(categoryId)
     }
 
-    override fun getMovieById(id: Int): Movie {
+    override fun getMovieById(id: Int): MovieWithActors {
        return moviesDao.getMovieById(id)
     }
 
