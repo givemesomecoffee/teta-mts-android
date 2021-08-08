@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.categories
+package ru.givemesomecoffee.tetamtsandroid.data.local.db.assets
 
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 

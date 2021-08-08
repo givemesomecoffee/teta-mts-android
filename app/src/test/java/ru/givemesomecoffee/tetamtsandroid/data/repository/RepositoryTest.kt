@@ -5,15 +5,14 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.categories.CategoriesDataSourceImpl
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.CategoriesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.MoviesDataSourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
-import java.lang.Exception
 
 class RepositoryTest {
 

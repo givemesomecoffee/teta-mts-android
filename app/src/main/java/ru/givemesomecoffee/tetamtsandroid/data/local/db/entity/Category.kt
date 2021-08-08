@@ -3,6 +3,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local.db.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.Relation
 
 @Entity(tableName = "categories")
 data class Category(
@@ -12,6 +13,7 @@ data class Category(
     val title: String,
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "categoryId")
     val id: Int?,
 )
+

@@ -3,13 +3,16 @@ package ru.givemesomecoffee.tetamtsandroid.data.local
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.CategoryDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.MovieDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.UserDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
 
 class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
 
     private val moviesDao: MovieDao = db.MovieDao()
     private val categoriesDao: CategoryDao = db.CategoryDao()
+    private val userDao: UserDao = db.UserDao()
 
     override fun getAllMovies(): List<Movie> {
        return  moviesDao.getAll()
@@ -33,6 +36,9 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
        return categoriesDao.getCategoryById(id)
     }
 
+    override fun getUser(id: Int): List<UserWithFavourites> {
+        return userDao.getUserData(0)
+    }
 
 
 }

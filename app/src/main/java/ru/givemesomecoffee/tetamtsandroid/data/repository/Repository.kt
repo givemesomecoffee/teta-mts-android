@@ -1,6 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
@@ -42,6 +43,9 @@ class Repository(
         return getNewMoviesDataset(id)
     }
 
+    fun getUser(id:Int = 0): List<UserWithFavourites>{
+        return localDatasource.getUser(0)
+    }
 
 
 }
