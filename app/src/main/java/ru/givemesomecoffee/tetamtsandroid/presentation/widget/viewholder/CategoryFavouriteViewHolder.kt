@@ -7,12 +7,16 @@ import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 
-class CategoryViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
-    RecyclerView.ViewHolder(view) {
+class CategoryFavouriteViewHolder(view: View) :
+RecyclerView.ViewHolder(view) {
     private val categoryTitle: TextView = view.findViewById(R.id.category_title)
 
-    fun bind(item: CategoryUi) {
+    fun bind(item: Category) {
         categoryTitle.text = item.title
-        itemView.setOnClickListener { item.id?.let { it1 -> this.itemClick?.invoke(it1) } }
     }
 }
+
+    //TODO: try to change implementations to use 1 adapter and holder for categories and favourites
+
+
+

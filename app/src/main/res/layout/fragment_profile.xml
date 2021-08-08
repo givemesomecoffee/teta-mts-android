@@ -41,7 +41,7 @@
                 tools:text="Name" />
 
             <TextView
-
+                android:id="@+id/profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
@@ -69,7 +69,8 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profile_favourite" />
+                app:layout_constraintTop_toBottomOf="@id/profile_favourite"
+                tools:listitem="@layout/category_item"/>
 
             <TextView
                 android:id="@+id/profile_personal_data"
@@ -87,16 +88,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_15"
-                app:hintTextColor="#4D000000"
                 app:boxBackgroundColor="@color/grey"
+                app:hintTextColor="#4D000000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_personal_data">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_name_input_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Имя"
-                    android:background="@null" />
+                    android:background="@null"
+                    android:hint="Имя" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -110,6 +112,7 @@
                 app:layout_constraintTop_toBottomOf="@id/profile_name_input">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_password_input_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Почта"
@@ -128,6 +131,7 @@
                 app:layout_constraintTop_toBottomOf="@id/profile_password_input">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/profile_email_input_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Пароль"
