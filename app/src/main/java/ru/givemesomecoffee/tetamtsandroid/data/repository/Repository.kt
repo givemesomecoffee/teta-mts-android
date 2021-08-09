@@ -41,9 +41,16 @@ class Repository(
         return getNewMoviesDataset(id)
     }
 
-    fun getUser(id:Int = 0): UserUi {
+    fun getUser(id: Int = 0): UserUi {
         return UserMapper.toUserUi(localDatasource.getUser(id))
     }
 
-
+    fun checkUser(email: String, password: Int): Int? {
+        val user = localDatasource.checkUser(email, password)
+        return if (user != null) {
+            user.userId
+        } else {
+            null
+        }
+    }
 }

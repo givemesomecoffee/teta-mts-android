@@ -1,8 +1,11 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
+import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.ProfileViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFavouriteAdapter
@@ -29,6 +34,8 @@ class ProfileFragment : Fragment() {
     private var inputEmail: TextInputEditText? = null
     private var inputPassword: TextInputEditText? = null
     private var favouriteCategoriesListView: RecyclerView? = null
+    private var exitLoginButton: MaterialButton? = null
+    private var login: Login? = null
 
     private fun init() {
         headerName = view?.findViewById(R.id.profile_name)
@@ -38,22 +45,22 @@ class ProfileFragment : Fragment() {
         inputPassword = view?.findViewById(R.id.profile_password_input_edit)
         favouriteCategoriesListView = requireView().findViewById(R.id.profile_favourite_list)
         favouriteCategoriesListView!!.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
-
+        exitLoginButton = requireView().findViewById(R.id.exit_login_button)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is ProfileFragmentClickListener) {
-            profileFragmentClickListener = context
+        if (context is Login) {
+          //  profileFragmentClickListener = context
+            login = context
         }
-        val callback =
+      /*  val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     profileFragmentClickListener?.profileOnBackPressed()
-
                 }
             }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)*/
     }
 
     override fun onCreateView(
@@ -61,6 +68,7 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("navigationFragments", "view is created")
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -69,12 +77,16 @@ class ProfileFragment : Fragment() {
         init()
         viewModel.getUser(0)
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
-    }
 
+        exitLoginButton?.setOnClickListener {
+            login?.exitLogin()
+        }
+    }
 
     override fun onDetach() {
         super.onDetach()
-        profileFragmentClickListener = null
+        //profileFragmentClickListener = null
+        login = null
     }
 
     private fun bindData(user: UserUi?) {
@@ -87,7 +99,9 @@ class ProfileFragment : Fragment() {
             favouriteCategoriesListView?.adapter =
                 CategoryFavouriteAdapter(user.favouriteCategories)
         }
+
     }
+
 }
 
 

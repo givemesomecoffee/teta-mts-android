@@ -6,6 +6,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
     </fragment>
+
 </navigation>

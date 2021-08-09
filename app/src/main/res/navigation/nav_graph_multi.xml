@@ -4,7 +4,23 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/movies_list">
 
-    <include app:graph="@navigation/movies_list"/>
-    <include app:graph="@navigation/profile"/>
+    <include app:graph="@navigation/movies_list" />
+    <include app:graph="@navigation/profile" />
+
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.LoginFragment"
+        android:label="LoginFragment" >
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:launchSingleTop="true"/>
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profile"
+        app:launchSingleTop="true"/>
 
 </navigation>

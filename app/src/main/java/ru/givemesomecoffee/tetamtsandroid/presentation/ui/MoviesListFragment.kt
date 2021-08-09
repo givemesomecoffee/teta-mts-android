@@ -64,6 +64,7 @@ class MoviesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("navigationFragments", "view list is created")
         return inflater.inflate(R.layout.fragment_movies_list, container, false)
     }
 

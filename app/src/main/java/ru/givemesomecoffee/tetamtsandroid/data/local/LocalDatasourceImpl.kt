@@ -4,10 +4,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.CategoryDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.MovieDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.UserDao
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
 
 class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
 
@@ -39,6 +36,10 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
 
     override fun getUser(id: Int): UserWithFavourites {
         return userDao.getUserData(id)
+    }
+
+    override fun checkUser(email: String, password: Int): User {
+        return userDao.checkUser(email, password)
     }
 
 
