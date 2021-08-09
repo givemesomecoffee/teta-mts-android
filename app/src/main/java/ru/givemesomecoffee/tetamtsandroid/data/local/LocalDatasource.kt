@@ -17,6 +17,6 @@ interface LocalDatasource {
 
     fun getCategoryById(id: Int): Category
 
-    fun getUser(id:Int): List<UserWithFavourites>
+    fun getUser(id:Int): UserWithFavourites
 
 }

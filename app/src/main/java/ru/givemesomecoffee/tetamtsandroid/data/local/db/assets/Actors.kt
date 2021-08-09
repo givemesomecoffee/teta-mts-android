@@ -135,6 +135,4 @@ class Actors {
         ActorsToMovies(7, 22),
         ActorsToMovies(7, 23),
     )
-
-
 }

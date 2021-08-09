@@ -14,7 +14,7 @@ interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM users WHERE userId == :id")
-    fun getUserData(id: Int): List<UserWithFavourites>
+    fun getUserData(id: Int): UserWithFavourites
 
     @Insert
     fun setUser(user: User)

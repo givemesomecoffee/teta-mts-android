@@ -118,26 +118,5 @@ class MovieDetailsFragment : Fragment() {
             LoadingState.Status.SUCCESS -> refreshWrapper?.isRefreshing = false
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("test", " view destroyed")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("test", "destroyed")
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("test", "detached")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Log.d("test", "saved")
-    }
 }
 

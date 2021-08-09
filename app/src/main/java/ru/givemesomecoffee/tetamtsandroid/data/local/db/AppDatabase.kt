@@ -1,6 +1,5 @@
 package ru.givemesomecoffee.tetamtsandroid.data.local.db
 
-import android.service.autofill.UserData
 import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
@@ -14,8 +13,13 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.CategoryDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.UserDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
 
+
 @Database(
-    entities = [Movie::class, Category::class, User::class, UserFavourites::class, Actor::class, ActorsToMovies::class], version = 1
+    entities = [Movie::class,
+        Category::class,
+        User::class, UserFavourites::class,
+        Actor::class, ActorsToMovies::class],
+    version = 1
 )
 //@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

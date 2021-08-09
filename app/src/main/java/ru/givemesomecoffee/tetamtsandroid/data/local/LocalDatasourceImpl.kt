@@ -37,8 +37,8 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
        return categoriesDao.getCategoryById(id)
     }
 
-    override fun getUser(id: Int): List<UserWithFavourites> {
-        return userDao.getUserData(0)
+    override fun getUser(id: Int): UserWithFavourites {
+        return userDao.getUserData(id)
     }
 
 

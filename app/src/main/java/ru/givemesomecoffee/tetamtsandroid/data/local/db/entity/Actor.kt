@@ -2,6 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local.db.entity
 
 import androidx.room.*
 
+
 @Entity
 class Actor(
     val name: String,

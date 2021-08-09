@@ -25,7 +25,7 @@ class MoviesListViewModel : ViewModel() {
 
     private val categoriesHandler = CoroutineExceptionHandler { _, e ->
         Log.d("CategoriesList", e.toString())
-        viewModelScope.launch() {
+        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 delay(5000L)
                 updateCategories()

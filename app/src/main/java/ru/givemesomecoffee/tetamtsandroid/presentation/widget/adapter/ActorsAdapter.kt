@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Actor
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.ActorUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.ActorViewHolder
 
 class ActorsAdapter(
-    private val actors: List<Actor>
+    private val actors: List<ActorUi>
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

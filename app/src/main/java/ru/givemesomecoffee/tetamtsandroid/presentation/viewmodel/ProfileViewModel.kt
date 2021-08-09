@@ -4,26 +4,25 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
-import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
 
 class ProfileViewModel: ViewModel() {
     private val domain: UserCase = UserCase()
-    val data: LiveData<List<UserWithFavourites>> get() = _data
-    private val _data = MutableLiveData<List<UserWithFavourites>>()
-    fun getUser(id: Int? = 0) {
+    val data: LiveData<UserUi> get() = _data
+    private val _data = MutableLiveData<UserUi>()
+    fun getUser(id: Int = 0) {
         viewModelScope.launch {
 
 
-                withContext(Dispatchers.IO) { _data.postValue(domain.getUser(0)) }
+                withContext(Dispatchers.IO) { _data.postValue(domain.getUser(id)) }
 
         }
     }
 
-    fun init(movieId: Int?) {
-        if (data.value == null) getUser(movieId)
+    fun init(id: Int = 0) {
+        if (data.value == null) getUser(id)
     }
 
 }

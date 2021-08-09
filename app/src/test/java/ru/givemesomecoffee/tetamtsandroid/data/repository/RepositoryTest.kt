@@ -2,7 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.repository
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.CategoriesDataSourceImpl
@@ -18,11 +18,11 @@ class RepositoryTest {
 
     private val movies: List<Movie> =
         MoviesDataSourceImpl().getMovies().sortedBy { it.id }
-    private val moviesUi: List<MovieUi> = MoviesMapper().toMovieUi(movies)
+    private val moviesUi: List<MovieUi> = MoviesMapper.toMovieUi(movies)
 
     private val categories: List<Category> =
         CategoriesDataSourceImpl().getCategories().sortedBy { it.id }
-    private val categoriesUi: List<CategoryUi> = CategoriesMapper().toCategoryUi(categories)
+    private val categoriesUi: List<CategoryUi> = CategoriesMapper.toCategoryUi(categories)
     private lateinit var fakeDatasource: FakeDataSource
     private lateinit var repository: Repository
 
@@ -72,3 +72,4 @@ class RepositoryTest {
     }
 
 }
+

@@ -3,7 +3,6 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.ProfileViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFavouriteAdapter
@@ -73,23 +72,21 @@ class ProfileFragment : Fragment() {
     }
 
 
-
     override fun onDetach() {
         super.onDetach()
         profileFragmentClickListener = null
     }
-    private fun bindData(list: List<UserWithFavourites>?) {
-        val temp = list?.get(0)
-        val user = temp?.user
-        val categories = temp?.categories
-        Log.d("room", user.toString())
-        Log.d("room", categories.toString())
+
+    private fun bindData(user: UserUi?) {
         headerName?.text = user?.name
         headerEmail?.text = user?.email
         inputName?.text = Editable.Factory.getInstance().newEditable(user?.name)
         inputEmail?.text = Editable.Factory.getInstance().newEditable(user?.email)
         inputPassword?.text = Editable.Factory.getInstance().newEditable(user?.password)
-        favouriteCategoriesListView?.adapter = CategoryFavouriteAdapter(categories!!)
+        if (user?.favouriteCategories != null) {
+            favouriteCategoriesListView?.adapter =
+                CategoryFavouriteAdapter(user.favouriteCategories)
+        }
     }
 }
 

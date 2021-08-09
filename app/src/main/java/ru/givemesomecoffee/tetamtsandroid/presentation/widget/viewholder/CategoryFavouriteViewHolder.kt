@@ -11,7 +11,7 @@ class CategoryFavouriteViewHolder(view: View) :
 RecyclerView.ViewHolder(view) {
     private val categoryTitle: TextView = view.findViewById(R.id.category_title)
 
-    fun bind(item: Category) {
+    fun bind(item: CategoryUi) {
         categoryTitle.text = item.title
     }
 }

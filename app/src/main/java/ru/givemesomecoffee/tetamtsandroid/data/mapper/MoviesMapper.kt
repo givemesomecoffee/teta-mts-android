@@ -5,7 +5,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
-class MoviesMapper {
+object MoviesMapper {
 
     fun toMovieUi(list: List<Movie>): List<MovieUi> {
         return list.map {
@@ -35,8 +35,7 @@ class MoviesMapper {
             imageUrl = movie.movie.imageUrl,
             rateScore = movie.movie.rateScore.toFloat(),
             category = categoryTitle,
-            actors = movie.actors
-
+            actors = ActorsMapper.toActorUi(movie.actors)
         )
     }
 

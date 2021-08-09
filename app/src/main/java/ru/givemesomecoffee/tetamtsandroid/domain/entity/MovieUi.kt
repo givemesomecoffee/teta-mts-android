@@ -13,5 +13,5 @@ data class MovieUi(
     val id: Int,
     val categoryId: Int,
     var category: String? = null,
-    val actors: List<Actor>? = null //TODO: write Ui class
+    val actors: List<ActorUi>? = null //TODO: write Ui class
 )

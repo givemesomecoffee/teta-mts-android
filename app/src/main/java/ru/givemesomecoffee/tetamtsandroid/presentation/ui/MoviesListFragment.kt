@@ -147,17 +147,6 @@ class MoviesListFragment : Fragment() {
             LoadingState.Status.SUCCESS -> moviesRefreshSwipeView?.isRefreshing = false
         }
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("list", " view destroyed")
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("list", "destroyed")
-    }
-
-
-
 
         companion object {
         const val CATEGORY = "category_key"
