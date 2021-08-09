@@ -14,15 +14,7 @@ class ProfileViewModel: ViewModel() {
     private val _data = MutableLiveData<UserUi>()
     fun getUser(id: Int = 0) {
         viewModelScope.launch {
-
-
-                withContext(Dispatchers.IO) { _data.postValue(domain.getUser(id)) }
-
+            withContext(Dispatchers.IO) { _data.postValue(domain.getUser(id)) }
         }
     }
-
-    fun init(id: Int = 0) {
-        if (data.value == null) getUser(id)
-    }
-
 }

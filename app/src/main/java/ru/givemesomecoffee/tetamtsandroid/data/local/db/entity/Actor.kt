@@ -2,7 +2,6 @@ package ru.givemesomecoffee.tetamtsandroid.data.local.db.entity
 
 import androidx.room.*
 
-
 @Entity
 class Actor(
     val name: String,
@@ -11,7 +10,6 @@ class Actor(
     @ColumnInfo(name = "actorId")
     val id: Int?,
     )
-
 
 @Entity(primaryKeys = ["movieId", "actorId"])
 data class ActorsToMovies(

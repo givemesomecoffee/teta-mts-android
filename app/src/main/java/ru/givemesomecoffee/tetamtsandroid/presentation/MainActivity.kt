@@ -3,7 +3,6 @@ package ru.givemesomecoffee.tetamtsandroid.presentation
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -42,11 +41,8 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         init()
         mSettings = getSharedPreferences("test", Context.MODE_PRIVATE)
         login = checkLoginStatus()
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            Log.d("navigation", login.toString())
-            Log.d("navigation", destination.label.toString())
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             if (login == null && destination.id == R.id.profileFragment) {
-                Log.d("navigation", "moving to profile")
                 navController.popBackStack()
                 navController.navigate(R.id.action_global_loginFragment)
             }
@@ -103,5 +99,3 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     }
 }
 
-//TODO: добавить крипту сюда и токен в базу. на чек возвращать токен, по токену дергать в переменную логин айдишку. айдишку прокидывать в профиль фрагмент.
-//TODO: вынести в отдельный класс логику авторизации(?) короче подумать как разгрузить активити.

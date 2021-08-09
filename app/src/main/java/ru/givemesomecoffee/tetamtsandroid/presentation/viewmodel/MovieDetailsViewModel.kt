@@ -1,6 +1,5 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

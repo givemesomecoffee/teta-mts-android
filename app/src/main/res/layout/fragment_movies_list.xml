@@ -30,7 +30,6 @@
         android:id="@+id/movie_category_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="@dimen/offset_12"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -75,7 +74,6 @@
         app:layout_constraintStart_toStartOf="@id/swipe_container"
         app:layout_constraintTop_toTopOf="@id/swipe_container" />
 
-
     <TextView
         android:id="@+id/empty_movies_list"
         android:layout_width="match_parent"
@@ -95,4 +93,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

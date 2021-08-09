@@ -7,7 +7,6 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.UserDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
 
 class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
-
     private val moviesDao: MovieDao = db.MovieDao()
     private val categoriesDao: CategoryDao = db.CategoryDao()
     private val userDao: UserDao = db.UserDao()
@@ -24,8 +23,6 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
        return moviesDao.getMovieById(id)
     }
 
-
-
     override fun getAllCategories(): List<Category> {
        return categoriesDao.getAll()
     }
@@ -41,6 +38,4 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
     override fun checkUser(email: String, password: Int): User {
         return userDao.checkUser(email, password)
     }
-
-
 }

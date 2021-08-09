@@ -13,6 +13,7 @@
         android:layout_height="@dimen/item_movie_cover_height"
         android:layout_gravity="center"
         app:cardCornerRadius="@dimen/radius_10"
+        app:cardBackgroundColor="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

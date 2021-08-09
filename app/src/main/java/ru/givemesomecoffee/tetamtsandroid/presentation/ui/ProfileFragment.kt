@@ -1,16 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,13 +16,11 @@ import com.google.android.material.textfield.TextInputEditText
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
-import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.ProfileFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.ProfileViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFavouriteAdapter
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 class ProfileFragment : Fragment() {
-    private var profileFragmentClickListener: ProfileFragmentClickListener? = null
     private val viewModel: ProfileViewModel by viewModels()
     private var headerName: TextView? = null
     private var headerEmail: TextView? = null
@@ -51,16 +45,8 @@ class ProfileFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is Login) {
-          //  profileFragmentClickListener = context
             login = context
         }
-      /*  val callback =
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    profileFragmentClickListener?.profileOnBackPressed()
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)*/
     }
 
     override fun onCreateView(
@@ -68,7 +54,6 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("navigationFragments", "view is created")
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -85,7 +70,6 @@ class ProfileFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        //profileFragmentClickListener = null
         login = null
     }
 
@@ -99,7 +83,6 @@ class ProfileFragment : Fragment() {
             favouriteCategoriesListView?.adapter =
                 CategoryFavouriteAdapter(user.favouriteCategories)
         }
-
     }
 
 }

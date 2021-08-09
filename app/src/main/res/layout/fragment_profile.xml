@@ -102,7 +102,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/profile_password_input"
+                android:id="@+id/profile_email_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_20"
@@ -112,7 +112,7 @@
                 app:layout_constraintTop_toBottomOf="@id/profile_name_input">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/profile_password_input_edit"
+                    android:id="@+id/profile_email_input_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Почта"
@@ -120,7 +120,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/profile_email_input"
+                android:id="@+id/profile_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/offset_20"
@@ -128,10 +128,10 @@
                 app:boxBackgroundColor="@color/grey"
                 app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profile_password_input">
+                app:layout_constraintTop_toBottomOf="@id/profile_email_input">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/profile_email_input_edit"
+                    android:id="@+id/profile_password_input_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Пароль"
@@ -147,7 +147,7 @@
                 app:boxBackgroundColor="@color/grey"
                 app:hintEnabled="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profile_email_input">
+                app:layout_constraintTop_toBottomOf="@id/profile_password_input">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -166,7 +166,6 @@
                 android:textSize="@dimen/space_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_phone_input" />
-
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/profile_settings_menu"
@@ -201,7 +200,6 @@
                 app:layout_constraintTop_toBottomOf="@id/profile_support"
                 app:menu="@menu/profile_support" />
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/exit_login_button"
                 android:layout_width="match_parent"
@@ -222,7 +220,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_support_menu" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

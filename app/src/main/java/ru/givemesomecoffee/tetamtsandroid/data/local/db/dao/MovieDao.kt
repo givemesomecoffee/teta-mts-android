@@ -9,6 +9,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
 
 @Dao
 interface MovieDao {
+
     @Query("SELECT * FROM movies")
     fun getAll(): List<Movie>
 

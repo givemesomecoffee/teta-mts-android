@@ -8,7 +8,6 @@
     android:layout_marginEnd="@dimen/offset_20">
 
     <com.google.android.material.textfield.TextInputLayout
-
         android:id="@+id/profile_email_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +18,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-
             android:id="@+id/profile_email_input_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +35,6 @@
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_email_input">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profile_password_input_edit"
             android:layout_width="match_parent"
@@ -78,6 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_password_input" />
+
     <TextView
         android:id="@+id/login_error_wrong_data"
         android:layout_width="wrap_content"

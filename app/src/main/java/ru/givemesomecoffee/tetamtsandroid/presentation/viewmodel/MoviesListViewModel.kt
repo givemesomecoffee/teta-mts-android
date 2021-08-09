@@ -45,9 +45,7 @@ class MoviesListViewModel : ViewModel() {
                 Log.d("test", Thread.currentThread().toString())
                 try {
                     _loadingState.postValue(LoadingState.LOADING)
-
                     _data.postValue(domain.getMoviesList(categoryId))
-
                     _loadingState.postValue(LoadingState.LOADED)
                 } catch (e: Exception) {
                     _loadingState.postValue(LoadingState.error(e.message))

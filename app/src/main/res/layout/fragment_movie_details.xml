@@ -21,7 +21,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/movie_details_guideline"
             android:layout_width="wrap_content"
@@ -99,7 +98,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
                 <RatingBar
                     android:id="@+id/ratingBar"
                     style="@style/MyRatingBar1"
@@ -111,7 +109,6 @@
                     android:numStars="5"
                     android:rating="4"
                     android:stepSize="1"
-
                     app:layout_constraintStart_toStartOf="@id/movie_title"
                     app:layout_constraintTop_toBottomOf="@id/movie_title" />
 
@@ -126,7 +123,6 @@
                     app:layout_constraintTop_toBottomOf="@id/ratingBar"
                     tools:text="@string/movie_description" />
 
-
                 <TextView
                     android:id="@+id/actors_section_title"
                     android:layout_width="wrap_content"
@@ -138,23 +134,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/movie_description" />
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/actors_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/offset_16"
-                    android:scrollbars="none"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/actors_section_title"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/actor_item"
                     android:layout_marginBottom="@dimen/offset_46"
+                    android:orientation="horizontal"
+                    android:scrollbars="none"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    />
-
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/actors_section_title"
+                    tools:listitem="@layout/actor_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

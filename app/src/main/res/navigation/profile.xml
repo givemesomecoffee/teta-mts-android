@@ -2,11 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profile"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/profileFragment"
+    xmlns:tools="http://schemas.android.com/tools">
     <fragment
         android:id="@+id/profileFragment"
         android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragment"
-        android:label="ProfileFragment">
-    </fragment>
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"
+        />
 
 </navigation>

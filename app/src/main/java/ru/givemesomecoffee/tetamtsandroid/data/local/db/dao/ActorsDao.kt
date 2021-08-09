@@ -7,6 +7,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.ActorsToMovies
 
 @Dao
 interface ActorsDao {
+
     @Insert
     fun setActors(actors: List<Actor>)
 

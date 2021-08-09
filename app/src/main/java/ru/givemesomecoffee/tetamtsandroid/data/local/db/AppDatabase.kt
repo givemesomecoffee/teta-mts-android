@@ -21,7 +21,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
         Actor::class, ActorsToMovies::class],
     version = 1
 )
-//@TypeConverters(Converters::class)
+
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun MovieDao(): MovieDao
