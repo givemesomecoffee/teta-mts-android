@@ -10,8 +10,8 @@
         android:layout_width="@dimen/actor_photo_width"
         android:layout_height="@dimen/actor_photo_height"
         android:layout_gravity="center"
-        app:cardCornerRadius="@dimen/radius_10"
         app:cardBackgroundColor="@color/grey"
+        app:cardCornerRadius="@dimen/radius_10"
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,13 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_12"
-        android:fontFamily="@font/roboto_medium"
         android:maxLines="1"
-        android:text="@string/actor_name1"
         android:textSize="@dimen/space_12"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_cover_wrapper"
-        tools:text="Гнев человеческий " />
+        tools:text="@string/actor_name1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!-- TODO: checl fonts -->

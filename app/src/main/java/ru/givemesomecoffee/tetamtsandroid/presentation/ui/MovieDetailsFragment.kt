@@ -24,10 +24,6 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsVie
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.ActorsAdapter
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
-//TODO:
-// clean mess
-// try cliptobounds
-// write tests
 
 class MovieDetailsFragment : Fragment() {
     private var categoryTitle: TextView? = null

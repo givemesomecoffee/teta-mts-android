@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private var mSettings: SharedPreferences? = null
     private var login: String? = null
     private var lastItemView: BottomNavigationItemView? = null
+    val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+    val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
 
     private fun init() {
         val navHostFragment = supportFragmentManager
@@ -39,7 +44,14 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
-        mSettings = getSharedPreferences("test", Context.MODE_PRIVATE)
+      //  mSettings = getSharedPreferences("test", Context.MODE_PRIVATE)
+        mSettings = EncryptedSharedPreferences.create(
+            "test",
+            masterKeyAlias,
+            this,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
         login = checkLoginStatus()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (login == null && destination.id == R.id.profileFragment) {
@@ -52,6 +64,14 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     override fun onMovieCardClicked(id: Int) {
         val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(id)
         navController.navigate(action)
+    }
+
+    override fun homeOnBackPressed(category: Int) {
+        if (category != 0) {
+            navController.navigate(navController.graph.findStartDestination().id)
+        } else {
+            finishAffinity()
+        }
     }
 
     private fun checkLoginStatus(): String? {
@@ -98,4 +118,5 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         login = id.toString()
     }
 }
+
 
