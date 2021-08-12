@@ -16,6 +16,6 @@ interface LocalDatasource {
 
     fun getUser(id:Int): UserWithFavourites
 
-    fun checkUser(email: String, password: Int): User
+    fun checkUser(email: String, password: String): User?
 
 }

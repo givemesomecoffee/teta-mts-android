@@ -20,7 +20,7 @@ class MovieDetailsViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _loadingState.value = LOADING
-                withContext(Dispatchers.IO) { _data.postValue(domain.getMovieById(id!!)) }
+                withContext(Dispatchers.IO) { _data.postValue(id?.let { domain.getMovieById(it) }) }
                 _loadingState.value = LOADED
             } catch (e: Exception) {
                 _loadingState.value = LoadingState.error(e.message)

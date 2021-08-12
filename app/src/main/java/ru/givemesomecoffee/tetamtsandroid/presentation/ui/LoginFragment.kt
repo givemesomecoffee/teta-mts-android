@@ -28,7 +28,7 @@ class LoginFragment : Fragment() {
         passwordEditText = requireView().findViewById(R.id.profile_password_input_edit)
         errorEmptyView = requireView().findViewById(R.id.login_error_empty)
         errorWrongDataView = requireView().findViewById(R.id.login_error_wrong_data)
-        confirmLoginButton!!.setOnClickListener {
+        confirmLoginButton?.setOnClickListener {
             clearErrors()
             checkUser()
         }
@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
         if (email.isEmpty() || password.isEmpty()) {
             errorEmptyView?.visibility = View.VISIBLE
         } else {
-            val check: Int? = UserCase().checkUser(email, password.toInt())
+            val check: Int? = UserCase().checkUser(email, password)
             if (check != null) {
                 login?.saveLogin(check)
                 login?.showProfile()

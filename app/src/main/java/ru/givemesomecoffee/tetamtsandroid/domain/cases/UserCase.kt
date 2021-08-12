@@ -10,7 +10,7 @@ class UserCase {
         return repository.getUser(id)
     }
 
-    fun checkUser(email:String, password: Int): Int?{
+    fun checkUser(email:String, password: String): Int?{
         return repository.checkUser(email, password)
     }
 

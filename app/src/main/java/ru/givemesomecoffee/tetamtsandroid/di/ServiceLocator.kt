@@ -1,8 +1,8 @@
 package ru.givemesomecoffee.tetamtsandroid.di
 
 
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
 import ru.givemesomecoffee.tetamtsandroid.data.repository.Repository
 
 object ServiceLocator {

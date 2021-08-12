@@ -6,7 +6,7 @@ data class MovieUi(
     val rateScore: Float,
     val ageRestriction: String,
     val imageUrl: String,
-    val id: Int,
+    val id: Int?,
     val categoryId: Int,
     var category: String? = null,
     val actors: List<ActorUi>? = null

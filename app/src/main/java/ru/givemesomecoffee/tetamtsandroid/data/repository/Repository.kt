@@ -1,6 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
+import ru.givemesomecoffee.tetamtsandroid.data.mapper.ActorsMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.UserMapper
@@ -11,15 +12,22 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 class Repository(
     private val localDatasource: LocalDatasource
 ) {
+
+    /*feels like this initialisation will be reworked later with tests integration*/
+    private val moviesMapper by lazy { MoviesMapper() }
+    private val categoriesMapper by lazy { CategoriesMapper() }
+    private val userMapper by lazy { UserMapper() }
+    private val actorsMapper by lazy { ActorsMapper() }
+
     private fun getNewCategoriesDataset(): List<CategoryUi> {
-        return CategoriesMapper.toCategoryUi(localDatasource.getAllCategories())
+        return categoriesMapper.toCategoryUi(localDatasource.getAllCategories())
     }
 
     private fun getNewMoviesDataset(id: Int = 0): List<MovieUi> {
         return if (id == 0) {
-            MoviesMapper.toMovieUi(localDatasource.getAllMovies())
+            moviesMapper.toMovieUi(localDatasource.getAllMovies())
         } else {
-            MoviesMapper.toMovieUi(localDatasource.getMoviesByCategory(id))
+            moviesMapper.toMovieUi(localDatasource.getMoviesByCategory(id))
         }
     }
 
@@ -30,7 +38,7 @@ class Repository(
     fun getMovie(id: Int): MovieUi {
         val movie = localDatasource.getMovieById(id)
         val category = getCategoryTitle(movie.movie.categoryId)
-        return MoviesMapper.toMovieUi(movie, category)
+        return moviesMapper.toMovieUi(movie, category, actorsMapper)
     }
 
     fun getCategoriesList(): List<CategoryUi> {
@@ -42,15 +50,10 @@ class Repository(
     }
 
     fun getUser(id: Int = 0): UserUi {
-        return UserMapper.toUserUi(localDatasource.getUser(id))
+        return userMapper.toUserUi(localDatasource.getUser(id), categoriesMapper)
     }
 
-    fun checkUser(email: String, password: Int): Int? {
-        val user = localDatasource.checkUser(email, password)
-        return if (user != null) {
-            user.userId
-        } else {
-            null
-        }
+    fun checkUser(email: String, password: String): Int? {
+        return localDatasource.checkUser(email, password)?.userId
     }
 }

@@ -5,7 +5,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
-object MoviesMapper {
+class MoviesMapper {
 
     fun toMovieUi(list: List<Movie>): List<MovieUi> {
         return list.map {
@@ -15,7 +15,7 @@ object MoviesMapper {
 
     private fun toMovieUi(movie: Movie): MovieUi {
         return MovieUi(
-            id = movie.id!!,
+            id = movie.id,
             title = movie.title,
             description = movie.description,
             categoryId = movie.categoryId,
@@ -25,7 +25,11 @@ object MoviesMapper {
         )
     }
 
-    fun toMovieUi(movie: MovieWithActors, categoryTitle: String? = null): MovieUi {
+    fun toMovieUi(
+        movie: MovieWithActors,
+        categoryTitle: String? = null,
+        actorsMapper: ActorsMapper
+    ): MovieUi {
         return MovieUi(
             id = movie.movie.id!!,
             title = movie.movie.title,
@@ -35,7 +39,7 @@ object MoviesMapper {
             imageUrl = movie.movie.imageUrl,
             rateScore = movie.movie.rateScore.toFloat(),
             category = categoryTitle,
-            actors = ActorsMapper.toActorUi(movie.actors)
+            actors = actorsMapper.toActorUi(movie.actors)
         )
     }
 

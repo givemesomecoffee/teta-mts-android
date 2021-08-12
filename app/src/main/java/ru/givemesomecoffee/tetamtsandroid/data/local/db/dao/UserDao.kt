@@ -17,7 +17,7 @@ interface UserDao {
     fun getUserData(id: Int): UserWithFavourites
 
     @Query("SELECT * FROM users WHERE email == :email AND password == :password")
-    fun checkUser(email: String?, password: Int?): User
+    fun checkUser(email: String?, password: String?): User
 
     @Insert
     fun setUser(user: User)

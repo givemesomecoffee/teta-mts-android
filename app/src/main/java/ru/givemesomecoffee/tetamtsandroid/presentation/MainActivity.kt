@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private var mSettings: SharedPreferences? = null
     private var login: String? = null
     private var lastItemView: BottomNavigationItemView? = null
-    val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
-    val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+    private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+    private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
 
     private fun init() {
         val navHostFragment = supportFragmentManager
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
-      //  mSettings = getSharedPreferences("test", Context.MODE_PRIVATE)
+        //  mSettings = getSharedPreferences("test", Context.MODE_PRIVATE)
         mSettings = EncryptedSharedPreferences.create(
             "test",
             masterKeyAlias,
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     }
 
     private fun checkLoginStatus(): String? {
-        return mSettings!!.getString("KEY_INT", null)
+        return mSettings?.getString("KEY_INT", null)
     }
 
     private fun clearLoginData() {
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         val firstItemView = bottomNavigationMenuView.getChildAt(0) as BottomNavigationItemView
         firstItemView.addView(firstItemViewLayout)
         lastItemView = bottomNavigationMenuView.getChildAt(1) as BottomNavigationItemView
-        lastItemView!!.addView(lastItemViewLayout)
+        lastItemView?.addView(lastItemViewLayout)
         firstItemViewLayout.isSelected = true
     }
 

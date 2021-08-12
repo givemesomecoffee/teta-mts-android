@@ -8,7 +8,6 @@ import androidx.room.Relation
 @Entity(tableName = "categories")
 data class Category(
 
-
     @ColumnInfo(name = "title")
     val title: String,
 
