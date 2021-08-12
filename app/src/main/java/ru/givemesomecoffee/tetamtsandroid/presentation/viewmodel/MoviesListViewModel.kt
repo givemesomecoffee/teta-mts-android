@@ -39,7 +39,7 @@ class MoviesListViewModel : ViewModel() {
         }
     }
 
-    fun updateMoviesListByCategory(categoryId: Int = 0) {
+    fun updateMoviesListByCategory(categoryId: Int? = null) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 Log.d("test", Thread.currentThread().toString())

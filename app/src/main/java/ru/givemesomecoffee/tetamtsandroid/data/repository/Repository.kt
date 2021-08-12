@@ -23,8 +23,8 @@ class Repository(
         return categoriesMapper.toCategoryUi(localDatasource.getAllCategories())
     }
 
-    private fun getNewMoviesDataset(id: Int = 0): List<MovieUi> {
-        return if (id == 0) {
+    private fun getNewMoviesDataset(id: Int?): List<MovieUi> {
+        return if (id == null) {
             moviesMapper.toMovieUi(localDatasource.getAllMovies())
         } else {
             moviesMapper.toMovieUi(localDatasource.getMoviesByCategory(id))
@@ -45,7 +45,7 @@ class Repository(
         return getNewCategoriesDataset()
     }
 
-    fun getMoviesList(id: Int = 0): List<MovieUi> {
+    fun getMoviesList(id: Int?): List<MovieUi> {
         return getNewMoviesDataset(id)
     }
 

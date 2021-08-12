@@ -9,7 +9,7 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 class MoviesListCases {
     private val repository: Repository = App.repository
 
-    fun getMoviesList(id: Int = 0): List<MovieUi> {
+    fun getMoviesList(id: Int?): List<MovieUi> {
         Log.d("test", Thread.currentThread().toString())
         return repository.getMoviesList(id)
     }

@@ -35,7 +35,7 @@ class MoviesListFragment : Fragment() {
     private var moviesRefreshSwipeView: SwipeRefreshLayout? = null
     private lateinit var errorHandlerView: TextView
     private var moviesList: List<MovieUi>? = null
-    private var category = 0
+    private var category: Int? = null
     private val viewModel: MoviesListViewModel by viewModels()
 
     private fun init() {
@@ -63,7 +63,7 @@ class MoviesListFragment : Fragment() {
                 override fun handleOnBackPressed() {
                     Log.d("back", category.toString())
                     moviesListFragmentClickListener?.homeOnBackPressed(category)
-                    category = 0
+                    category = null
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
@@ -81,7 +81,7 @@ class MoviesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (savedInstanceState != null) {
-            category = savedInstanceState.getInt(CATEGORY, 0)
+            category = savedInstanceState.getInt(CATEGORY)
         }
         viewModel.init()
         init()
@@ -98,8 +98,11 @@ class MoviesListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(CATEGORY, category)
-        Log.d("list", "saved")
+        if (category == null) {
+            outState.remove(CATEGORY)
+        } else {
+            outState.putInt(CATEGORY, category!!)
+        }
     }
 
     override fun onDetach() {
@@ -119,10 +122,10 @@ class MoviesListFragment : Fragment() {
     private fun setCategoryAdapter(): CategoryAdapter {
         return CategoryAdapter(
             listOf(),
-            itemClick = { categoryId: Int -> onCategoryClicked(categoryId) })
+            itemClick = { categoryId: Int? -> onCategoryClicked(categoryId) })
     }
 
-    private fun onCategoryClicked(categoryId: Int) {
+    private fun onCategoryClicked(categoryId: Int?) {
         moviesListView.scrollToPosition(0)
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
@@ -158,7 +161,7 @@ class MoviesListFragment : Fragment() {
         }
     }
 
-        companion object {
+    companion object {
         const val CATEGORY = "category_key"
     }
 }

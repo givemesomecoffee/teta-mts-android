@@ -66,11 +66,11 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         navController.navigate(action)
     }
 
-    override fun homeOnBackPressed(category: Int) {
-        if (category != 0) {
-            navController.navigate(navController.graph.findStartDestination().id)
-        } else {
+    override fun homeOnBackPressed(category: Int?) {
+        if (category == null) {
             finishAffinity()
+        } else {
+            navController.navigate(navController.graph.findStartDestination().id)
         }
     }
 

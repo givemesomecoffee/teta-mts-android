@@ -15,7 +15,7 @@ const val TYPE_HEADER = 0
 
 class CategoryAdapter(
     private var dataset: List<CategoryUi>,
-    private val itemClick: ((Int) -> Unit)?
+    private val itemClick: ((Int?) -> Unit)?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
