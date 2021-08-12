@@ -3,6 +3,7 @@ package ru.givemesomecoffee.tetamtsandroid.presentation
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private lateinit var bottomNavigationBar: BottomNavigationView
     private lateinit var navController: NavController
     private var mSettings: SharedPreferences? = null
-    private var login: String? = null
+    private var login: Int? = null
     private var lastItemView: BottomNavigationItemView? = null
     private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
     private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
@@ -74,12 +75,12 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         }
     }
 
-    private fun checkLoginStatus(): String? {
-        return mSettings?.getString("KEY_INT", null)
+    private fun checkLoginStatus(): Int? {
+        return mSettings?.getString("KEY_INT", null)?.toInt()
     }
 
     private fun clearLoginData() {
-        mSettings?.edit()?.putString("KEY_INT", null)?.apply()
+        mSettings?.edit()?.remove("KEY_INT")?.apply()
         login = null
     }
 
@@ -115,7 +116,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     override fun saveLogin(id: Int) {
         mSettings?.edit()?.putString("KEY_INT", id.toString())?.apply()
-        login = id.toString()
+        login = id
     }
 }
 

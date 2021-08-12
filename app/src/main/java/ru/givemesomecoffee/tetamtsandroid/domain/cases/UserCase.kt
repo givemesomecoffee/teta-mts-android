@@ -5,7 +5,7 @@ import ru.givemesomecoffee.tetamtsandroid.App.Companion.repository
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
 class UserCase {
-    fun getUser(id: Int = 0): UserUi {
+    fun getUser(id: Int): UserUi {
         Log.d("test", Thread.currentThread().toString())
         return repository.getUser(id)
     }

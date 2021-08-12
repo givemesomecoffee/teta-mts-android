@@ -49,7 +49,7 @@ class Repository(
         return getNewMoviesDataset(id)
     }
 
-    fun getUser(id: Int = 0): UserUi {
+    fun getUser(id: Int): UserUi {
         return userMapper.toUserUi(localDatasource.getUser(id), categoriesMapper)
     }
 
