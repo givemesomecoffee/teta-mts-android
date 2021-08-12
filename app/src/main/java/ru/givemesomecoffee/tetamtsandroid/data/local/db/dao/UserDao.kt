@@ -1,9 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.local.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.User
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserFavourites
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
@@ -24,4 +21,10 @@ interface UserDao {
 
     @Insert
     fun setUserFavourites(favourites: List<UserFavourites>)
+
+    @Query("UPDATE users SET token = :token WHERE userId == :id")
+    fun changeUserToken(token: String?, id: Int)
+
+    @Query("SELECT userId FROM users WHERE token == :token")
+    fun getUserId(token: String?): Int?
 }

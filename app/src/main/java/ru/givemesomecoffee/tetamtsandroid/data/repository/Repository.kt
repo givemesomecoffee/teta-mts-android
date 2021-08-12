@@ -56,4 +56,16 @@ class Repository(
     fun checkUser(email: String, password: String): Int? {
         return localDatasource.checkUser(email, password)?.userId
     }
+
+    fun changeToken(token: String?, id: Int) {
+        localDatasource.changeUserToken(token, id)
+    }
+
+    fun getUserIdByToken(token: String?): Int? {
+       return localDatasource.getUserId(token)
+    }
+
+    fun saveNewUser(userUi: UserUi) {
+        localDatasource.saveNewUser(userMapper.toUser(userUi))
+    }
 }

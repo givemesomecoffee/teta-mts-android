@@ -1,10 +1,10 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.entity
 
 data class UserUi(
-    val id: Int?,
+    val id: Int? = null,
     val name: String,
     val email: String,
     val password: String,
-    val phone: Int?,
-    val favouriteCategories: List<CategoryUi>?
+    val phone: Int? = null,
+    val favouriteCategories: List<CategoryUi>? = null
 )

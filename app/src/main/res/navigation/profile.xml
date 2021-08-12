@@ -9,6 +9,10 @@
         android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"
-        />
+        >
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

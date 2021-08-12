@@ -38,4 +38,16 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
     override fun checkUser(email: String, password: String): User {
         return userDao.checkUser(email, password)
     }
+
+    override fun changeUserToken(token: String?, id:Int) {
+        userDao.changeUserToken(token, id)
+    }
+
+    override fun getUserId(token: String?): Int? {
+        return userDao.getUserId(token)
+    }
+
+    override fun saveNewUser(user: User) {
+        userDao.setUser(user)
+    }
 }

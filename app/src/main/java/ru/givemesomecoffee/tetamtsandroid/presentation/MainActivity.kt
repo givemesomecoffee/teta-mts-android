@@ -1,9 +1,8 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+import android.text.Layout
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -15,10 +14,13 @@ import androidx.security.crypto.MasterKeys
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import ru.givemesomecoffee.tetamtsandroid.App
+import ru.givemesomecoffee.tetamtsandroid.NavGraphDirections
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
+import ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragment
 
 
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
@@ -30,6 +32,11 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private var lastItemView: BottomNavigationItemView? = null
     private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
     private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+
+
+    //TODO: implement shared viewModel for login/register feature
+    // rewrite register check to check only email
+    // add phone, name, categories to register field
 
     private fun init() {
         val navHostFragment = supportFragmentManager
@@ -45,14 +52,16 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
-        //  mSettings = getSharedPreferences("test", Context.MODE_PRIVATE)
+
         mSettings = EncryptedSharedPreferences.create(
-            "test",
+            "UserPref",
             masterKeyAlias,
             this,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
+
+        //swapping login/profile fragments
         login = checkLoginStatus()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (login == null && destination.id == R.id.profileFragment) {
@@ -75,18 +84,39 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         }
     }
 
-    private fun checkLoginStatus(): Int? {
-        return mSettings?.getString("KEY_INT", null)?.toInt()
+    override fun showProfile() {
+        navController.popBackStack()
+        navController.navigate(R.id.action_global_profileFragment)
     }
 
-    private fun clearLoginData() {
-        mSettings?.edit()?.remove("KEY_INT")?.apply()
-        login = null
+    override fun saveLogin(id: Int, token: String) {
+        App.repository.changeToken(token, id)
+        mSettings?.edit()?.putString("USER_ID", token)?.apply()
+        login = id
+    }
+
+    override fun onRegisterComplete() {
+        navController.popBackStack()
+    }
+
+    override fun getUserId(): Int? {
+        return login
     }
 
     override fun exitLogin() {
         clearLoginData()
         lastItemView?.performClick()
+    }
+
+    private fun checkLoginStatus(): Int? {
+        val token = mSettings?.getString("USER_ID", null)
+       return App.repository.getUserIdByToken(token)
+    }
+
+    private fun clearLoginData() {
+        mSettings?.edit()?.remove("USER_ID")?.apply()
+        login?.let { App.repository.changeToken(null, it) }
+        login = null
     }
 
     private fun setupMenuItemCustomView() {
@@ -109,15 +139,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         firstItemViewLayout.isSelected = true
     }
 
-    override fun showProfile() {
-        navController.popBackStack()
-        navController.navigate(R.id.action_global_profileFragment)
-    }
-
-    override fun saveLogin(id: Int) {
-        mSettings?.edit()?.putString("KEY_INT", id.toString())?.apply()
-        login = id
-    }
 }
 
 

@@ -27,7 +27,7 @@ class ProfileFragment : Fragment() {
     private var inputName: TextInputEditText? = null
     private var inputEmail: TextInputEditText? = null
     private var inputPassword: TextInputEditText? = null
-    private var favouriteCategoriesListView: RecyclerView? = null
+    private lateinit var favouriteCategoriesListView: RecyclerView
     private var exitLoginButton: MaterialButton? = null
     private var login: Login? = null
 
@@ -38,8 +38,8 @@ class ProfileFragment : Fragment() {
         inputEmail = view?.findViewById(R.id.profile_email_input_edit)
         inputPassword = view?.findViewById(R.id.profile_password_input_edit)
         favouriteCategoriesListView = requireView().findViewById(R.id.profile_favourite_list)
-        favouriteCategoriesListView!!.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
         exitLoginButton = requireView().findViewById(R.id.exit_login_button)
+        favouriteCategoriesListView.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
     }
 
     override fun onAttach(context: Context) {
@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        viewModel.getUser(0)
+        login?.getUserId()?.let { viewModel.getUser(it) }
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
 
         exitLoginButton?.setOnClickListener {
@@ -80,9 +80,10 @@ class ProfileFragment : Fragment() {
         inputEmail?.text = Editable.Factory.getInstance().newEditable(user?.email)
         inputPassword?.text = Editable.Factory.getInstance().newEditable(user?.password)
         if (user?.favouriteCategories != null) {
-            favouriteCategoriesListView?.adapter =
+            favouriteCategoriesListView.adapter =
                 CategoryFavouriteAdapter(user.favouriteCategories)
         }
+
     }
 
 }

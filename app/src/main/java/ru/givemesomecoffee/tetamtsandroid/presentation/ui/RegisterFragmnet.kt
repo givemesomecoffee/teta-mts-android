@@ -7,20 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
     private var confirmLoginButton: MaterialButton? = null
     private var emailEditText: TextInputEditText? = null
     private var passwordEditText: TextInputEditText? = null
     private var errorEmptyView: TextView? = null
     private var errorWrongDataView: TextView? = null
-    private var toRegisterButtonView: MaterialButton? = null
     private var login: Login? = null
 
     private fun init() {
@@ -29,13 +28,9 @@ class LoginFragment : Fragment() {
         passwordEditText = requireView().findViewById(R.id.profile_password_input_edit)
         errorEmptyView = requireView().findViewById(R.id.login_error_empty)
         errorWrongDataView = requireView().findViewById(R.id.login_error_wrong_data)
-        toRegisterButtonView = requireView().findViewById(R.id.to_register_button)
         confirmLoginButton?.setOnClickListener {
             clearErrors()
             checkUser()
-        }
-        toRegisterButtonView?.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
 
@@ -50,7 +45,7 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_login, container, false)
+        return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,10 +66,10 @@ class LoginFragment : Fragment() {
         } else {
             val check: Int? = UserCase().checkUser(email, password)
             if (check != null) {
-                login?.saveLogin(check, getToken())
-                login?.showProfile()
-            } else {
                 errorWrongDataView?.visibility = View.VISIBLE
+            } else {
+                UserCase().saveNewUser(UserUi(name = "test", email = email, password = password))
+                login?.onRegisterComplete()
             }
         }
     }
@@ -84,10 +79,4 @@ class LoginFragment : Fragment() {
         errorWrongDataView?.visibility = View.INVISIBLE
     }
 
-    fun getToken(length: Int = 16) : String {
-        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
-            .map { allowedChars.random() }
-            .joinToString("")
-    }
 }

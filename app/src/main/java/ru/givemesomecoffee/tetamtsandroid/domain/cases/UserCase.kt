@@ -14,4 +14,8 @@ class UserCase {
         return repository.checkUser(email, password)
     }
 
+    fun saveNewUser(userUi: UserUi) {
+        repository.saveNewUser(userUi)
+    }
+
 }

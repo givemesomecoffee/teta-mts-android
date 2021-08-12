@@ -18,4 +18,9 @@ interface LocalDatasource {
 
     fun checkUser(email: String, password: String): User?
 
+    fun changeUserToken(token: String?, id: Int)
+
+    fun getUserId(token: String?): Int?
+
+    fun saveNewUser(user: User)
 }

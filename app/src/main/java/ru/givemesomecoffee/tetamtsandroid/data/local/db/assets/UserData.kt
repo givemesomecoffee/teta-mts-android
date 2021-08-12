@@ -6,7 +6,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserFavourites
 
 fun getUser(): User {
 
-    return User(0, "Anatoliy", "test@test.ru", "123456", null)
+    return User(0, "Anatoliy", "test@test.ru", "123456", null, null)
 }
 
 fun getUserFavourites(): List<UserFavourites> {
