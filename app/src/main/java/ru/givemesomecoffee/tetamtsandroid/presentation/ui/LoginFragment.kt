@@ -2,29 +2,27 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 
 class LoginFragment : Fragment() {
+    private var login: Login? = null
+    private val userCase = UserCase() //TODO: remove dependency
     private var confirmLoginButton: MaterialButton? = null
     private var emailView: TextInputLayout? = null
     private var passwordView: TextInputLayout? = null
     private var errorEmptyView: TextView? = null
     private var errorWrongDataView: TextView? = null
     private var toRegisterButtonView: MaterialButton? = null
-    private var login: Login? = null
 
     private fun init() {
         confirmLoginButton = requireView().findViewById(R.id.confirm_login_button)
@@ -38,6 +36,7 @@ class LoginFragment : Fragment() {
             clearErrors()
             checkUser()
         }
+
         toRegisterButtonView?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
@@ -74,7 +73,7 @@ class LoginFragment : Fragment() {
         if (email.isEmpty() || password.isEmpty()) {
             errorEmptyView?.visibility = View.VISIBLE
         } else {
-            val check: Int? = UserCase().checkUser(email, password)
+            val check: Int? = userCase.checkUser(email, password)
             if (check != null) {
                 login?.saveLogin(check, getToken())
                 login?.showProfile()
@@ -95,6 +94,5 @@ class LoginFragment : Fragment() {
             .map { allowedChars.random() }
             .joinToString("")
     }
-
 
 }

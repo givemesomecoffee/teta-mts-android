@@ -16,11 +16,17 @@ class RegisterViewModel : ViewModel() {
     val data: LiveData<List<CategoryUi>> get() = _data
     private val _data = MutableLiveData<List<CategoryUi>>()
 
-    fun getCategories() {
+    private fun getCategories() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _data.postValue(domain.getCategoriesList())
             }
+        }
+    }
+
+    fun init(){
+        if (data.value == null){
+            getCategories()
         }
     }
 }

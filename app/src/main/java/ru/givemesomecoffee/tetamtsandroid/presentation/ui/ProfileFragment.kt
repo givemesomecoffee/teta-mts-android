@@ -62,7 +62,6 @@ class ProfileFragment : Fragment() {
         init()
         login?.getUserId()?.let { viewModel.initUser(it) }
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
-
         exitLoginButton?.setOnClickListener {
             login?.exitLogin()
         }

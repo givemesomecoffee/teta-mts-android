@@ -19,17 +19,19 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFrag
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.Authorisation
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
 
+private const val USER_TOKEN = "user_token"
+private const val PREF_FILE_NAME = "UserPref"
 
 class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     Login {
-    private lateinit var bottomNavigationBar: BottomNavigationView
-    private lateinit var navController: NavController
     private val authorisationController = Authorisation()
-    private var mSettings: SharedPreferences? = null
     private var login: Int? = null
-    private var lastItemView: BottomNavigationItemView? = null
+    private var mSettings: SharedPreferences? = null
     private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
     private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+    private lateinit var bottomNavigationBar: BottomNavigationView
+    private lateinit var navController: NavController
+    private var lastItemView: BottomNavigationItemView? = null
 
     private fun init() {
         val navHostFragment = supportFragmentManager
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         init()
 
         mSettings = EncryptedSharedPreferences.create(
-            "UserPref",
+            PREF_FILE_NAME,
             masterKeyAlias,
             this,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     override fun saveLogin(id: Int, token: String) {
         authorisationController.setNewToken(token, id)
-        mSettings?.edit()?.putString("USER_TOKEN", token)?.apply()
+        mSettings?.edit()?.putString(USER_TOKEN, token)?.apply()
         login = id
     }
 
@@ -102,12 +104,12 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     }
 
     private fun checkLoginStatus(): Int? {
-        val token = mSettings?.getString("USER_TOKEN", null)
+        val token = mSettings?.getString(USER_TOKEN, null)
         return token?.let { authorisationController.getUserId(it) }
     }
 
     private fun clearLoginData() {
-        mSettings?.edit()?.remove("USER_TOKEN")?.apply()
+        mSettings?.edit()?.remove(USER_TOKEN)?.apply()
         login?.let { authorisationController.deleteToken(it) }
         login = null
     }

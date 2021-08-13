@@ -25,18 +25,20 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFa
 import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 class RegisterFragment : Fragment() {
-    private var confirmLoginButton: MaterialButton? = null
-    private var emailView: TextInputLayout? = null
-    private var passwordView: TextInputLayout? = null
-    private var nameView: TextInputLayout? = null
-    private var errorWrongDataView: TextView? = null
     private var login: Login? = null
-    private var nameInput: TextInputEditText? = null
-    private var passwordInput: TextInputEditText? = null
-    private var emailInput: TextInputEditText? = null
-    private var favouriteCategoriesList: RecyclerView? = null
-    private val favouriteCategories: MutableList<Int> = mutableListOf()
     private val viewModel: RegisterViewModel by viewModels()
+    private var favouriteCategoriesList: RecyclerView? = null
+    private var favouriteCategoriesListAdapter: CategoryFavouriteAdapter? = null
+    private var errorWrongDataView: TextView? = null
+    private var nameView: TextInputLayout? = null
+    private var nameInput: TextInputEditText? = null
+    private var passwordView: TextInputLayout? = null
+    private var passwordInput: TextInputEditText? = null
+    private var emailView: TextInputLayout? = null
+    private var emailInput: TextInputEditText? = null
+    private var confirmLoginButton: MaterialButton? = null
+    private val favouriteCategories: MutableList<Int> = mutableListOf()
+
 
     private fun init() {
         confirmLoginButton = requireView().findViewById(R.id.confirm_login_button)
@@ -45,7 +47,7 @@ class RegisterFragment : Fragment() {
         nameView = requireView().findViewById(R.id.profile_name_input)
         errorWrongDataView = requireView().findViewById(R.id.login_error_wrong_data)
         favouriteCategoriesList = requireView().findViewById(R.id.profile_favourite_list)
-        viewModel.getCategories()
+        viewModel.init()
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindCategories))
         favouriteCategoriesList!!.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
         confirmLoginButton?.setOnClickListener {
@@ -58,24 +60,6 @@ class RegisterFragment : Fragment() {
         nameInput!!.doOnTextChanged { text, start, before, count -> validateUserName() }
         passwordInput!!.doOnTextChanged { text, start, before, count -> validatePassword() }
         emailInput!!.doOnTextChanged { text, start, before, count -> validateEmail() }
-    }
-
-    private fun bindCategories(list: List<CategoryUi>?) {
-        favouriteCategoriesList!!.adapter =
-            list?.let {
-                CategoryFavouriteAdapter(
-                    it,
-                    itemClick = { categoryId: Int -> onCategoryClicked(categoryId) })
-            }
-    }
-
-    private fun onCategoryClicked(categoryId: Int) {
-        try {
-            favouriteCategories.first { it == categoryId }
-            favouriteCategories.remove(categoryId)
-        } catch (e: NoSuchElementException) {
-            favouriteCategories.add(categoryId)
-        }
     }
 
     override fun onAttach(context: Context) {
@@ -100,6 +84,27 @@ class RegisterFragment : Fragment() {
     override fun onDetach() {
         login = null
         super.onDetach()
+    }
+
+
+    private fun bindCategories(list: List<CategoryUi>?) {
+        favouriteCategoriesListAdapter =
+            list?.let {
+                CategoryFavouriteAdapter(
+                    it,
+                    itemClick = { categoryId: Int -> onCategoryClicked(categoryId) })
+            }
+
+        favouriteCategoriesList!!.adapter = favouriteCategoriesListAdapter
+    }
+
+    private fun onCategoryClicked(categoryId: Int) {
+        try {
+            favouriteCategories.first { it == categoryId }
+            favouriteCategories.remove(categoryId)
+        } catch (e: NoSuchElementException) {
+            favouriteCategories.add(categoryId)
+        }
     }
 
     private fun checkUser() {
@@ -129,10 +134,10 @@ class RegisterFragment : Fragment() {
     private fun validateEmail(): Boolean {
         val email = emailView?.editText?.text.toString()
         if (email.isEmpty()) {
-            emailView?.error = "Email не должен быть пустым"
+            emailView?.error = getString(R.string.register_empty_email_error_text)
             return false
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailView?.error = "Email введен некорректно"
+            emailView?.error = getString(R.string.register_wrong_email_error_text)
             return false
         }
         emailView?.error = null
@@ -142,10 +147,10 @@ class RegisterFragment : Fragment() {
     private fun validatePassword(): Boolean {
         val password = passwordView?.editText?.text.toString()
         if (password.isEmpty()) {
-            passwordView?.error = "Пароль не должен быть пустым"
+            passwordView?.error = getString(R.string.register_empty_password_error_text)
             return false
         } else if (password.length < 6) {
-            passwordView?.error = "Пароль олжен содержать минимум 6 символов"
+            passwordView?.error = getString(R.string.register_short_password_error_text)
             return false
         }
         passwordView?.error = null
@@ -155,7 +160,7 @@ class RegisterFragment : Fragment() {
     private fun validateUserName(): Boolean {
         val name = nameView?.editText?.text.toString()
         if (name.isEmpty()) {
-            nameView?.error = "Имя не может быть пустым"
+            nameView?.error = getString(R.string.register_empty_name_error_text)
             return false
         }
         nameView?.error = null
