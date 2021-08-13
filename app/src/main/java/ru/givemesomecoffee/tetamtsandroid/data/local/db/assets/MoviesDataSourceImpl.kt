@@ -5,7 +5,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 
 class MoviesDataSourceImpl {
     fun getMovies(): List<Movie> = listOf(
-       Movie(
+        Movie(
             id = 0,
             title = "Гнев человеческий",
             description = "Эйч — загадочный и холодный на вид джентльмен, но внутри него пылает жажда справедливости. Преследуя...",

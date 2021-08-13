@@ -15,5 +15,3 @@ class ActorsMapper {
         }
     }
 }
-
-//TODO: singleton feels creepy, find best practises

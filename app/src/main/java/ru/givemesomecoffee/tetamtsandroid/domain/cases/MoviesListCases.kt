@@ -14,7 +14,7 @@ class MoviesListCases {
         return repository.getMoviesList(id)
     }
 
-    suspend fun getCategoriesList(): List<CategoryUi>{
+    suspend fun getCategoriesList(): List<CategoryUi> {
         return repository.getCategoriesList()
     }
 

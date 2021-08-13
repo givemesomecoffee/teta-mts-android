@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="Имя" />
+            android:hint="@string/user_name_field_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -33,7 +33,6 @@
         android:layout_marginTop="@dimen/offset_20"
         app:boxBackgroundColor="@color/grey"
         app:errorEnabled="true"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_name_input">
 
@@ -41,7 +40,7 @@
             android:id="@+id/profile_email_input_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Почта" />
+            android:hint="@string/user_email_field_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -59,7 +58,7 @@
             android:id="@+id/profile_password_input_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Пароль"
+            android:hint="@string/user_password_field_hint"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,10 +66,10 @@
         android:id="@+id/profile_favourite_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Выберите интересные для вас жанры:"
         android:layout_marginTop="@dimen/offset_20"
+        android:text="@string/favourite_categories_pick_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_password_input"/>
+        app:layout_constraintTop_toBottomOf="@id/profile_password_input" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profile_favourite_list"
@@ -81,7 +80,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_favourite_list_title"
-        tools:listitem="@layout/category_item"/>
+        tools:listitem="@layout/category_item" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirm_login_button"
@@ -93,7 +92,7 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:stateListAnimator="@null"
-        android:text="Зарегистрироваться"
+        android:text="@string/confirm_registration_button_title"
         android:textColor="@color/black"
         android:textSize="@dimen/space_16"
         app:backgroundTint="#C4C4C4"
@@ -109,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_20"
-        android:text="Пользователь  таким email же существует"
+        android:text="@string/user_exist_error"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,7 +9,7 @@ class Actor(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "actorId")
     val id: Int?,
-    )
+)
 
 @Entity(primaryKeys = ["movieId", "actorId"])
 data class ActorsToMovies(

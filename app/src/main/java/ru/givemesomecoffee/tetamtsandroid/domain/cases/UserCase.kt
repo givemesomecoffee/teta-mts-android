@@ -11,12 +11,12 @@ class UserCase {
         return repository.getUser(id)
     }
 
-    fun checkUser(email:String, password: String): Int?{
+    fun checkUser(email: String, password: String): Int? {
         return repository.checkUser(email, password)
     }
 
     fun saveNewUser(userUi: UserUi): Int {
-       return repository.saveNewUser(userUi)
+        return repository.saveNewUser(userUi)
     }
 
     fun changeToken(token: String?, id: Int) {
@@ -31,7 +31,7 @@ class UserCase {
         return repository.checkUser(email)
     }
 
-    fun setFavouriteCategories(categories: List<Int>, id: Int){
+    fun setFavouriteCategories(categories: List<Int>, id: Int) {
         return repository.setFavouriteCategories(categories, id)
     }
 

@@ -10,8 +10,8 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Actor
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.ActorUi
 
 class ActorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val actorPhoto: ImageView = view.findViewById(R.id.actor_cover)
-    val actorName: TextView = view.findViewById(R.id.actor_name)
+    private val actorPhoto: ImageView = view.findViewById(R.id.actor_cover)
+    private val actorName: TextView = view.findViewById(R.id.actor_name)
 
     fun bind(item: ActorUi) {
         actorPhoto.load(item.imgUrl)

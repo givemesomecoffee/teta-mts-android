@@ -66,14 +66,14 @@ class Repository(
     }
 
     fun saveNewUser(userUi: UserUi): Int {
-      return localDatasource.saveNewUser(userMapper.toUser(userUi))
+        return localDatasource.saveNewUser(userMapper.toUser(userUi))
     }
 
     fun checkUser(email: String): Int? {
-       return localDatasource.checkUser(email)?.userId
+        return localDatasource.checkUser(email)?.userId
     }
 
     fun setFavouriteCategories(categories: List<Int>, id: Int) {
-localDatasource.setFavouriteCategories(categories, id)
+        localDatasource.setFavouriteCategories(categories, id)
     }
 }

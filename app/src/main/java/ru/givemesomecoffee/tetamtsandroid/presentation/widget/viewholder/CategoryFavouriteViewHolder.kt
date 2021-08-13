@@ -17,7 +17,7 @@ class CategoryFavouriteViewHolder(view: View, private val itemClick: ((Int) -> U
         if (itemClick != null) {
             categoryTitle.setOnClickListener {
                 item.id?.let { it1 -> itemClick.invoke(it1) }
-                if (categoryTitle.currentTextColor == Color.BLACK){
+                if (categoryTitle.currentTextColor == Color.BLACK) {
                     categoryTitle.setTextColor(Color.WHITE)
                     categoryTitle.setBackgroundResource(R.drawable.round_border_filled)
                 } else {

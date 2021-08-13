@@ -3,7 +3,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local.db.assets
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
 
 
-class CategoriesDataSourceImpl  {
+class CategoriesDataSourceImpl {
     fun getCategories() = listOf(
         Category("боевики", 1),
         Category("драмы", 2),

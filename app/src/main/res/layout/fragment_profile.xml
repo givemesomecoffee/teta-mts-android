@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="160dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Интересы"
+                android:text="@string/favourite_categories_title"
                 android:textSize="@dimen/space_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -70,7 +70,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_favourite"
-                tools:listitem="@layout/category_item"/>
+                tools:listitem="@layout/category_item" />
 
             <TextView
                 android:id="@+id/profile_personal_data"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Личные данные"
+                android:text="@string/user_data_title"
                 android:textSize="@dimen/space_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_favourite_list" />
@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="Имя" />
+                    android:hint="@string/user_name_field_hint" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +115,7 @@
                     android:id="@+id/profile_email_input_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Почта"
+                    android:hint="@string/user_email_field_hint"
                     android:paddingTop="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +134,7 @@
                     android:id="@+id/profile_password_input_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Пароль"
+                    android:hint="@string/user_password_field_hint"
                     android:inputType="textPassword"
                     android:paddingTop="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -152,7 +152,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Телефон"
+                    android:hint="@string/user_phone_field_hint"
                     android:paddingTop="12dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Настройки"
+                android:text="@string/user_settings_title"
                 android:textSize="@dimen/space_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_phone_input" />
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Приложение"
+                android:text="@string/support_section_title"
                 android:textSize="@dimen/space_16"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/profile_settings_menu" />
@@ -210,7 +210,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:stateListAnimator="@null"
-                android:text="ВЫЙТИ"
+                android:text="@string/user_logout_button_title"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_16"
                 app:backgroundTint="#C4C4C4"

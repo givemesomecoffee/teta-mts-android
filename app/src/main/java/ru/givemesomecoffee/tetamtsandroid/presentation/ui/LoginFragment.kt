@@ -89,7 +89,7 @@ class LoginFragment : Fragment() {
         errorWrongDataView?.visibility = View.INVISIBLE
     }
 
-    private fun getToken(length: Int = 16) : String {
+    private fun getToken(length: Int = 16): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..length)
             .map { allowedChars.random() }

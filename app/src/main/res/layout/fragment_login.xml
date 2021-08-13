@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/offset_20"
@@ -21,7 +20,7 @@
             android:id="@+id/profile_email_input_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Почта"
+            android:hint="@string/user_email_field_hint"
             android:paddingTop="12dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -35,14 +34,16 @@
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_email_input">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profile_password_input_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Пароль"
+            android:hint="@string/user_password_field_hint"
             android:inputType="textPassword"
             android:paddingTop="12dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/to_register_button"
         android:layout_width="match_parent"
@@ -53,7 +54,7 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:stateListAnimator="@null"
-        android:text="РЕГИСТРАЦИЯ"
+        android:text="@string/to_registration_button_title"
         android:textColor="@color/black"
         android:textSize="@dimen/space_16"
         app:backgroundTint="#C4C4C4"
@@ -74,7 +75,7 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:stateListAnimator="@null"
-        android:text="ВОЙТИ"
+        android:text="@string/confirm_login_button_title"
         android:textColor="@color/black"
         android:textSize="@dimen/space_16"
         app:backgroundTint="#C4C4C4"
@@ -90,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_20"
-        android:text="Заполните все поля"
+        android:text="@string/empty_fields_error"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_20"
-        android:text="Пользователь не найден"
+        android:text="@string/user_not_found_error"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

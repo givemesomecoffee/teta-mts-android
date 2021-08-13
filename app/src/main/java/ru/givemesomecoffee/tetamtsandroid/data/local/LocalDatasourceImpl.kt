@@ -52,7 +52,7 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
     }
 
     override fun saveNewUser(user: User): Int {
-       return userDao.setUser(user).toInt()
+        return userDao.setUser(user).toInt()
     }
 
     override fun setFavouriteCategories(categories: List<Int>, id: Int) {

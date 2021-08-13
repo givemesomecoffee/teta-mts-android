@@ -71,10 +71,10 @@ class RegisterFragment : Fragment() {
 
     private fun onCategoryClicked(categoryId: Int) {
         try {
-            favouriteCategories?.first { it == categoryId }
-            favouriteCategories?.remove(categoryId)
+            favouriteCategories.first { it == categoryId }
+            favouriteCategories.remove(categoryId)
         } catch (e: NoSuchElementException) {
-            favouriteCategories?.add(categoryId)
+            favouriteCategories.add(categoryId)
         }
     }
 
@@ -112,8 +112,9 @@ class RegisterFragment : Fragment() {
                 val name = nameView?.editText?.text.toString()
 
                 val password = passwordView?.editText?.text.toString()
-                val id = UserCase().saveNewUser(UserUi(name = name, email = email, password = password))
-                if (favouriteCategories.size > 0){
+                val id =
+                    UserCase().saveNewUser(UserUi(name = name, email = email, password = password))
+                if (favouriteCategories.size > 0) {
                     UserCase().setFavouriteCategories(categories = favouriteCategories, id)
                 }
                 login?.onRegisterComplete()

@@ -9,11 +9,11 @@ class Authorisation {
         userCase.changeToken(token, id)
     }
 
-    fun getUserId(token: String): Int?{
+    fun getUserId(token: String): Int? {
         return userCase.getUserId(token)
     }
 
-    fun deleteToken(id: Int){
+    fun deleteToken(id: Int) {
         userCase.changeToken(null, id)
     }
 

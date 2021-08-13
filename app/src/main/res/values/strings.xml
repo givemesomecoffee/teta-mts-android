@@ -27,5 +27,21 @@
     <string name="not_done">UNDER CONSTRUCTION</string>
     <string name="errorHolderText">Ошибка при загрузке. Потяните вниз, чтобы обновить страницу</string>
     <string name="movies_point_title">Movies</string>
+    <string name="user_exist_error">Пользователь таким email же существует</string>
+    <string name="confirm_registration_button_title">Зарегистрироваться</string>
+    <string name="favourite_categories_pick_title">Выберите интересные для вас жанры:</string>
+    <string name="user_password_field_hint">Пароль</string>
+    <string name="user_email_field_hint">Почта</string>
+    <string name="user_name_field_hint">Имя</string>
+    <string name="favourite_categories_title">Интересы</string>
+    <string name="user_data_title">Личные данные</string>
+    <string name="user_phone_field_hint">Телефон</string>
+    <string name="user_settings_title">Настройки</string>
+    <string name="support_section_title">Приложение</string>
+    <string name="user_logout_button_title">ВЫЙТИ</string>
+    <string name="to_registration_button_title">РЕГИСТРАЦИЯ</string>
+    <string name="confirm_login_button_title">ВОЙТИ</string>
+    <string name="empty_fields_error">Заполните все поля</string>
+    <string name="user_not_found_error">Пользователь не найден</string>
 
 </resources>

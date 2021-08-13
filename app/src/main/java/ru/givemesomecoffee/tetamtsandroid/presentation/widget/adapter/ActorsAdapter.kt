@@ -10,14 +10,17 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.ActorVi
 
 class ActorsAdapter(
     private val actors: List<ActorUi>
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ActorViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.actor_item, parent, false))
+        return ActorViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.actor_item, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       if (holder is ActorViewHolder) holder.bind(actors[position])
+        if (holder is ActorViewHolder) holder.bind(actors[position])
     }
 
     override fun getItemCount(): Int {

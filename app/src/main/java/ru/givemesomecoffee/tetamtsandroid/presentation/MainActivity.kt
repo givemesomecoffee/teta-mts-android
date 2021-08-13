@@ -31,11 +31,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
     private val masterKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
 
-
-
-    // rewrite register check to check only email
-    // add phone, name, categories to register field
-
     private fun init() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
