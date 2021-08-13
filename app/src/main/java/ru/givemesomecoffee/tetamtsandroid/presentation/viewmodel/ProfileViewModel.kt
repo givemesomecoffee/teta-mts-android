@@ -7,7 +7,6 @@ import kotlinx.coroutines.withContext
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
-
 class ProfileViewModel : ViewModel() {
     private val domain: UserCase = UserCase()
     val data: LiveData<UserUi> get() = _data
