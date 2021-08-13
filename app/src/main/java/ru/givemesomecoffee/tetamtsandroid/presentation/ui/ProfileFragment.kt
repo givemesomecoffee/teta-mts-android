@@ -10,9 +10,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
@@ -60,8 +64,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        login?.getUserId()?.let { viewModel.initUser(it) }
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
+        lifecycle.coroutineScope.launch {
+            withContext(Dispatchers.IO){
+                login?.getUserId()?.let { viewModel.initUser(it) }
+            }
+        }
+
         exitLoginButton?.setOnClickListener {
             login?.exitLogin()
         }

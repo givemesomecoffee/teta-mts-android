@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -13,6 +14,9 @@ import androidx.security.crypto.MasterKeys
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
@@ -45,9 +49,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        init()
-
         mSettings = EncryptedSharedPreferences.create(
             PREF_FILE_NAME,
             masterKeyAlias,
@@ -56,14 +57,17 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
-        //swapping login/profile fragments
         login = checkLoginStatus()
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (login == null && destination.id == R.id.profileFragment) {
-                navController.popBackStack()
-                navController.navigate(R.id.action_global_loginFragment)
+        setContentView(R.layout.activity_main)
+        init()
+
+        //swapping login/profile fragments
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (login == null && destination.id == R.id.profileFragment) {
+                    navController.popBackStack()
+                    navController.navigate(R.id.action_global_loginFragment)
+                }
             }
-        }
     }
 
     override fun onMovieCardClicked(id: Int) {
@@ -85,9 +89,14 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     }
 
     override fun saveLogin(id: Int, token: String) {
-        authorisationController.setNewToken(token, id)
         mSettings?.edit()?.putString(USER_TOKEN, token)?.apply()
         login = id
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO){
+                authorisationController.setNewToken(token, id)
+            }
+        }
+
     }
 
     override fun onRegisterComplete() {
@@ -110,8 +119,11 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     private fun clearLoginData() {
         mSettings?.edit()?.remove(USER_TOKEN)?.apply()
-        login?.let { authorisationController.deleteToken(it) }
         login = null
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) { login?.let { authorisationController.deleteToken(it) } }
+        }
+
     }
 
     private fun setupMenuItemCustomView() {
