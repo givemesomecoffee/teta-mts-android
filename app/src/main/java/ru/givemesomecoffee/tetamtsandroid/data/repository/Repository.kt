@@ -1,67 +1,79 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import ru.givemesomecoffee.tetamtsandroid.data.categories.MovieCategoriesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
+import ru.givemesomecoffee.tetamtsandroid.data.mapper.ActorsMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
-import ru.givemesomecoffee.tetamtsandroid.data.movies.MoviesDataSourceImpl
+import ru.givemesomecoffee.tetamtsandroid.data.mapper.UserMapper
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
-import ru.givemesomecoffee.tetamtsandroid.utils.simulateNetwork
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
-class Repository {
-    private var categoriesDataset: List<CategoryUi>? = null
-    private var moviesDataset: List<MovieUi>? = null
-    private var movieUi: MovieUi? = null
+class Repository(
+    private val localDatasource: LocalDatasource
+) {
 
-    private fun setNewCategoriesDataset() {
-        simulateNetwork()
-        categoriesDataset =
-            CategoriesMapper().toCategoryUi(MovieCategoriesDataSourceImpl().getCategories())
+    /*feels like this initialisation will be reworked later with tests integration*/
+    private val moviesMapper by lazy { MoviesMapper() }
+    private val categoriesMapper by lazy { CategoriesMapper() }
+    private val userMapper by lazy { UserMapper() }
+    private val actorsMapper by lazy { ActorsMapper() }
+
+    private fun getNewCategoriesDataset(): List<CategoryUi> {
+        return categoriesMapper.toCategoryUi(localDatasource.getAllCategories())
     }
 
-    private fun setNewMoviesDataset(id: Int = 0) {
-        simulateNetwork()
-        var temp = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies())
-        temp = if (id == 0) {
-            temp.shuffled().take(5)
+    private fun getNewMoviesDataset(id: Int?): List<MovieUi> {
+        return if (id == null) {
+            moviesMapper.toMovieUi(localDatasource.getAllMovies())
         } else {
-            temp.filter { it.categoryId == id }
+            moviesMapper.toMovieUi(localDatasource.getMoviesByCategory(id))
         }
-        moviesDataset = temp
     }
 
-    private fun setMovie(id: Int) {
-        simulateNetwork()
-        movieUi = MoviesMapper().toMovieUi(MoviesDataSourceImpl().getMovies().first{it.id == id})
+    private fun getCategoryTitle(id: Int): String {
+        return localDatasource.getCategoryById(id).title
     }
 
+    fun getMovie(id: Int): MovieUi {
+        val movie = localDatasource.getMovieById(id)
+        val category = getCategoryTitle(movie.movie.categoryId)
+        return moviesMapper.toMovieUi(movie, category, actorsMapper)
+    }
 
     fun getCategoriesList(): List<CategoryUi> {
-        if (categoriesDataset == null) {
-            setNewCategoriesDataset()
-        }
-        return categoriesDataset!!
+        return getNewCategoriesDataset()
     }
 
-    fun getMoviesList(id: Int = 0, restore: Boolean = false): List<MovieUi> {
-     if ( !restore || moviesDataset == null){
-         setNewMoviesDataset(id)
-     }
-        return moviesDataset!!
+    fun getMoviesList(id: Int?): List<MovieUi> {
+        return getNewMoviesDataset(id)
     }
 
-    fun getMovie(id: Int, restore: Boolean = false): MovieUi {
-        if (!restore || movieUi == null) {
-            setMovie(id)
-        }
-        return movieUi!!
+    fun getUser(id: Int): UserUi {
+        return userMapper.toUserUi(localDatasource.getUser(id), categoriesMapper)
     }
 
-    fun getCategoryTitle(id: Int): String {
-        if (categoriesDataset != null) {
-            return categoriesDataset!!.first { it.id == id }.title
-        }
-        return getCategoriesList().first { it.id == id }.title
+    fun checkUser(email: String, password: String): Int? {
+        return localDatasource.checkUser(email, password)?.userId
     }
 
+    fun changeToken(token: String?, id: Int) {
+        localDatasource.changeUserToken(token, id)
+    }
+
+    fun getUserIdByToken(token: String?): Int? {
+        return localDatasource.getUserId(token)
+    }
+
+    fun saveNewUser(userUi: UserUi): Int {
+        return localDatasource.saveNewUser(userMapper.toUser(userUi))
+    }
+
+    fun checkUser(email: String): Int? {
+        return localDatasource.checkUser(email)?.userId
+    }
+
+    fun setFavouriteCategories(categories: List<Int>, id: Int) {
+        localDatasource.setFavouriteCategories(categories, id)
+    }
 }

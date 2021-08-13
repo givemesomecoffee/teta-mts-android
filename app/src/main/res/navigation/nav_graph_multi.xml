@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/movies_list">
 
-    <include app:graph="@navigation/movies_list"/>
-    <include app:graph="@navigation/profile"/>
+    <include app:graph="@navigation/movies_list" />
+    <include app:graph="@navigation/profile" />
+
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login"
+    >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:launchSingleTop="true"/>
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profile"
+        app:launchSingleTop="true"/>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"/>
 
 </navigation>

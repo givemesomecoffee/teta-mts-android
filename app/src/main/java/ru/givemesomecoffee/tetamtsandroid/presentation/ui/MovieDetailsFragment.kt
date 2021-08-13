@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.imageLoader
 import coil.request.CachePolicy
@@ -20,6 +21,8 @@ import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModel
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.ActorsAdapter
+import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
 
 class MovieDetailsFragment : Fragment() {
@@ -34,6 +37,7 @@ class MovieDetailsFragment : Fragment() {
     private var movie: MovieUi? = null
     private var refreshWrapper: SwipeRefreshLayout? = null
     private var movieId: Int? = null
+    private var actorsListView: RecyclerView? = null
     private val viewModel: MovieDetailsViewModel by viewModels()
 
     private fun init() {
@@ -46,6 +50,8 @@ class MovieDetailsFragment : Fragment() {
         errorHandlerView = requireView().findViewById(R.id.error_handler)
         movieDetailsHolder = requireView().findViewById(R.id.movie_details_scroll)
         ratingBar = requireView().findViewById(R.id.ratingBar)
+        actorsListView = requireView().findViewById(R.id.actors_section)
+        actorsListView!!.addItemDecoration(RecyclerItemDecoration(10, 0, 20))
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
         viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
     }
@@ -63,8 +69,8 @@ class MovieDetailsFragment : Fragment() {
         init()
         movieDetailsHolder?.visibility = View.INVISIBLE
         movieId = arguments?.getInt("id")
+        viewModel.init(movieId)
         refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId) }
-        viewModel.getMovie(movieId, true)
     }
 
     private fun setImgToView(result: Drawable) {
@@ -87,6 +93,9 @@ class MovieDetailsFragment : Fragment() {
             .target(onSuccess = { result -> setImgToView(result) })
             .build()
         requireView().context.imageLoader.enqueue(movieCoverImg)
+        if (movie.actors != null) {
+            actorsListView?.adapter = ActorsAdapter(movie.actors)
+        }
     }
 
     private fun onGetDataFailure(message: String?) {

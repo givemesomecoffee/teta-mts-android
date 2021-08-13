@@ -2,11 +2,13 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -33,7 +35,7 @@ class MoviesListFragment : Fragment() {
     private var moviesRefreshSwipeView: SwipeRefreshLayout? = null
     private lateinit var errorHandlerView: TextView
     private var moviesList: List<MovieUi>? = null
-    private var category = 0
+    private var category: Int? = null
     private val viewModel: MoviesListViewModel by viewModels()
 
     private fun init() {
@@ -49,8 +51,6 @@ class MoviesListFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
         viewModel.categories.observe(viewLifecycleOwner, Observer(::setNewCategoriesList))
         viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
-        viewModel.updateCategories()
-        viewModel.updateMoviesListByCategory(category, true)
     }
 
     override fun onAttach(context: Context) {
@@ -58,6 +58,15 @@ class MoviesListFragment : Fragment() {
         if (context is MoviesListFragmentClickListener) {
             moviesListFragmentClickListener = context
         }
+        val callback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Log.d("back", category.toString())
+                    moviesListFragmentClickListener?.homeOnBackPressed(category)
+                    category = null
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreateView(
@@ -72,8 +81,9 @@ class MoviesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (savedInstanceState != null) {
-            category = savedInstanceState.getInt(CATEGORY, 0)
+            category = savedInstanceState.getInt(CATEGORY)
         }
+        viewModel.init()
         init()
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
         moviesListView.addItemDecoration(
@@ -88,12 +98,17 @@ class MoviesListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(CATEGORY, category)
+        if (category == null) {
+            outState.remove(CATEGORY)
+        } else {
+            outState.putInt(CATEGORY, category!!)
+        }
     }
 
     override fun onDetach() {
         super.onDetach()
         moviesListFragmentClickListener = null
+        Log.d("list", "detached")
     }
 
     private fun setMoviesListAdapter(): MoviesListAdapter {
@@ -107,14 +122,15 @@ class MoviesListFragment : Fragment() {
     private fun setCategoryAdapter(): CategoryAdapter {
         return CategoryAdapter(
             listOf(),
-            itemClick = { categoryId: Int -> onCategoryClicked(categoryId) })
+            itemClick = { categoryId: Int? -> onCategoryClicked(categoryId) })
     }
 
-    private fun onCategoryClicked(categoryId: Int) {
+    private fun onCategoryClicked(categoryId: Int?) {
+        moviesListView.scrollToPosition(0)
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
         viewModel.updateMoviesListByCategory(categoryId)
-        moviesListView.scrollToPosition(0)
+
     }
 
     private fun onGetDataFailure(message: String?) {
@@ -129,7 +145,7 @@ class MoviesListFragment : Fragment() {
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)
-        moviesListView.scrollToPosition(0)
+        moviesListView.scrollToPosition(0) // scroll position loss on restore :C
     }
 
     private fun setNewCategoriesList(await: List<CategoryUi>) {

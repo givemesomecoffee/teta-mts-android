@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.utils
 
+import kotlinx.coroutines.delay
 import java.lang.Exception
 
 fun simulateNetwork() {
@@ -7,6 +8,6 @@ fun simulateNetwork() {
     val serverAnswer = listForErrorTest.random()
     Thread.sleep(200L)
     if (serverAnswer == 500) {
-      throw Exception("Ошибка. Попробуйте обновить страницу")
+        //  throw Exception("Ошибка. Попробуйте обновить страницу")
     }
 }

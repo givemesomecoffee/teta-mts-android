@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="register_empty_password_error_text">Пароль не должен быть пустым</string>
+    <string name="register_short_password_error_text">Пароль должен содержать минимум 6 символов</string>
+    <string name="register_empty_name_error_text">Имя не может быть пустым</string>
+    <string name="register_wrong_email_error_text">Email введен некорректно</string>
+    <string name="register_empty_email_error_text">Email не должен быть пустым</string>
+</resources>
