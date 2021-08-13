@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        login?.getUserId()?.let { viewModel.getUser(it) }
+        login?.getUserId()?.let { viewModel.initUser(it) }
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
 
         exitLoginButton?.setOnClickListener {
@@ -83,7 +83,6 @@ class ProfileFragment : Fragment() {
             favouriteCategoriesListView.adapter =
                 CategoryFavouriteAdapter(user.favouriteCategories)
         }
-
     }
 
 }

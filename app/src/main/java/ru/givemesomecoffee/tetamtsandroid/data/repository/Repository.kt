@@ -62,10 +62,18 @@ class Repository(
     }
 
     fun getUserIdByToken(token: String?): Int? {
-       return localDatasource.getUserId(token)
+        return localDatasource.getUserId(token)
     }
 
-    fun saveNewUser(userUi: UserUi) {
-        localDatasource.saveNewUser(userMapper.toUser(userUi))
+    fun saveNewUser(userUi: UserUi): Int {
+      return localDatasource.saveNewUser(userMapper.toUser(userUi))
+    }
+
+    fun checkUser(email: String): Int? {
+       return localDatasource.checkUser(email)?.userId
+    }
+
+    fun setFavouriteCategories(categories: List<Int>, id: Int) {
+localDatasource.setFavouriteCategories(categories, id)
     }
 }

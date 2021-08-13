@@ -12,23 +12,23 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
     private val userDao: UserDao = db.UserDao()
 
     override fun getAllMovies(): List<Movie> {
-       return  moviesDao.getAll()
+        return moviesDao.getAll()
     }
 
     override fun getMoviesByCategory(categoryId: Int): List<Movie> {
-      return   moviesDao.getMoviesByCategory(categoryId)
+        return moviesDao.getMoviesByCategory(categoryId)
     }
 
     override fun getMovieById(id: Int): MovieWithActors {
-       return moviesDao.getMovieById(id)
+        return moviesDao.getMovieById(id)
     }
 
     override fun getAllCategories(): List<Category> {
-       return categoriesDao.getAll()
+        return categoriesDao.getAll()
     }
 
     override fun getCategoryById(id: Int): Category {
-       return categoriesDao.getCategoryById(id)
+        return categoriesDao.getCategoryById(id)
     }
 
     override fun getUser(id: Int): UserWithFavourites {
@@ -39,7 +39,11 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
         return userDao.checkUser(email, password)
     }
 
-    override fun changeUserToken(token: String?, id:Int) {
+    override fun checkUser(email: String): User {
+        return userDao.checkUser(email)
+    }
+
+    override fun changeUserToken(token: String?, id: Int) {
         userDao.changeUserToken(token, id)
     }
 
@@ -47,7 +51,11 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
         return userDao.getUserId(token)
     }
 
-    override fun saveNewUser(user: User) {
-        userDao.setUser(user)
+    override fun saveNewUser(user: User): Int {
+       return userDao.setUser(user).toInt()
+    }
+
+    override fun setFavouriteCategories(categories: List<Int>, id: Int) {
+        userDao.setUserFavourites(categories.map { UserFavourites(id, it) })
     }
 }

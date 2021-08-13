@@ -2,35 +2,79 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.RegisterViewModel
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFavouriteAdapter
+import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
 
 class RegisterFragment : Fragment() {
     private var confirmLoginButton: MaterialButton? = null
-    private var emailEditText: TextInputEditText? = null
-    private var passwordEditText: TextInputEditText? = null
-    private var errorEmptyView: TextView? = null
+    private var emailView: TextInputLayout? = null
+    private var passwordView: TextInputLayout? = null
+    private var nameView: TextInputLayout? = null
     private var errorWrongDataView: TextView? = null
     private var login: Login? = null
+    private var nameInput: TextInputEditText? = null
+    private var passwordInput: TextInputEditText? = null
+    private var emailInput: TextInputEditText? = null
+    private var favouriteCategoriesList: RecyclerView? = null
+    private val favouriteCategories: MutableList<Int> = mutableListOf()
+    private val viewModel: RegisterViewModel by viewModels()
 
     private fun init() {
         confirmLoginButton = requireView().findViewById(R.id.confirm_login_button)
-        emailEditText = requireView().findViewById(R.id.profile_email_input_edit)
-        passwordEditText = requireView().findViewById(R.id.profile_password_input_edit)
-        errorEmptyView = requireView().findViewById(R.id.login_error_empty)
+        emailView = requireView().findViewById(R.id.profile_email_input)
+        passwordView = requireView().findViewById(R.id.profile_password_input)
+        nameView = requireView().findViewById(R.id.profile_name_input)
         errorWrongDataView = requireView().findViewById(R.id.login_error_wrong_data)
+        favouriteCategoriesList = requireView().findViewById(R.id.profile_favourite_list)
+        viewModel.getCategories()
+        viewModel.data.observe(viewLifecycleOwner, Observer(::bindCategories))
+        favouriteCategoriesList!!.addItemDecoration(RecyclerItemDecoration(6, 0, 20))
         confirmLoginButton?.setOnClickListener {
             clearErrors()
             checkUser()
+        }
+        nameInput = requireView().findViewById(R.id.profile_name_input_edit)
+        passwordInput = requireView().findViewById(R.id.profile_password_input_edit)
+        emailInput = requireView().findViewById(R.id.profile_email_input_edit)
+        nameInput!!.doOnTextChanged { text, start, before, count -> validateUserName() }
+        passwordInput!!.doOnTextChanged { text, start, before, count -> validatePassword() }
+        emailInput!!.doOnTextChanged { text, start, before, count -> validateEmail() }
+    }
+
+    private fun bindCategories(list: List<CategoryUi>?) {
+        favouriteCategoriesList!!.adapter =
+            list?.let {
+                CategoryFavouriteAdapter(
+                    it,
+                    itemClick = { categoryId: Int -> onCategoryClicked(categoryId) })
+            }
+    }
+
+    private fun onCategoryClicked(categoryId: Int) {
+        try {
+            favouriteCategories?.first { it == categoryId }
+            favouriteCategories?.remove(categoryId)
+        } catch (e: NoSuchElementException) {
+            favouriteCategories?.add(categoryId)
         }
     }
 
@@ -59,24 +103,62 @@ class RegisterFragment : Fragment() {
     }
 
     private fun checkUser() {
-        val email = emailEditText?.editableText.toString()
-        val password = passwordEditText?.editableText.toString()
-        if (email.isEmpty() || password.isEmpty()) {
-            errorEmptyView?.visibility = View.VISIBLE
-        } else {
-            val check: Int? = UserCase().checkUser(email, password)
+        if (validateEmail() && validatePassword() && validateUserName()) {
+            val email = emailView?.editText?.text.toString()
+            val check: Int? = UserCase().checkUser(email)
             if (check != null) {
                 errorWrongDataView?.visibility = View.VISIBLE
             } else {
-                UserCase().saveNewUser(UserUi(name = "test", email = email, password = password))
+                val name = nameView?.editText?.text.toString()
+
+                val password = passwordView?.editText?.text.toString()
+                val id = UserCase().saveNewUser(UserUi(name = name, email = email, password = password))
+                if (favouriteCategories.size > 0){
+                    UserCase().setFavouriteCategories(categories = favouriteCategories, id)
+                }
                 login?.onRegisterComplete()
             }
         }
     }
 
     private fun clearErrors() {
-        errorEmptyView?.visibility = View.INVISIBLE
         errorWrongDataView?.visibility = View.INVISIBLE
+    }
+
+    private fun validateEmail(): Boolean {
+        val email = emailView?.editText?.text.toString()
+        if (email.isEmpty()) {
+            emailView?.error = "Email не должен быть пустым"
+            return false
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailView?.error = "Email введен некорректно"
+            return false
+        }
+        emailView?.error = null
+        return true
+    }
+
+    private fun validatePassword(): Boolean {
+        val password = passwordView?.editText?.text.toString()
+        if (password.isEmpty()) {
+            passwordView?.error = "Пароль не должен быть пустым"
+            return false
+        } else if (password.length < 6) {
+            passwordView?.error = "Пароль олжен содержать минимум 6 символов"
+            return false
+        }
+        passwordView?.error = null
+        return true
+    }
+
+    private fun validateUserName(): Boolean {
+        val name = nameView?.editText?.text.toString()
+        if (name.isEmpty()) {
+            nameView?.error = "Имя не может быть пустым"
+            return false
+        }
+        nameView?.error = null
+        return true
     }
 
 }

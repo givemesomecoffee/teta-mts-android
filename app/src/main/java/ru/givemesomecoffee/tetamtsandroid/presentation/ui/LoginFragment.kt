@@ -2,22 +2,25 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 
 class LoginFragment : Fragment() {
     private var confirmLoginButton: MaterialButton? = null
-    private var emailEditText: TextInputEditText? = null
-    private var passwordEditText: TextInputEditText? = null
+    private var emailView: TextInputLayout? = null
+    private var passwordView: TextInputLayout? = null
     private var errorEmptyView: TextView? = null
     private var errorWrongDataView: TextView? = null
     private var toRegisterButtonView: MaterialButton? = null
@@ -25,11 +28,12 @@ class LoginFragment : Fragment() {
 
     private fun init() {
         confirmLoginButton = requireView().findViewById(R.id.confirm_login_button)
-        emailEditText = requireView().findViewById(R.id.profile_email_input_edit)
-        passwordEditText = requireView().findViewById(R.id.profile_password_input_edit)
+        emailView = requireView().findViewById(R.id.profile_email_input)
+        passwordView = requireView().findViewById(R.id.profile_password_input)
         errorEmptyView = requireView().findViewById(R.id.login_error_empty)
         errorWrongDataView = requireView().findViewById(R.id.login_error_wrong_data)
         toRegisterButtonView = requireView().findViewById(R.id.to_register_button)
+
         confirmLoginButton?.setOnClickListener {
             clearErrors()
             checkUser()
@@ -37,6 +41,7 @@ class LoginFragment : Fragment() {
         toRegisterButtonView?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
+
     }
 
     override fun onAttach(context: Context) {
@@ -64,8 +69,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkUser() {
-        val email = emailEditText?.editableText.toString()
-        val password = passwordEditText?.editableText.toString()
+        val email = emailView?.editText?.text.toString()
+        val password = passwordView?.editText?.text.toString()
         if (email.isEmpty() || password.isEmpty()) {
             errorEmptyView?.visibility = View.VISIBLE
         } else {
@@ -84,10 +89,12 @@ class LoginFragment : Fragment() {
         errorWrongDataView?.visibility = View.INVISIBLE
     }
 
-    fun getToken(length: Int = 16) : String {
+    private fun getToken(length: Int = 16) : String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..length)
             .map { allowedChars.random() }
             .joinToString("")
     }
+
+
 }

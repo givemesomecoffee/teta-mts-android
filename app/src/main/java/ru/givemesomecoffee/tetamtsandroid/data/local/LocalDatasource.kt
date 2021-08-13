@@ -14,7 +14,7 @@ interface LocalDatasource {
 
     fun getCategoryById(id: Int): Category
 
-    fun getUser(id:Int): UserWithFavourites
+    fun getUser(id: Int): UserWithFavourites
 
     fun checkUser(email: String, password: String): User?
 
@@ -22,5 +22,9 @@ interface LocalDatasource {
 
     fun getUserId(token: String?): Int?
 
-    fun saveNewUser(user: User)
+    fun saveNewUser(user: User): Int
+
+    fun checkUser(email: String): User?
+
+    fun setFavouriteCategories(categories: List<Int>, id: Int)
 }

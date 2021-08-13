@@ -8,7 +8,8 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.CategoryFavouriteViewHolder
 
 class CategoryFavouriteAdapter(
-    private var dataset: List<CategoryUi>
+    private var dataset: List<CategoryUi>,
+    private var itemClick: ((Int) -> Unit)? = null
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -17,12 +18,14 @@ class CategoryFavouriteAdapter(
                         R.layout.category_item,
                         parent,
                         false
-                    ))
+                    ), itemClick)
+
+
+
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             when (holder) {
-
                 is CategoryFavouriteViewHolder -> holder.bind(dataset[position])
             }
         }
