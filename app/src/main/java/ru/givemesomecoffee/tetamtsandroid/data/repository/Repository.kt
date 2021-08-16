@@ -5,12 +5,14 @@ import ru.givemesomecoffee.tetamtsandroid.data.mapper.ActorsMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.UserMapper
+import ru.givemesomecoffee.tetamtsandroid.data.remote.MoviesApiService
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
 class Repository(
-    private val localDatasource: LocalDatasource
+    private val localDatasource: LocalDatasource,
+    private val remoteDatasource: MoviesApiService = MoviesApiService.create()
 ) {
 
     /*feels like this initialisation will be reworked later with tests integration*/
@@ -19,33 +21,27 @@ class Repository(
     private val userMapper by lazy { UserMapper() }
     private val actorsMapper by lazy { ActorsMapper() }
 
-    private fun getNewCategoriesDataset(): List<CategoryUi> {
-        return categoriesMapper.toCategoryUi(localDatasource.getAllCategories())
+    private suspend fun getNewCategoriesDataset(): List<CategoryUi> {
+       return categoriesMapper.toCategoryUi(remoteDatasource.getGenres().genres)
     }
 
-    private fun getNewMoviesDataset(id: Int?): List<MovieUi> {
+    private suspend fun getNewMoviesDataset(id: Int?): List<MovieUi> {
         return if (id == null) {
-            moviesMapper.toMovieUi(localDatasource.getAllMovies())
+            moviesMapper.toMovieUi(remoteDatasource.getMovies())
         } else {
-            moviesMapper.toMovieUi(localDatasource.getMoviesByCategory(id))
+            moviesMapper.toMovieUi(remoteDatasource.getMoviesByGenre(genre = id.toString()))
         }
     }
 
-    private fun getCategoryTitle(id: Int): String {
-        return localDatasource.getCategoryById(id).title
+    suspend fun getMovie(id: Int): MovieUi {
+        return moviesMapper.toMovieUi(remoteDatasource.getMovie(id = id.toString()), actorsMapper)
     }
 
-    fun getMovie(id: Int): MovieUi {
-        val movie = localDatasource.getMovieById(id)
-        val category = getCategoryTitle(movie.movie.categoryId)
-        return moviesMapper.toMovieUi(movie, category, actorsMapper)
-    }
-
-    fun getCategoriesList(): List<CategoryUi> {
+    suspend fun getCategoriesList(): List<CategoryUi> {
         return getNewCategoriesDataset()
     }
 
-    fun getMoviesList(id: Int?): List<MovieUi> {
+    suspend fun getMoviesList(id: Int?): List<MovieUi> {
         return getNewMoviesDataset(id)
     }
 

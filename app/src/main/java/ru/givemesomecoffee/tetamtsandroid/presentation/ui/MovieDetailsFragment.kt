@@ -85,6 +85,11 @@ class MovieDetailsFragment : Fragment() {
         movieTitle?.text = movie.title
         movieDescription?.text = movie.description
         ageSign?.text = movie.ageRestriction
+        if (movie.ageRestriction.isEmpty()) {
+            ageSign?.visibility = View.INVISIBLE
+        } else {
+            ageSign?.visibility = View.VISIBLE
+        }
         ratingBar?.rating = movie.rateScore
         movieDetailsHolder?.visibility = View.VISIBLE
         val movieCoverImg = ImageRequest.Builder(requireView().context)

@@ -44,6 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_10"
+        android:ellipsize="end"
+        android:maxLines="5"
         android:textSize="@dimen/space_12"
         app:layout_constraintBottom_toTopOf="@id/ratingBar"
         app:layout_constraintStart_toStartOf="parent"

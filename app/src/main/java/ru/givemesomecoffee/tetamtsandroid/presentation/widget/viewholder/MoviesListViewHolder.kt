@@ -23,10 +23,15 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
         movieDescription.text = item.description
         movieCover.load(item.imageUrl)
         movieAge.text = item.ageRestriction
+        if (item.ageRestriction.isEmpty()) {
+            movieAge.visibility = View.INVISIBLE
+        } else {
+            movieAge.visibility = View.VISIBLE
+        }
         ratingBar.apply {
             rating = item.rateScore
             contentDescription = item.rateScore.toString()
         }
-        itemView.setOnClickListener { item.id?.let { it1 -> itemClick?.invoke(it1) } }
+        itemView.setOnClickListener { item.id?.let { id -> itemClick?.invoke(id) } }
     }
 }

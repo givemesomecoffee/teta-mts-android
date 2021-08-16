@@ -2,7 +2,6 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +60,6 @@ class MoviesListFragment : Fragment() {
         val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    Log.d("back", category.toString())
                     moviesListFragmentClickListener?.homeOnBackPressed(category)
                     category = null
                 }
@@ -83,8 +81,8 @@ class MoviesListFragment : Fragment() {
         if (savedInstanceState != null) {
             category = savedInstanceState.getInt(CATEGORY)
         }
-        viewModel.init()
         init()
+        viewModel.init()
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(spacingBottom = 50, isMovieList = true)
@@ -108,7 +106,6 @@ class MoviesListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         moviesListFragmentClickListener = null
-        Log.d("list", "detached")
     }
 
     private fun setMoviesListAdapter(): MoviesListAdapter {
@@ -130,7 +127,6 @@ class MoviesListFragment : Fragment() {
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
         viewModel.updateMoviesListByCategory(categoryId)
-
     }
 
     private fun onGetDataFailure(message: String?) {
@@ -145,8 +141,7 @@ class MoviesListFragment : Fragment() {
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)
-        moviesListView.scrollToPosition(0) // scroll position loss on restore :C
-    }
+     }
 
     private fun setNewCategoriesList(await: List<CategoryUi>) {
         categoriesAdapter?.updateCategoriesList(await)

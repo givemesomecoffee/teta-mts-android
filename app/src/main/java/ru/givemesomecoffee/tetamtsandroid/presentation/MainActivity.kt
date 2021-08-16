@@ -2,6 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.presentation
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.data.remote.MoviesApiService
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.Authorisation
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         mSettings = EncryptedSharedPreferences.create(
             PREF_FILE_NAME,
             masterKeyAlias,
@@ -56,18 +59,15 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-
         login = checkLoginStatus()
-        setContentView(R.layout.activity_main)
         init()
-
         //swapping login/profile fragments
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (login == null && destination.id == R.id.profileFragment) {
-                    navController.popBackStack()
-                    navController.navigate(R.id.action_global_loginFragment)
-                }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (login == null && destination.id == R.id.profileFragment) {
+                navController.popBackStack()
+                navController.navigate(R.id.action_global_loginFragment)
             }
+        }
     }
 
     override fun onMovieCardClicked(id: Int) {
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         mSettings?.edit()?.putString(USER_TOKEN, token)?.apply()
         login = id
         lifecycleScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 authorisationController.setNewToken(token, id)
             }
         }
