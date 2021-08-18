@@ -60,11 +60,10 @@ interface MoviesApiService {
 
             return OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .readTimeout(2, TimeUnit.SECONDS)
-                .connectTimeout(2, TimeUnit.SECONDS)
-                .callTimeout(2, TimeUnit.SECONDS)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(false)
-                .writeTimeout(2, TimeUnit.SECONDS)
                 .build()
         }
 
