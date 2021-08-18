@@ -1,7 +1,9 @@
 package ru.givemesomecoffee.tetamtsandroid.data.remote
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -14,11 +16,11 @@ import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
 
 interface MoviesApiService {
     @GET("discover/movie")
-    suspend fun getMovies(
+    fun getMovies(
         @Query("api_key") apiKey: String = "0b60005e258e5e6a053da6f4870cf6bf",
         @Query("sort_by") endpoint: String = "popularity.desc",
         @Query("language") lang: String = "ru-RU"
-    ): MoviesApiResponse
+    ): Observable<MoviesApiResponse>
 
     @GET("discover/movie")
     suspend fun getMoviesByGenre(
@@ -54,6 +56,7 @@ interface MoviesApiService {
             return Retrofit.Builder()
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
                 .baseUrl("https://api.themoviedb.org/3/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(MoviesApiService::class.java)
         }

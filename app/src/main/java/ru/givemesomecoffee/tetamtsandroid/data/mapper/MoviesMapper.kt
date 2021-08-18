@@ -10,14 +10,14 @@ import java.lang.Exception
 
 class MoviesMapper {
 
-    suspend fun toMovieUi(response: MoviesApiResponse): List<MovieUi> {
+    fun toMovieUi(response: MoviesApiResponse): List<MovieUi> {
         return response.results.map {
             MovieUi(
                 id = it.id.toInt(),
                 title = it.title,
                 description = it.overview,
                 categoryId = 1,
-                ageRestriction = getCertification(it.id),
+                ageRestriction = "", // getCertification(it.id),
                 imageUrl = "https://image.tmdb.org/t/p/original" + it.poster_path,
                 rateScore = it.vote_average / 2
             )

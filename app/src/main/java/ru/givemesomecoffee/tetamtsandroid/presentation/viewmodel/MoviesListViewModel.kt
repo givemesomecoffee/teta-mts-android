@@ -2,7 +2,13 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
+import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
+import ru.givemesomecoffee.tetamtsandroid.data.remote.MoviesApiService
+import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
@@ -40,7 +46,7 @@ class MoviesListViewModel : ViewModel() {
     }
 
     fun updateMoviesListByCategory(categoryId: Int? = null) {
-        viewModelScope.launch {
+/*        viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 Log.d("test", Thread.currentThread().toString())
                 try {
@@ -51,7 +57,15 @@ class MoviesListViewModel : ViewModel() {
                     _loadingState.postValue(LoadingState.error(e.message))
                 }
             }
-        }
+        }*/
+        val obs: Observable<MoviesApiResponse> = MoviesApiService.create().getMovies()
+
+        obs
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                _data.postValue(MoviesMapper().toMovieUi(it))
+            }
     }
 
 }

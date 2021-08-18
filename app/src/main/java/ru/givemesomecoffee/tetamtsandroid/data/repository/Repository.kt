@@ -1,11 +1,15 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.ActorsMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.UserMapper
 import ru.givemesomecoffee.tetamtsandroid.data.remote.MoviesApiService
+import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
@@ -26,11 +30,11 @@ class Repository(
     }
 
     private suspend fun getNewMoviesDataset(id: Int?): List<MovieUi> {
-        return if (id == null) {
+    /*    return if (id == null) {
             moviesMapper.toMovieUi(remoteDatasource.getMovies())
-        } else {
-            moviesMapper.toMovieUi(remoteDatasource.getMoviesByGenre(genre = id.toString()))
-        }
+        } else {*/
+         return   moviesMapper.toMovieUi(remoteDatasource.getMoviesByGenre(genre = id.toString()))
+      //  }
     }
 
     suspend fun getMovie(id: Int): MovieUi {
