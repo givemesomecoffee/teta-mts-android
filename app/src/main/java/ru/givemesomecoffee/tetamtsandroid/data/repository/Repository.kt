@@ -26,15 +26,30 @@ class Repository(
     private val actorsMapper by lazy { ActorsMapper() }
 
     private suspend fun getNewCategoriesDataset(): List<CategoryUi> {
-       return categoriesMapper.toCategoryUi(remoteDatasource.getGenres().genres)
+        return categoriesMapper.toCategoryUi(remoteDatasource.getGenres().genres)
     }
 
-    private suspend fun getNewMoviesDataset(id: Int?): List<MovieUi> {
-    /*    return if (id == null) {
-            moviesMapper.toMovieUi(remoteDatasource.getMovies())
-        } else {*/
-         return   moviesMapper.toMovieUi(remoteDatasource.getMoviesByGenre(genre = id.toString()))
-      //  }
+    private fun getNewMoviesDataset(id: Int?): Observable <List<MovieUi>> {
+        return if (id == null) {
+            // moviesMapper.toMovieUi(remoteDatasource.getMovies())
+            return Observable.defer {
+                remoteDatasource.getMovies()
+                    .subscribeOn(Schedulers.io())
+                    .flatMap {
+                        moviesMapper.toMovieUi(it)
+                    }
+            }
+
+
+        } else {
+            return Observable.defer {
+                remoteDatasource.getMoviesByGenre(genre = id.toString())
+                    .subscribeOn(Schedulers.io())
+                    .flatMap {
+                        moviesMapper.toMovieUi(it)
+                    }
+            }
+        }
     }
 
     suspend fun getMovie(id: Int): MovieUi {
@@ -45,7 +60,7 @@ class Repository(
         return getNewCategoriesDataset()
     }
 
-    suspend fun getMoviesList(id: Int?): List<MovieUi> {
+    fun getMoviesList(id: Int?): Observable<List<MovieUi>> {
         return getNewMoviesDataset(id)
     }
 

@@ -23,12 +23,12 @@ interface MoviesApiService {
     ): Observable<MoviesApiResponse>
 
     @GET("discover/movie")
-    suspend fun getMoviesByGenre(
+    fun getMoviesByGenre(
         @Query("api_key") apiKey: String = "0b60005e258e5e6a053da6f4870cf6bf",
         @Query("sort_by") endpoint: String = "popularity.desc",
         @Query("language") lang: String = "ru-RU",
         @Query("with_genres") genre: String
-    ): MoviesApiResponse
+    ): Observable<MoviesApiResponse>
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(

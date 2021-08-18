@@ -12,8 +12,11 @@ import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import io.reactivex.disposables.CompositeDisposable
+
 
 class MoviesListViewModel : ViewModel() {
+    var compositeDisposable = CompositeDisposable()
     private val domain: MoviesListCases = MoviesListCases()
     val data: LiveData<List<MovieUi>> get() = _data
     private val _data = MutableLiveData<List<MovieUi>>()
@@ -46,26 +49,21 @@ class MoviesListViewModel : ViewModel() {
     }
 
     fun updateMoviesListByCategory(categoryId: Int? = null) {
-/*        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                Log.d("test", Thread.currentThread().toString())
-                try {
-                    _loadingState.postValue(LoadingState.LOADING)
-                    _data.postValue(domain.getMoviesList(categoryId))
-                    _loadingState.postValue(LoadingState.LOADED)
-                } catch (e: Exception) {
-                    _loadingState.postValue(LoadingState.error(e.message))
-                }
-            }
-        }*/
-        val obs: Observable<MoviesApiResponse> = MoviesApiService.create().getMovies()
-
-        obs
+        val obs: Observable<List<MovieUi>> = domain.getMoviesList(categoryId)
+        _loadingState.postValue(LoadingState.LOADING)
+        val dis = obs
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                _data.postValue(MoviesMapper().toMovieUi(it))
+                _data.postValue(it)
+                _loadingState.postValue(LoadingState.LOADED)
             }
+        compositeDisposable.add(dis)
+    }
+
+    override fun onCleared() {
+        compositeDisposable.dispose()
+        super.onCleared()
     }
 
 }

@@ -7,21 +7,26 @@ import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MovieApiResponse
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
 import java.lang.Exception
+import java.util.*
+import io.reactivex.Observable
+
 
 class MoviesMapper {
 
-    fun toMovieUi(response: MoviesApiResponse): List<MovieUi> {
-        return response.results.map {
-            MovieUi(
-                id = it.id.toInt(),
-                title = it.title,
-                description = it.overview,
-                categoryId = 1,
-                ageRestriction = "", // getCertification(it.id),
-                imageUrl = "https://image.tmdb.org/t/p/original" + it.poster_path,
-                rateScore = it.vote_average / 2
-            )
+    fun toMovieUi(response: MoviesApiResponse): Observable<List<MovieUi>> {
+        return Observable.just (
+            response.results.map {
+                MovieUi(
+                    id = it.id.toInt(),
+                    title = it.title,
+                    description = it.overview,
+                    categoryId = 1,
+                    ageRestriction = "", // getCertification(it.id),
+                    imageUrl = "https://image.tmdb.org/t/p/original" + it.poster_path,
+                    rateScore = it.vote_average / 2
+                )
         }
+        )
     }
 
     suspend fun toMovieUi(movie: MovieApiResponse, actorsMapper: ActorsMapper): MovieUi {
@@ -33,6 +38,20 @@ class MoviesMapper {
             ageRestriction = getCertification(movie.id),
             imageUrl = "https://image.tmdb.org/t/p/original" + movie.poster_path,
             actors = actorsMapper.toActorUi(movie.credits.cast),
+            categoryId = movie.genres[0].id,
+            category = movie.genres[0].name
+        )
+    }
+
+    fun toMovieUi(movie: MovieApiResponse): MovieUi {
+        return MovieUi(
+            title = movie.title,
+            description = movie.overview,
+            id = movie.id.toInt(),
+            rateScore = movie.vote_average / 2,
+            ageRestriction = "", //getCertification(movie.id),
+            imageUrl = "https://image.tmdb.org/t/p/original" + movie.poster_path,
+
             categoryId = movie.genres[0].id,
             category = movie.genres[0].name
         )
