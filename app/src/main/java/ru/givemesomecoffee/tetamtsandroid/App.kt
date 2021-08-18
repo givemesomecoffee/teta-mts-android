@@ -23,6 +23,7 @@ class App : Application() {
         lateinit var appContext: Context
         lateinit var db: AppDatabase
         val repository get() = ServiceLocator.provideRepository()
+        val userRepository get() = ServiceLocator.provideUserRepository()
     }
 
     //TODO: try to remove context

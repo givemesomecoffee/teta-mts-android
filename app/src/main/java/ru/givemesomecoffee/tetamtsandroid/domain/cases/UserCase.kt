@@ -1,11 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.cases
 
 import android.util.Log
-import ru.givemesomecoffee.tetamtsandroid.App.Companion.repository
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
 class UserCase {
+    private val repository = App.userRepository
+
     fun getUser(id: Int): UserUi {
         Log.d("test", Thread.currentThread().toString())
         return repository.getUser(id)

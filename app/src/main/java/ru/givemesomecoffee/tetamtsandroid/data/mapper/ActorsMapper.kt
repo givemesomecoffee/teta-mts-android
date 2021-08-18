@@ -1,10 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Actor
 import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.ActorApi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.ActorUi
 
 class ActorsMapper {
 
+    @JvmName("fromApiToActorUi")
     fun toActorUi(list: List<ActorApi>): List<ActorUi> {
         return list.map {
             var img = it.profile_path
@@ -15,6 +17,17 @@ class ActorsMapper {
                 id = null,
                 name = it.name,
                 imgUrl = img
+            )
+        }
+    }
+
+
+    fun toActorUi(list: List<Actor>): List<ActorUi> {
+        return list.map {
+            ActorUi(
+                id = it.id,
+                name = it.name,
+                imgUrl = it.img
             )
         }
     }

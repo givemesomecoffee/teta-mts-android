@@ -13,6 +13,8 @@ import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.CertificationRespon
 import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.GenresResponse
 import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MovieApiResponse
 import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
+import java.util.concurrent.TimeUnit
+
 
 const val API_BASE_URL = "https://api.themoviedb.org/3/"
 const val API_LANG_QUERY = "ru-RU"
@@ -56,7 +58,14 @@ interface MoviesApiService {
                 chain.proceed(request)
             }
 
-            return OkHttpClient.Builder().addInterceptor(interceptor).build()
+            return OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .readTimeout(2, TimeUnit.SECONDS)
+                .connectTimeout(2, TimeUnit.SECONDS)
+                .callTimeout(2, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
+                .writeTimeout(2, TimeUnit.SECONDS)
+                .build()
         }
 
         fun create(): MoviesApiService {
