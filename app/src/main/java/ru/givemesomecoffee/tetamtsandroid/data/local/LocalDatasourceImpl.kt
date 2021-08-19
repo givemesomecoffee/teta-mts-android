@@ -6,8 +6,9 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.ActorsDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.UserDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
+import javax.inject.Inject
 
-class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
+class LocalDatasourceImpl @Inject constructor(db: AppDatabase) : LocalDatasource {
     private val moviesDao: MovieDao = db.MovieDao()
     private val categoriesDao: CategoryDao = db.CategoryDao()
     private val userDao: UserDao = db.UserDao()

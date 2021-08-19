@@ -6,8 +6,9 @@ import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.CertificationR
 import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.GenresResponse
 import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MovieApiResponse
 import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MoviesApiResponse
+import javax.inject.Inject
 
-class RemoteDatasourceImpl(private val apiService: MoviesApiService): RemoteDatasource {
+class RemoteDatasourceImpl @Inject constructor(private val apiService: MoviesApiService): RemoteDatasource {
 
     override suspend fun getMovies(id: String?): MoviesApiResponse {
         return if (id == null){

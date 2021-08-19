@@ -71,6 +71,7 @@ interface MoviesApiService {
 
         fun create(): MoviesApiService {
             val moshi = Moshi.Builder()
+                .add(CustomDateAdapter())
                 .add(KotlinJsonAdapterFactory())
                 .build()
 

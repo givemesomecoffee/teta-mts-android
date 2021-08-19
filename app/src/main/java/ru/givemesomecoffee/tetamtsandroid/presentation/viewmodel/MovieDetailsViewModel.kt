@@ -4,13 +4,14 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState.Companion.LOADED
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState.Companion.LOADING
 
 class MovieDetailsViewModel : ViewModel() {
-    private val domain: MovieCase = MovieCase()
+    private val domain: MovieCase = App.appComponent.movieCase()
     val data: LiveData<MovieUi> get() = _data
     private val _data = MutableLiveData<MovieUi>()
     val loadingState: LiveData<LoadingState> get() = _loadingState

@@ -2,6 +2,7 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,6 +139,8 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun setNewMoviesList(await: List<MovieUi>) {
+        Log.d("test", "bind movies")
+        Log.d("test", await.toString())
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)

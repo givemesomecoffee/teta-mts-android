@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
+import android.util.Log
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.ActorsMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
@@ -8,8 +9,9 @@ import ru.givemesomecoffee.tetamtsandroid.data.remote.RemoteDatasource
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import java.lang.Exception
+import javax.inject.Inject
 
-class Repository(
+class Repository @Inject constructor(
     private val localDatasource: LocalDatasource,
     private val remoteDatasource: RemoteDatasource
 ) {
@@ -25,7 +27,13 @@ class Repository(
     }
 
     private suspend fun getNewMoviesDataset(id: Int?): List<MovieUi> {
-        val movies = moviesMapper.toMovieUi(remoteDatasource.getMovies(id?.toString()))
+        Log.d("test111", "movies.toString()")
+
+            val movies = moviesMapper.toMovieUi(remoteDatasource.getMovies(id?.toString()))
+
+
+
+        Log.d("test111", "movies.toString()")
         localDatasource.saveMovies(moviesMapper.toMovieDto(movies))
         return movies
     }
@@ -71,9 +79,12 @@ class Repository(
     }
 
     suspend fun getMoviesList(id: Int?): List<MovieUi> {
+        Log.d("test", "getMoviesList")
         return try {
             getNewMoviesDataset(id)
         } catch (e: Exception) {
+            //
+            Log.d("test", e.toString())
             getLocalMoviesDataset(id)
         }
     }

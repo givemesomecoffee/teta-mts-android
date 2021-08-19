@@ -4,8 +4,9 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.UserMapper
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
+import javax.inject.Inject
 
-class UserRepository( private val localDatasource: LocalDatasource) {
+class UserRepository @Inject constructor( private val localDatasource: LocalDatasource) {
     private val userMapper by lazy { UserMapper() }
     private val categoriesMapper by lazy { CategoriesMapper() }
 

@@ -57,15 +57,19 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
-        login = checkLoginStatus()
-        init()
-        //swapping login/profile fragments
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (login == null && destination.id == R.id.profileFragment) {
-                navController.popBackStack()
-                navController.navigate(R.id.action_global_loginFragment)
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) { login = checkLoginStatus() }
+            init()
+
+            //swapping login/profile fragments
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (login == null && destination.id == R.id.profileFragment) {
+                    navController.popBackStack()
+                    navController.navigate(R.id.action_global_loginFragment)
+                }
             }
         }
+
     }
 
     override fun onMovieCardClicked(id: Int) {

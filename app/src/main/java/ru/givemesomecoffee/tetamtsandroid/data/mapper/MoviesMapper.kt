@@ -5,6 +5,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
 import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.IMAGE_BASE_URL
 import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.MoviesApiService
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.Certification
 import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MovieApiResponse
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MoviesApiResponse
@@ -24,12 +25,12 @@ class MoviesMapper {
         )
     }
 
-    private suspend fun getCertification(id: String): String {
+    private suspend fun getCertification(id: String): Certification? {
         val cert = MoviesApiService.create().getCert(id = id)
-        var certification = ""
+        var certification: Certification? = null
         try {
             val dates = cert.results.first { it.iso_3166_1 == "RU" }
-            certification = dates.release_dates[0].certification
+            certification = dates.release_dates[0]
         } catch (e: Exception) {
             Log.d("retro", cert.results.toString())
         }
@@ -39,12 +40,13 @@ class MoviesMapper {
 
     suspend fun toMovieUi(response: MoviesApiResponse): List<MovieUi> {
         return response.results.map {
+            val certification = getCertification(it.id)
             MovieUi(
                 id = it.id.toInt(),
                 title = it.title,
                 description = it.overview,
                 categoryId = it.genre_ids[0],
-                ageRestriction = getCertification(it.id),
+                ageRestriction = certification?.certification,
                 imageUrl = IMAGE_BASE_URL + it.poster_path,
                 rateScore = it.vote_average / 2
             )
@@ -52,16 +54,19 @@ class MoviesMapper {
     }
 
     suspend fun toMovieUi(movie: MovieApiResponse, actorsMapper: ActorsMapper): MovieUi {
+        val certification = getCertification(movie.id)
         return MovieUi(
             title = movie.title,
             description = movie.overview,
             id = movie.id.toInt(),
             rateScore = movie.vote_average / 2,
-            ageRestriction = getCertification(movie.id),
+            ageRestriction = certification?.certification,
             imageUrl = IMAGE_BASE_URL + movie.poster_path,
             actors = actorsMapper.toActorUi(movie.credits.cast),
             categoryId = movie.genres[0].id,
-            category = movie.genres[0].name
+            category = movie.genres[0].name,
+            releaseDate = certification?.release_date
+
         )
     }
 
@@ -79,7 +84,8 @@ class MoviesMapper {
             imageUrl = movie.movie.imageUrl,
             rateScore = movie.movie.rateScore,
             category = categoryTitle,
-            actors = actorsMapper.toActorUi(movie.actors)
+            actors = actorsMapper.toActorUi(movie.actors),
+            releaseDate = movie.movie.releaseDate
         )
     }
 
@@ -98,7 +104,8 @@ class MoviesMapper {
                 categoryId = movie.categoryId,
                 ageRestriction = movie.ageRestriction,
                 imageUrl = movie.imageUrl,
-                rateScore = movie.rateScore
+                rateScore = movie.rateScore,
+                releaseDate = movie.releaseDate
             )
         }
     }

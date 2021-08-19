@@ -11,12 +11,16 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
@@ -26,6 +30,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItem
 
 class RegisterFragment : Fragment() {
     private var login: Login? = null
+    private val userCase = App.appComponent.userCase()
     private val viewModel: RegisterViewModel by viewModels()
     private var favouriteCategoriesList: RecyclerView? = null
     private var favouriteCategoriesListAdapter: CategoryFavouriteAdapter? = null
@@ -110,19 +115,31 @@ class RegisterFragment : Fragment() {
     private fun checkUser() {
         if (validateEmail() && validatePassword() && validateUserName()) {
             val email = emailView?.editText?.text.toString()
-            val check: Int? = UserCase().checkUser(email)
-            if (check != null) {
-                errorWrongDataView?.visibility = View.VISIBLE
-            } else {
-                val name = nameView?.editText?.text.toString()
+            viewLifecycleOwner.lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val check: Int? = userCase.checkUser(email)
+                    if (check != null) {
+                        withContext(Dispatchers.Main) {
+                            errorWrongDataView?.visibility = View.VISIBLE
+                        }
+                    } else {
+                        val name = nameView?.editText?.text.toString()
 
-                val password = passwordView?.editText?.text.toString()
-                val id =
-                    UserCase().saveNewUser(UserUi(name = name, email = email, password = password))
-                if (favouriteCategories.size > 0) {
-                    UserCase().setFavouriteCategories(categories = favouriteCategories, id)
+                        val password = passwordView?.editText?.text.toString()
+                        val id =
+                            userCase.saveNewUser(
+                                UserUi(
+                                    name = name,
+                                    email = email,
+                                    password = password
+                                )
+                            )
+                        if (favouriteCategories.size > 0) {
+                            userCase.setFavouriteCategories(categories = favouriteCategories, id)
+                        }
+                        withContext(Dispatchers.Main) { login?.onRegisterComplete() }
+                    }
                 }
-                login?.onRegisterComplete()
             }
         }
     }

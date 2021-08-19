@@ -3,12 +3,14 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
 class MoviesListViewModel : ViewModel() {
-    private val domain: MoviesListCases = MoviesListCases()
+    private val domain: MoviesListCases = App.appComponent.moviesListCase()
+
     val data: LiveData<List<MovieUi>> get() = _data
     private val _data = MutableLiveData<List<MovieUi>>()
     val categories: LiveData<List<CategoryUi>> get() = _categories

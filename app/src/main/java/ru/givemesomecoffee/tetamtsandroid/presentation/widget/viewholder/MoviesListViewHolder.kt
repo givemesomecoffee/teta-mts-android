@@ -32,7 +32,7 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
                 onStart = { progressBar.visibility = View.VISIBLE })
         }
         movieAge.text = item.ageRestriction
-        if (item.ageRestriction.isEmpty()) {
+        if (item.ageRestriction.isNullOrEmpty()) {
             movieAge.visibility = View.INVISIBLE
         } else {
             movieAge.visibility = View.VISIBLE

@@ -3,6 +3,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local.db.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "movies")
 data class MovieDto(
@@ -21,12 +22,14 @@ data class MovieDto(
     val rateScore: Float,
 
     @ColumnInfo(name = "ageRestriction")
-    val ageRestriction: String,
+    val ageRestriction: String?,
 
     @ColumnInfo(name = "imageUrl")
     val imageUrl: String,
 
     @ColumnInfo(name = "categoryId")
-    val categoryId: Int
+    val categoryId: Int,
+
+    val releaseDate: Date?
 
 )

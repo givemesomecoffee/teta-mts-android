@@ -16,12 +16,18 @@ import coil.imageLoader
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.CustomDateAdapter
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.ActorsAdapter
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.setTopCrop
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 class MovieDetailsFragment : Fragment() {
     private var categoryTitle: TextView? = null
@@ -30,6 +36,7 @@ class MovieDetailsFragment : Fragment() {
     private var ageSign: TextView? = null
     private var movieDetailsHolder: View? = null
     private var ratingBar: RatingBar? = null
+    private var releaseDateView: TextView? = null
     private lateinit var movieCover: ImageView
     private lateinit var errorHandlerView: TextView
     private var movie: MovieUi? = null
@@ -50,6 +57,7 @@ class MovieDetailsFragment : Fragment() {
         errorHandlerView = requireView().findViewById(R.id.error_handler)
         movieDetailsHolder = requireView().findViewById(R.id.movie_details_scroll)
         ratingBar = requireView().findViewById(R.id.ratingBar)
+        releaseDateView = requireView().findViewById(R.id.movie_date)
         progressBarCover = requireView().findViewById(R.id.movie_cover_progress_bar)
         actorsListView = requireView().findViewById(R.id.actors_section)
         actorsListView!!.addItemDecoration(RecyclerItemDecoration(10, 0, 20))
@@ -88,10 +96,13 @@ class MovieDetailsFragment : Fragment() {
         movieTitle?.text = movie.title
         movieDescription?.text = movie.description
         ageSign?.text = movie.ageRestriction
-        if (movie.ageRestriction.isEmpty()) {
+        if (movie.ageRestriction.isNullOrEmpty()) {
             ageSign?.visibility = View.INVISIBLE
         } else {
             ageSign?.visibility = View.VISIBLE
+        }
+        if (movie.releaseDate != null) {
+            releaseDateView?.text = SimpleDateFormat("dd.MM.yyyy").format(movie.releaseDate)
         }
         ratingBar?.rating = movie.rateScore
         movieDetailsHolder?.visibility = View.VISIBLE
