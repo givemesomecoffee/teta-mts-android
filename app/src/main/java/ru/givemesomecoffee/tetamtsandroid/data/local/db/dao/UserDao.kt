@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.data.local.db.dao
 
 import androidx.room.*
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.User
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserDto
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserFavourites
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
 
@@ -14,13 +14,13 @@ interface UserDao {
     fun getUserData(id: Int): UserWithFavourites
 
     @Query("SELECT * FROM users WHERE email == :email AND password == :password")
-    fun checkUser(email: String?, password: String?): User
+    fun checkUser(email: String?, password: String?): UserDto
 
     @Query("SELECT * FROM users WHERE email == :email")
-    fun checkUser(email: String?): User
+    fun checkUser(email: String?): UserDto
 
     @Insert
-    fun setUser(user: User): Long
+    fun setUser(user: UserDto): Long
 
     @Insert
     fun setUserFavourites(favourites: List<UserFavourites>)

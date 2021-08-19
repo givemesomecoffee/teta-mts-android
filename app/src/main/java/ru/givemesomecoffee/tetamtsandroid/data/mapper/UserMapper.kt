@@ -1,6 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.User
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserDto
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.UserWithFavourites
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
@@ -17,8 +17,8 @@ class UserMapper {
         )
     }
 
-    fun toUser(userUi: UserUi): User {
-        return User(
+    fun toUser(userUi: UserUi): UserDto {
+        return UserDto(
             name = userUi.name,
             email = userUi.email,
             password = userUi.password

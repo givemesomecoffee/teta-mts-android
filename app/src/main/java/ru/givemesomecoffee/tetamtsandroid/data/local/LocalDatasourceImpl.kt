@@ -13,11 +13,11 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
     private val userDao: UserDao = db.UserDao()
     private val actorDao: ActorsDao = db.ActorsDao()
 
-    override fun getAllMovies(): List<Movie> {
+    override fun getAllMovies(): List<MovieDto> {
         return moviesDao.getAll()
     }
 
-    override fun getMoviesByCategory(categoryId: Int): List<Movie> {
+    override fun getMoviesByCategory(categoryId: Int): List<MovieDto> {
         return moviesDao.getMoviesByCategory(categoryId)
     }
 
@@ -25,11 +25,11 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
         return moviesDao.getMovieById(id)
     }
 
-    override fun getAllCategories(): List<Category> {
+    override fun getAllCategories(): List<CategoryDto> {
         return categoriesDao.getAll()
     }
 
-    override fun getCategoryById(id: Int): Category {
+    override fun getCategoryById(id: Int): CategoryDto {
         return categoriesDao.getCategoryById(id)
     }
 
@@ -37,11 +37,11 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
         return userDao.getUserData(id)
     }
 
-    override fun checkUser(email: String, password: String): User {
+    override fun checkUser(email: String, password: String): UserDto {
         return userDao.checkUser(email, password)
     }
 
-    override fun checkUser(email: String): User {
+    override fun checkUser(email: String): UserDto {
         return userDao.checkUser(email)
     }
 
@@ -53,7 +53,7 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
         return userDao.getUserId(token)
     }
 
-    override fun saveNewUser(user: User): Int {
+    override fun saveNewUser(user: UserDto): Int {
         return userDao.setUser(user).toInt()
     }
 
@@ -61,15 +61,15 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
         userDao.setUserFavourites(categories.map { UserFavourites(id, it) })
     }
 
-    override fun setMovies(movies: List<Movie>) {
+    override fun saveMovies(movies: List<MovieDto>) {
         moviesDao.setAll(movies)
     }
 
-    override fun setCategories(categories: List<Category>) {
+    override fun saveCategories(categories: List<CategoryDto>) {
         categoriesDao.insertAll(categories)
     }
 
-    override fun saveActors(actors: List<Actor>?, id: Int) {
+    override fun saveActors(actors: List<ActorDto>?, id: Int) {
         if (actors != null) {
             actorDao.setActors(actors)
             for (actor in actors) {

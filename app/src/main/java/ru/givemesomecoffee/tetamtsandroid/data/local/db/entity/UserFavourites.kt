@@ -12,13 +12,13 @@ data class UserFavourites(
 )
 
 data class UserWithFavourites(
-    @Embedded val user: User,
+    @Embedded val user: UserDto,
 
     @Relation(
         parentColumn = "userId",
         entityColumn = "categoryId",
         associateBy = Junction(UserFavourites::class)
     )
-    val categories: List<Category>
+    val categories: List<CategoryDto>
 )
 

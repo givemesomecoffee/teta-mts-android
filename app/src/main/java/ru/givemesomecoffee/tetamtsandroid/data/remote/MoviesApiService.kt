@@ -46,6 +46,7 @@ interface MoviesApiService {
     suspend fun getCert(@Path("id") id: String): CertificationResponse
 
     companion object {
+
         private fun getOkHttpClient(): OkHttpClient {
             val interceptor = Interceptor { chain ->
                 val url = chain.request().url().newBuilder()
@@ -80,6 +81,5 @@ interface MoviesApiService {
                 .create(MoviesApiService::class.java)
         }
     }
-
 
 }

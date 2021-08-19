@@ -3,7 +3,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local.db.entity
 import androidx.room.*
 
 @Entity(tableName = "users")
-data class User(
+data class UserDto(
     @PrimaryKey(autoGenerate = false)
     var userId: Int? = null,
     val name: String,

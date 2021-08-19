@@ -1,12 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Category
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.CategoryDto
 import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.Genre
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 
 class CategoriesMapper {
 
-    fun toCategoryUi(list: List<Category>): List<CategoryUi> {
+    fun toCategoryUi(list: List<CategoryDto>): List<CategoryUi> {
         return list.map { CategoryUi(id = it.id, title = it.title) }
     }
 
@@ -17,9 +17,9 @@ class CategoriesMapper {
         }
     }
 
-    fun toCategoryDto(categories: List<CategoryUi>): List<Category> {
+    fun toCategoryDto(categories: List<CategoryUi>): List<CategoryDto> {
         return categories.map {
-            Category(
+            CategoryDto(
                 id = it.id,
                 title = it.title
             )

@@ -25,7 +25,6 @@ class CategoryFavouriteAdapter(
         }
     }
 
-
     override fun getItemCount(): Int {
         return dataset.size
     }

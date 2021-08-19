@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Actor
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.ActorUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.ActorViewHolder
 

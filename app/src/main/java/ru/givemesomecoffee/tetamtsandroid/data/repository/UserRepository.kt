@@ -17,6 +17,10 @@ class UserRepository( private val localDatasource: LocalDatasource) {
         return localDatasource.checkUser(email, password)?.userId
     }
 
+    fun checkUser(email: String): Int? {
+        return localDatasource.checkUser(email)?.userId
+    }
+
     fun changeToken(token: String?, id: Int) {
         localDatasource.changeUserToken(token, id)
     }
@@ -27,10 +31,6 @@ class UserRepository( private val localDatasource: LocalDatasource) {
 
     fun saveNewUser(userUi: UserUi): Int {
         return localDatasource.saveNewUser(userMapper.toUser(userUi))
-    }
-
-    fun checkUser(email: String): Int? {
-        return localDatasource.checkUser(email)?.userId
     }
 
     fun setFavouriteCategories(categories: List<Int>, id: Int) {

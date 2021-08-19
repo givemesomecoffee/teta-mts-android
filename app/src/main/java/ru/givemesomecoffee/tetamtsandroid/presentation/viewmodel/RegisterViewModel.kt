@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
 class RegisterViewModel : ViewModel() {
     private val domain = MoviesListCases()

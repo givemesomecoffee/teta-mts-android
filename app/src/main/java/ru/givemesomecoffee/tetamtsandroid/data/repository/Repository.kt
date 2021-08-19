@@ -20,7 +20,7 @@ class Repository(
 
     private suspend fun getNewCategoriesDataset(): List<CategoryUi> {
         val categories = categoriesMapper.toCategoryUi(remoteDatasource.getGenres().genres)
-        localDatasource.setCategories(categoriesMapper.toCategoryDto(categories))
+        localDatasource.saveCategories(categoriesMapper.toCategoryDto(categories))
         return categories
     }
 
@@ -30,7 +30,7 @@ class Repository(
         } else {
             moviesMapper.toMovieUi(remoteDatasource.getMoviesByGenre(genre = id.toString()))
         }
-        localDatasource.setMovies(moviesMapper.toMovieDto(movies))
+        localDatasource.saveMovies(moviesMapper.toMovieDto(movies))
         return movies
     }
 

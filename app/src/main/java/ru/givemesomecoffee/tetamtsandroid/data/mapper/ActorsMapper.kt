@@ -1,6 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Actor
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.ActorDto
 import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.ActorApi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.ActorUi
 
@@ -22,7 +22,7 @@ class ActorsMapper {
     }
 
 
-    fun toActorUi(list: List<Actor>): List<ActorUi> {
+    fun toActorUi(list: List<ActorDto>): List<ActorUi> {
         return list.map {
             ActorUi(
                 id = it.id,
@@ -32,9 +32,9 @@ class ActorsMapper {
         }
     }
 
-    fun toActorDto(actors: List<ActorUi>): List<Actor> {
+    fun toActorDto(actors: List<ActorUi>): List<ActorDto> {
         return actors.map {
-            Actor(
+            ActorDto(
                 name = it.name,
                 img = it.imgUrl,
                 id = it.id

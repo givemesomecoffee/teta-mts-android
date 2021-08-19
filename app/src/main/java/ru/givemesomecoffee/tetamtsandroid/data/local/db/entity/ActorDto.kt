@@ -3,7 +3,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local.db.entity
 import androidx.room.*
 
 @Entity
-class Actor(
+class ActorDto(
     val name: String,
     val img: String?,
     @PrimaryKey(autoGenerate = false)
@@ -19,11 +19,11 @@ data class ActorsToMovies(
 
 data class MovieWithActors(
     @Embedded
-    val movie: Movie,
+    val movie: MovieDto,
     @Relation(
         parentColumn = "movieId",
         entityColumn = "actorId",
         associateBy = Junction(ActorsToMovies::class)
     )
-    val actors: List<Actor>
+    val actors: List<ActorDto>
 )
