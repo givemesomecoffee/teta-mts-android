@@ -14,6 +14,7 @@ import ru.givemesomecoffee.tetamtsandroid.data.repository.UserRepository
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
+import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
 import javax.inject.Singleton
 
 
@@ -33,6 +34,7 @@ interface AppComponent {
     fun movieCase(): MovieCase
     fun userCase(): UserCase
     fun moviesListCase(): MoviesListCases
+    fun inject(fragment: MovieDetailsFragment)
 }
 
 @Module(includes = [NetworkModule::class, DatabaseModule::class, AppBindModule::class])
@@ -97,4 +99,6 @@ interface AppBindModule {
 
     @Binds
     fun bind_RemoteDatasourceImpl_to_RemoteDatasource(remoteDatasourceImpl: RemoteDatasourceImpl): RemoteDatasource
+
+
 }

@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -15,18 +16,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.imageLoader
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.CustomDateAdapter
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModel
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModelFactory
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.ActorsAdapter
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.setTopCrop
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
+import javax.inject.Inject
 
 
 class MovieDetailsFragment : Fragment() {
@@ -45,7 +45,12 @@ class MovieDetailsFragment : Fragment() {
     private var progressBarCover: ProgressBar? = null
     private var actorsListView: RecyclerView? = null
 
-    private val viewModel: MovieDetailsViewModel by viewModels()
+    private val viewModel: MovieDetailsViewModel by viewModels {
+        factory.create(movieId!!)
+    }
+
+    @Inject
+    lateinit var factory: MovieDetailsViewModelFactory.Factory
 
     private fun init() {
         movieCover = requireView().findViewById(R.id.movie_cover)
@@ -65,6 +70,12 @@ class MovieDetailsFragment : Fragment() {
         viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
     }
 
+    override fun onAttach(context: Context) {
+        movieId = requireArguments().getInt("id")
+        App.appComponent.inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -78,8 +89,8 @@ class MovieDetailsFragment : Fragment() {
         init()
         movieDetailsHolder?.visibility = View.INVISIBLE
         movieId = arguments?.getInt("id")
-        viewModel.init(movieId)
-        refreshWrapper?.setOnRefreshListener { viewModel.getMovie(movieId) }
+        viewModel.init()
+        refreshWrapper?.setOnRefreshListener { viewModel.getMovie() }
     }
 
     private fun setImgToView(result: Drawable) {
