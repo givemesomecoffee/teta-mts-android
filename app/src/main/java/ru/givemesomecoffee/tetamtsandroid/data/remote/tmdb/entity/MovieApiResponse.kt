@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.remote.entity
+package ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity
 
 data class MovieApiResponse(
     val id: String,

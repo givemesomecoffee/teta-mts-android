@@ -1,7 +1,8 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.ActorDto
-import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.ActorApi
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.IMAGE_BASE_URL
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.ActorApi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.ActorUi
 
 class ActorsMapper {
@@ -11,7 +12,7 @@ class ActorsMapper {
         return list.map {
             var img = it.profile_path
             if (!img.isNullOrEmpty()) {
-                img = "https://image.tmdb.org/t/p/original" + it.profile_path
+                img = IMAGE_BASE_URL + it.profile_path
             }
             ActorUi(
                 id = it.id.toInt(),

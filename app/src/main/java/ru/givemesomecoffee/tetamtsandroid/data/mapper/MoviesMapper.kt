@@ -1,13 +1,13 @@
 package ru.givemesomecoffee.tetamtsandroid.data.mapper
 
-
 import android.util.Log
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieDto
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
-import ru.givemesomecoffee.tetamtsandroid.data.remote.MoviesApiService
-import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MovieApiResponse
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.IMAGE_BASE_URL
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.MoviesApiService
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MovieApiResponse
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
-import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MoviesApiResponse
 import java.lang.Exception
 
 class MoviesMapper {
@@ -45,7 +45,7 @@ class MoviesMapper {
                 description = it.overview,
                 categoryId = it.genre_ids[0],
                 ageRestriction = getCertification(it.id),
-                imageUrl = "https://image.tmdb.org/t/p/original" + it.poster_path,
+                imageUrl = IMAGE_BASE_URL + it.poster_path,
                 rateScore = it.vote_average / 2
             )
         }
@@ -58,7 +58,7 @@ class MoviesMapper {
             id = movie.id.toInt(),
             rateScore = movie.vote_average / 2,
             ageRestriction = getCertification(movie.id),
-            imageUrl = "https://image.tmdb.org/t/p/original" + movie.poster_path,
+            imageUrl = IMAGE_BASE_URL + movie.poster_path,
             actors = actorsMapper.toActorUi(movie.credits.cast),
             categoryId = movie.genres[0].id,
             category = movie.genres[0].name

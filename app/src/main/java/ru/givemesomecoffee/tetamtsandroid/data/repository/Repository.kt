@@ -4,14 +4,14 @@ import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.ActorsMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.MoviesMapper
-import ru.givemesomecoffee.tetamtsandroid.data.remote.MoviesApiService
+import ru.givemesomecoffee.tetamtsandroid.data.remote.RemoteDatasource
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import java.lang.Exception
 
 class Repository(
     private val localDatasource: LocalDatasource,
-    private val remoteDatasource: MoviesApiService = MoviesApiService.create()
+    private val remoteDatasource: RemoteDatasource
 ) {
     /*feels like this initialisation will be reworked later with tests integration*/
     private val moviesMapper by lazy { MoviesMapper() }
@@ -25,11 +25,7 @@ class Repository(
     }
 
     private suspend fun getNewMoviesDataset(id: Int?): List<MovieUi> {
-        val movies = if (id == null) {
-            moviesMapper.toMovieUi(remoteDatasource.getMovies())
-        } else {
-            moviesMapper.toMovieUi(remoteDatasource.getMoviesByGenre(genre = id.toString()))
-        }
+        val movies = moviesMapper.toMovieUi(remoteDatasource.getMovies(id?.toString()))
         localDatasource.saveMovies(moviesMapper.toMovieDto(movies))
         return movies
     }

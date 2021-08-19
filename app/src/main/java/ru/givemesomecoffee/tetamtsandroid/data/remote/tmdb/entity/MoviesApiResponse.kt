@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.remote.entity
+package ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity
 
 class MoviesApiResponse(val results: List<MovieApi>)
 

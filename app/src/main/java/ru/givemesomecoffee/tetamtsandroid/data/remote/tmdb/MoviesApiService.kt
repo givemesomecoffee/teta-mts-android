@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.remote
+package ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -9,10 +9,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.CertificationResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.GenresResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MovieApiResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.entity.MoviesApiResponse
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.CertificationResponse
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.GenresResponse
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MovieApiResponse
+import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MoviesApiResponse
 import java.util.concurrent.TimeUnit
 
 
@@ -20,6 +20,7 @@ const val API_BASE_URL = "https://api.themoviedb.org/3/"
 const val API_LANG_QUERY = "ru-RU"
 const val API_TOKEN = "0b60005e258e5e6a053da6f4870cf6bf"
 const val API_POPULARITY_SORT_BY = "popularity.desc"
+const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original"
 
 interface MoviesApiService {
     @GET("discover/movie")
