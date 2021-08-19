@@ -1,13 +1,12 @@
-package ru.givemesomecoffee.tetamtsandroid.utils
+package ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
+import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
-class CategoriesDiffCallback(
-    private val oldList: List<CategoryUi>,
-    private val newList: List<CategoryUi>
+class MoviesDiffCallback(
+    private val oldList: List<MovieUi>,
+    private val newList: List<MovieUi>
 ) : DiffUtil.Callback() {
-
     override fun getOldListSize(): Int = oldList.size
 
     override fun getNewListSize(): Int = newList.size
@@ -17,5 +16,4 @@ class CategoriesDiffCallback(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
         oldList[oldItemPosition] == newList[newItemPosition]
-
 }

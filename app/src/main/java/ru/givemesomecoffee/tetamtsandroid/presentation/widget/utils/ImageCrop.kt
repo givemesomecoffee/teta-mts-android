@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.utils
+package ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils
 
 import android.widget.ImageView
 

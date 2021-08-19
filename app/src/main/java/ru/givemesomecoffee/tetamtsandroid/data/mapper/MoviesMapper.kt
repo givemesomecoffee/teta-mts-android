@@ -18,7 +18,7 @@ class MoviesMapper {
                 id = it.id.toInt(),
                 title = it.title,
                 description = it.overview,
-                categoryId = 1,
+                categoryId = it.genre_ids[0],
                 ageRestriction = getCertification(it.id),
                 imageUrl = "https://image.tmdb.org/t/p/original" + it.poster_path,
                 rateScore = it.vote_average / 2
@@ -36,9 +36,9 @@ class MoviesMapper {
             title = movie.movie.title,
             description = movie.movie.description,
             categoryId = movie.movie.categoryId,
-            ageRestriction = movie.movie.ageRestriction.toString() + "+",
+            ageRestriction = movie.movie.ageRestriction,
             imageUrl = movie.movie.imageUrl,
-            rateScore = movie.movie.rateScore.toFloat(),
+            rateScore = movie.movie.rateScore,
             category = categoryTitle,
             actors = actorsMapper.toActorUi(movie.actors)
         )
@@ -83,10 +83,24 @@ class MoviesMapper {
             title = movie.title,
             description = movie.description,
             categoryId = movie.categoryId,
-            ageRestriction = movie.ageRestriction.toString() + "+",
+            ageRestriction = movie.ageRestriction,
             imageUrl = movie.imageUrl,
-            rateScore = movie.rateScore.toFloat()
+            rateScore = movie.rateScore
         )
+    }
+
+    fun toMovieDto(movies: List<MovieUi>): List<Movie> {
+        return movies.map { movie ->
+            Movie(
+                id = movie.id!!,
+                title = movie.title,
+                description = movie.description,
+                categoryId = movie.categoryId,
+                ageRestriction = movie.ageRestriction,
+                imageUrl = movie.imageUrl,
+                rateScore = movie.rateScore
+            )
+        }
     }
 
 }

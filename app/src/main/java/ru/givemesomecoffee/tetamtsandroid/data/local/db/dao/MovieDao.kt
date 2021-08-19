@@ -1,9 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.data.local.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.Movie
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.MovieWithActors
 
@@ -20,7 +17,7 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE movieId == :id")
     fun getMovieById(id: Int): MovieWithActors
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setAll(list: List<Movie>)
 
 }

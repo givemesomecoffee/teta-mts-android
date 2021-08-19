@@ -1,6 +1,5 @@
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import android.util.Log
 import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.ActorsMapper
 import ru.givemesomecoffee.tetamtsandroid.data.mapper.CategoriesMapper
@@ -20,15 +19,19 @@ class Repository(
     private val actorsMapper by lazy { ActorsMapper() }
 
     private suspend fun getNewCategoriesDataset(): List<CategoryUi> {
-        return categoriesMapper.toCategoryUi(remoteDatasource.getGenres().genres)
+        val categories = categoriesMapper.toCategoryUi(remoteDatasource.getGenres().genres)
+        localDatasource.setCategories(categoriesMapper.toCategoryDto(categories))
+        return categories
     }
 
     private suspend fun getNewMoviesDataset(id: Int?): List<MovieUi> {
-        return if (id == null) {
+        val movies = if (id == null) {
             moviesMapper.toMovieUi(remoteDatasource.getMovies())
         } else {
             moviesMapper.toMovieUi(remoteDatasource.getMoviesByGenre(genre = id.toString()))
         }
+        localDatasource.setMovies(moviesMapper.toMovieDto(movies))
+        return movies
     }
 
     private fun getLocalMoviesDataset(id: Int?): List<MovieUi> {
@@ -49,10 +52,13 @@ class Repository(
 
     suspend fun getMovie(id: Int): MovieUi {
         return try {
-            moviesMapper.toMovieUi(
+            val movie = moviesMapper.toMovieUi(
                 remoteDatasource.getMovie(id = id.toString()),
                 actorsMapper
             )
+            val actors = movie.actors?.let { actorsMapper.toActorDto(it) }
+            localDatasource.saveActors(actors, movie.id!!)
+            movie
         } catch (e: Exception) {
             val movie = localDatasource.getMovieById(id = id)
             val category = getCategoryTitle(movie.movie.categoryId)
@@ -70,13 +76,10 @@ class Repository(
 
     suspend fun getMoviesList(id: Int?): List<MovieUi> {
         return try {
-            Log.d("localds", "getNewMoviesDataset(id)")
             getNewMoviesDataset(id)
         } catch (e: Exception) {
-            Log.d("localds", e.message.toString())
             getLocalMoviesDataset(id)
         }
     }
-
 
 }

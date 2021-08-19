@@ -25,6 +25,14 @@
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
+
+        <ProgressBar
+            android:id="@+id/movie_cover_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
     </androidx.cardview.widget.CardView>
 
     <TextView

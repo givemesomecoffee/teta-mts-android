@@ -3,6 +3,7 @@ package ru.givemesomecoffee.tetamtsandroid.data.local
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.CategoryDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.MovieDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
+import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.ActorsDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.UserDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
 
@@ -10,6 +11,7 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
     private val moviesDao: MovieDao = db.MovieDao()
     private val categoriesDao: CategoryDao = db.CategoryDao()
     private val userDao: UserDao = db.UserDao()
+    private val actorDao: ActorsDao = db.ActorsDao()
 
     override fun getAllMovies(): List<Movie> {
         return moviesDao.getAll()
@@ -57,5 +59,22 @@ class LocalDatasourceImpl(db: AppDatabase) : LocalDatasource {
 
     override fun setFavouriteCategories(categories: List<Int>, id: Int) {
         userDao.setUserFavourites(categories.map { UserFavourites(id, it) })
+    }
+
+    override fun setMovies(movies: List<Movie>) {
+        moviesDao.setAll(movies)
+    }
+
+    override fun setCategories(categories: List<Category>) {
+        categoriesDao.insertAll(categories)
+    }
+
+    override fun saveActors(actors: List<Actor>?, id: Int) {
+        if (actors != null) {
+            actorDao.setActors(actors)
+            for (actor in actors) {
+                actorDao.setActorToMovie(ActorsToMovies(id, actor.id!!))
+            }
+        }
     }
 }

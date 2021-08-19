@@ -14,7 +14,7 @@ class ActorsMapper {
                 img = "https://image.tmdb.org/t/p/original" + it.profile_path
             }
             ActorUi(
-                id = null,
+                id = it.id.toInt(),
                 name = it.name,
                 imgUrl = img
             )
@@ -28,6 +28,16 @@ class ActorsMapper {
                 id = it.id,
                 name = it.name,
                 imgUrl = it.img
+            )
+        }
+    }
+
+    fun toActorDto(actors: List<ActorUi>): List<Actor> {
+        return actors.map {
+            Actor(
+                name = it.name,
+                img = it.imgUrl,
+                id = it.id
             )
         }
     }

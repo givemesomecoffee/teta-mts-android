@@ -16,4 +16,13 @@ class CategoriesMapper {
             CategoryUi(id = it.id, title = it.name)
         }
     }
+
+    fun toCategoryDto(categories: List<CategoryUi>): List<Category> {
+        return categories.map {
+            Category(
+                id = it.id,
+                title = it.title
+            )
+        }
+    }
 }

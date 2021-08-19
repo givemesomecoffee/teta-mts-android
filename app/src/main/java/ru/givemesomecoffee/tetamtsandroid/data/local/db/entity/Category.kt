@@ -11,7 +11,7 @@ data class Category(
     @ColumnInfo(name = "title")
     val title: String,
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "categoryId")
     val id: Int?,
 )

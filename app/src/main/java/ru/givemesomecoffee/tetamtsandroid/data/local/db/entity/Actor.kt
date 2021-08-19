@@ -5,8 +5,8 @@ import androidx.room.*
 @Entity
 class Actor(
     val name: String,
-    val img: String,
-    @PrimaryKey(autoGenerate = true)
+    val img: String?,
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "actorId")
     val id: Int?,
 )

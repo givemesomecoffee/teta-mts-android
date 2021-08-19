@@ -22,7 +22,7 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.RegisterViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFavouriteAdapter
-import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
 
 class RegisterFragment : Fragment() {
     private var login: Login? = null

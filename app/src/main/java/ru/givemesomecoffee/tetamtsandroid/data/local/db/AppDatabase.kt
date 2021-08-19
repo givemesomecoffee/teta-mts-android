@@ -6,7 +6,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import ru.givemesomecoffee.tetamtsandroid.App
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.assets.*
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.ActorsDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.MovieDao
 import ru.givemesomecoffee.tetamtsandroid.data.local.db.dao.CategoryDao
@@ -44,44 +43,15 @@ abstract class AppDatabase : RoomDatabase() {
             }
 
         private fun buildDatabase(): AppDatabase {
-            val temp = Room.databaseBuilder(
+            return Room.databaseBuilder(
                 App.appContext,
                 AppDatabase::class.java,
                 DATABASE_NAME
-            ).addCallback(callback)
-                .allowMainThreadQueries()
+            )
                 .fallbackToDestructiveMigration()
                 .build()
-            //TODO: find better solution
-            //this is freaking weird calls to force callback
-            temp.beginTransaction()
-            temp.endTransaction()
-            //
-
-            if (isSetup) {
-                Log.d("room", "i m in init")
-                temp.MovieDao().setAll(MoviesDataSourceImpl().getMovies())
-                temp.CategoryDao()
-                    .insertAll(CategoriesDataSourceImpl().getCategories())
-                temp.UserDao().setUser(getUser())
-                temp.UserDao().setUserFavourites(getUserFavourites())
-                val actors = Actors()
-                temp.ActorsDao().setActors(actors.actors)
-                temp.ActorsDao().setActorsToMovies(actors.actorsToMovies)
-            }
-            Log.d("room", "i gonna return this room")
-
-            return temp
         }
 
-
-        private val callback = object : RoomDatabase.Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                isSetup = true
-                Log.d("room", "i should be called only once")
-            }
-        }
     }
 }
 

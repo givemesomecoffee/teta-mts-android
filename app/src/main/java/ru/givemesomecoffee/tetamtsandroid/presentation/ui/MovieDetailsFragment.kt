@@ -2,13 +2,11 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -22,8 +20,8 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.ActorsAdapter
-import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
-import ru.givemesomecoffee.tetamtsandroid.utils.setTopCrop
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.setTopCrop
 
 class MovieDetailsFragment : Fragment() {
     private var categoryTitle: TextView? = null
@@ -37,7 +35,9 @@ class MovieDetailsFragment : Fragment() {
     private var movie: MovieUi? = null
     private var refreshWrapper: SwipeRefreshLayout? = null
     private var movieId: Int? = null
+    private var progressBarCover: ProgressBar? = null
     private var actorsListView: RecyclerView? = null
+
     private val viewModel: MovieDetailsViewModel by viewModels()
 
     private fun init() {
@@ -50,6 +50,7 @@ class MovieDetailsFragment : Fragment() {
         errorHandlerView = requireView().findViewById(R.id.error_handler)
         movieDetailsHolder = requireView().findViewById(R.id.movie_details_scroll)
         ratingBar = requireView().findViewById(R.id.ratingBar)
+        progressBarCover = requireView().findViewById(R.id.movie_cover_progress_bar)
         actorsListView = requireView().findViewById(R.id.actors_section)
         actorsListView!!.addItemDecoration(RecyclerItemDecoration(10, 0, 20))
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
@@ -74,6 +75,8 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setImgToView(result: Drawable) {
+        Log.d("coil", "i sucsess")
+        progressBarCover?.visibility = View.INVISIBLE
         movieCover.setImageDrawable(result)
         setTopCrop(movieCover)
     }
@@ -93,9 +96,12 @@ class MovieDetailsFragment : Fragment() {
         ratingBar?.rating = movie.rateScore
         movieDetailsHolder?.visibility = View.VISIBLE
         val movieCoverImg = ImageRequest.Builder(requireView().context)
+            .error(R.drawable.no_image)
             .data(movie.imageUrl)
             .memoryCachePolicy(CachePolicy.DISABLED)
-            .target(onSuccess = { result -> setImgToView(result) })
+            .target(onSuccess = { result -> setImgToView(result) },
+                onError = { result -> setImgToView(result!!) },
+                onStart = { progressBarCover?.visibility = View.VISIBLE })
             .build()
         requireView().context.imageLoader.enqueue(movieCoverImg)
         if (movie.actors != null) {
