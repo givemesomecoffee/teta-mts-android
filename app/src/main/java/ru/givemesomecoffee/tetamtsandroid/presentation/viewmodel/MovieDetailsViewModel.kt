@@ -13,7 +13,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState.Co
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState.Companion.LOADING
 
 class MovieDetailsViewModel(private val movieId: Int, private val domain: MovieCase) : ViewModel() {
-    //  private val domain: MovieCase = App.appComponent.movieCase()
+
     val data: LiveData<MovieUi> get() = _data
     private val _data = MutableLiveData<MovieUi>()
     val loadingState: LiveData<LoadingState> get() = _loadingState

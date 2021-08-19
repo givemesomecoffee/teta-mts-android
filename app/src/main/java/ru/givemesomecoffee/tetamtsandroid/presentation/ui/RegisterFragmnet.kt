@@ -30,7 +30,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItem
 
 class RegisterFragment : Fragment() {
     private var login: Login? = null
-    private val userCase = App.appComponent.userCase()
+    private val userCase = App.appComponent.userCase() //TODO: remove
     private val viewModel: RegisterViewModel by viewModels()
     private var favouriteCategoriesList: RecyclerView? = null
     private var favouriteCategoriesListAdapter: CategoryFavouriteAdapter? = null

@@ -15,6 +15,7 @@ import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
+import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragment
 import javax.inject.Singleton
 
 
@@ -31,10 +32,11 @@ interface AppComponent {
         fun build(): AppComponent
     }
 
-    fun movieCase(): MovieCase
+
     fun userCase(): UserCase
     fun moviesListCase(): MoviesListCases
     fun inject(fragment: MovieDetailsFragment)
+    fun inject(fragment: MoviesListFragment)
 }
 
 @Module(includes = [NetworkModule::class, DatabaseModule::class, AppBindModule::class])

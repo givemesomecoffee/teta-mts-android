@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryAdapter
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.MoviesListAdapter
@@ -23,7 +24,9 @@ import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MoviesListViewModel
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MoviesListViewModelFactory
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
+import javax.inject.Inject
 
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
@@ -36,7 +39,14 @@ class MoviesListFragment : Fragment() {
     private lateinit var errorHandlerView: TextView
     private var moviesList: List<MovieUi>? = null
     private var category: Int? = null
-    private val viewModel: MoviesListViewModel by viewModels()
+
+    @Inject
+    lateinit var factory: MoviesListViewModelFactory
+    private val viewModel: MoviesListViewModel by viewModels {
+        factory
+    }
+
+
 
     private fun init() {
         moviesListView = requireView().findViewById(R.id.movies_list)
@@ -54,6 +64,7 @@ class MoviesListFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        App.appComponent.inject(this)
         super.onAttach(context)
         if (context is MoviesListFragmentClickListener) {
             moviesListFragmentClickListener = context

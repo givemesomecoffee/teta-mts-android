@@ -2,14 +2,18 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*
 import ru.givemesomecoffee.tetamtsandroid.App
+import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import javax.inject.Inject
 
-class MoviesListViewModel : ViewModel() {
-    private val domain: MoviesListCases = App.appComponent.moviesListCase()
+class MoviesListViewModel(private val domain: MoviesListCases) : ViewModel() {
 
     val data: LiveData<List<MovieUi>> get() = _data
     private val _data = MutableLiveData<List<MovieUi>>()
@@ -56,4 +60,22 @@ class MoviesListViewModel : ViewModel() {
         }
     }
 
+}
+
+class MoviesListViewModelFactory @Inject constructor(
+    private val domain: MoviesListCases
+) : ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        //used toString() cause flat compare returns false,
+        // cant figure why(feels like it compares generic string of model class???)
+        require(modelClass.toString() == MoviesListViewModel::class.toString())
+        return MoviesListViewModel(domain) as T
+    }
+
+/*    @AssistedFactory
+    interface Factory {
+        fun create(@Assisted("movieId") movieId: Int): MovieDetailsViewModelFactory
+    }*/
 }

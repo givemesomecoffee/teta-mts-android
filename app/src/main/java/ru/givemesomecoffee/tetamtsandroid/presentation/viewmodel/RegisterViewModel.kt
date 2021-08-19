@@ -12,7 +12,7 @@ import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 
 class RegisterViewModel : ViewModel() {
-    private val domain = App.appComponent.moviesListCase()
+    private val domain = App.appComponent.moviesListCase() //TODO: rework
     val data: LiveData<List<CategoryUi>> get() = _data
     private val _data = MutableLiveData<List<CategoryUi>>()
 
