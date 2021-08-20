@@ -15,6 +15,16 @@ class ActorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val actorName: TextView = view.findViewById(R.id.actor_name)
     private val progressBar: ProgressBar = view.findViewById(R.id.actor_img_progress_bar)
 
+    private fun setImg(it: Drawable) {
+        progressBar.visibility = View.INVISIBLE
+        actorPhoto.setImageDrawable(it)
+    }
+
+    private fun setLoading() {
+        progressBar.visibility = View.VISIBLE
+        actorPhoto.setImageDrawable(null)
+    }
+
     fun bind(item: ActorUi) {
         if (item.imgUrl.isNullOrEmpty()) {
             actorPhoto.setImageResource(R.drawable.no_image)
@@ -24,15 +34,11 @@ class ActorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 target(
                     onSuccess = { setImg(it) },
                     onError = { setImg(it!!) },
-                    onStart = { progressBar.visibility = View.VISIBLE }
+                    onStart = { setLoading() }
                 )
             }
         }
         actorName.text = item.name
     }
 
-    private fun setImg(it: Drawable) {
-        progressBar.visibility = View.INVISIBLE
-        actorPhoto.setImageDrawable(it)
-    }
 }

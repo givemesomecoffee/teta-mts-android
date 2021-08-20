@@ -20,6 +20,16 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
     private val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
     private val progressBar: ProgressBar = view.findViewById(R.id.movie_cover_progress_bar)
 
+    private fun setLoading() {
+        progressBar.visibility = View.VISIBLE
+        movieCover.setImageDrawable(null)
+    }
+
+    private fun setImg(img: Drawable) {
+        progressBar.visibility = View.INVISIBLE
+        movieCover.setImageDrawable(img)
+    }
+
     fun bind(item: MovieUi) {
         movieTitle.text = item.title
         movieDescription.text = item.description
@@ -28,7 +38,7 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
             target(
                 onSuccess = { setImg(it) },
                 onError = { setImg(it!!) },
-                onStart = { progressBar.visibility = View.VISIBLE })
+                onStart = { setLoading()})
         }
         movieAge.text = item.ageRestriction
         if (item.ageRestriction.isNullOrEmpty()) {
@@ -43,8 +53,4 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
         itemView.setOnClickListener { item.id?.let { id -> itemClick?.invoke(id) } }
     }
 
-    private fun setImg(img: Drawable) {
-        progressBar.visibility = View.INVISIBLE
-        movieCover.setImageDrawable(img)
-    }
 }
