@@ -20,7 +20,8 @@ class MoviesMapper {
             categoryId = movie.categoryId,
             ageRestriction = movie.ageRestriction,
             imageUrl = movie.imageUrl,
-            rateScore = movie.rateScore
+            rateScore = movie.rateScore,
+            popularity = movie.popularity
         )
     }
 
@@ -46,7 +47,8 @@ class MoviesMapper {
                 categoryId = it.genre_ids[0],
                 ageRestriction = certification?.certification,
                 imageUrl = IMAGE_BASE_URL + it.poster_path,
-                rateScore = it.vote_average / 2
+                rateScore = it.vote_average / 2,
+                popularity = it.popularity
             )
         }
     }
@@ -63,7 +65,7 @@ class MoviesMapper {
             actors = actorsMapper.toActorUi(movie.credits.cast),
             categoryId = movie.genres[0].id,
             category = movie.genres[0].name,
-            releaseDate = certification?.release_date
+            releaseDate = certification?.release_date,
 
         )
     }
@@ -84,6 +86,7 @@ class MoviesMapper {
             category = categoryTitle,
             actors = actorsMapper.toActorUi(movie.actors),
             releaseDate = movie.movie.releaseDate
+
         )
     }
 
@@ -103,7 +106,8 @@ class MoviesMapper {
                 ageRestriction = movie.ageRestriction,
                 imageUrl = movie.imageUrl,
                 rateScore = movie.rateScore,
-                releaseDate = movie.releaseDate
+                releaseDate = movie.releaseDate,
+                popularity = movie.popularity
             )
         }
     }

@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.data.repository
 
+import android.util.Log
 import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.data.mapper.ActorsMapper
@@ -74,6 +75,7 @@ class Repository @Inject constructor(
         return try {
             getNewMoviesDataset(id)
         } catch (e: Exception) {
+            Log.d("test", "", e)
             getLocalMoviesDataset(id)
         }
     }

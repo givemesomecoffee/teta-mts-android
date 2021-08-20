@@ -30,6 +30,8 @@ data class MovieDto(
     @ColumnInfo(name = "categoryId")
     val categoryId: Int,
 
-    val releaseDate: Date?
+    val releaseDate: Date?,
+
+    val popularity: Float?
 
 )

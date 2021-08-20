@@ -8,5 +8,6 @@ data class MovieApi(
     val overview: String,
     val poster_path: String,
     val genre_ids: List<Int>,
-    val vote_average: Float
+    val vote_average: Float,
+    val popularity: Float
 )

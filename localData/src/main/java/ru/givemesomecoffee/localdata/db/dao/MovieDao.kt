@@ -7,10 +7,10 @@ import ru.givemesomecoffee.localdata.db.entity.MovieWithActors
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM movies")
+    @Query("SELECT * FROM movies ORDER BY popularity DESC")
     fun getAll(): List<MovieDto>
 
-    @Query("SELECT * FROM movies WHERE categoryId == :categoryId")
+    @Query("SELECT * FROM movies WHERE categoryId == :categoryId  ORDER BY popularity DESC")
     fun getMoviesByCategory(categoryId: Int): List<MovieDto>
 
     @Transaction

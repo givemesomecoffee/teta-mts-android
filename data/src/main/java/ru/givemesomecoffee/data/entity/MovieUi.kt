@@ -12,5 +12,6 @@ data class MovieUi(
     val categoryId: Int,
     var category: String? = null,
     val actors: List<ActorUi>? = null,
-    val releaseDate: Date? = null
+    val releaseDate: Date? = null,
+    val popularity: Float? = null
 )
