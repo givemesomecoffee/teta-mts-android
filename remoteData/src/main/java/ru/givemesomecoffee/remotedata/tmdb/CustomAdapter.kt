@@ -4,11 +4,11 @@ import com.squareup.moshi.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class CustomDateAdapter : JsonAdapter<Date>() {
+internal class CustomDateAdapter()  {
     private val dateFormat = SimpleDateFormat(SERVER_FORMAT, Locale.getDefault())
 
     @FromJson
-    override fun fromJson(reader: JsonReader): Date? {
+    fun fromJson(reader: JsonReader): Date? {
         return try {
             val dateAsString = reader.nextString()
             synchronized(dateFormat) {
@@ -20,7 +20,7 @@ internal class CustomDateAdapter : JsonAdapter<Date>() {
     }
 
     @ToJson
-    override fun toJson(writer: JsonWriter, value: Date?) {
+    fun toJson(writer: JsonWriter, value: Date?) {
         if (value != null) {
             synchronized(dateFormat) {
                 writer.value(value.toString())
