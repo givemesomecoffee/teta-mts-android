@@ -2,15 +2,10 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*
-import ru.givemesomecoffee.tetamtsandroid.App
-import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
+import ru.givemesomecoffee.data.entity.CategoryUi
+import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import javax.inject.Inject
 
 class MoviesListViewModel(private val domain: MoviesListCases) : ViewModel() {

@@ -1,12 +1,15 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.givemesomecoffee.data.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 
 class ProfileViewModel : ViewModel() {
     private val domain: UserCase = App.appComponent.userCase()

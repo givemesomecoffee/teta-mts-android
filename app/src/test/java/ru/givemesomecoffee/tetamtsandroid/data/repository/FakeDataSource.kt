@@ -1,8 +1,10 @@
+/*
 
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
+import ru.givemesomecoffee.localdata.LocalDatasource
+import ru.givemesomecoffee.localdata.db.entity.*
+
 
 class FakeDataSource(private val movies: List<MovieDto>, private val categories: List<CategoryDto>) :
     LocalDatasource {
@@ -35,3 +37,4 @@ class FakeDataSource(private val movies: List<MovieDto>, private val categories:
     }
 }
 
+*/

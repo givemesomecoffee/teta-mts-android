@@ -8,8 +8,8 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 
 
 class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :

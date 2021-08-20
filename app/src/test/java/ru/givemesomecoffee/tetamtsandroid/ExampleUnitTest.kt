@@ -1,14 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
 /**
- * Example local unit test, which will execute on the development machine (host).
+ * Example localData unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */

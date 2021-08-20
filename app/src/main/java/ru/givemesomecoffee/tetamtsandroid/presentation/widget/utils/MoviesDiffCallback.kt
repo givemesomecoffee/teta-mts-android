@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import ru.givemesomecoffee.data.entity.MovieUi
 
 class MoviesDiffCallback(
     private val oldList: List<MovieUi>,

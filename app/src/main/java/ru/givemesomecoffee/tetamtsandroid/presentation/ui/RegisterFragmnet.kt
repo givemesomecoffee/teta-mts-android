@@ -19,10 +19,10 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.givemesomecoffee.data.entity.CategoryUi
+import ru.givemesomecoffee.data.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.RegisterViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFavouriteAdapter

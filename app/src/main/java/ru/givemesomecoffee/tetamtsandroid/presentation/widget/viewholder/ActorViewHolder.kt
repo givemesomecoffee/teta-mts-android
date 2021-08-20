@@ -7,8 +7,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import ru.givemesomecoffee.data.entity.ActorUi
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.ActorUi
 
 class ActorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val actorPhoto: ImageView = view.findViewById(R.id.actor_cover)

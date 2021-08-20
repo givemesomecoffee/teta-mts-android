@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
+import ru.givemesomecoffee.data.entity.CategoryUi
 
 class CategoriesDiffCallback(
     private val oldList: List<CategoryUi>,

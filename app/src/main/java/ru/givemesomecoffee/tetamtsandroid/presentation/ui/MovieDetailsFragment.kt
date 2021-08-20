@@ -16,9 +16,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.imageLoader
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MovieDetailsViewModelFactory
@@ -27,7 +27,6 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItem
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.setTopCrop
 import java.text.SimpleDateFormat
 import javax.inject.Inject
-
 
 class MovieDetailsFragment : Fragment() {
     private var categoryTitle: TextView? = null
@@ -113,7 +112,7 @@ class MovieDetailsFragment : Fragment() {
             ageSign?.visibility = View.VISIBLE
         }
         if (movie.releaseDate != null) {
-            releaseDateView?.text = SimpleDateFormat("dd.MM.yyyy").format(movie.releaseDate)
+            releaseDateView?.text = SimpleDateFormat("dd.MM.yyyy").format(movie.releaseDate!!)
         }
         ratingBar?.rating = movie.rateScore
         movieDetailsHolder?.visibility = View.VISIBLE
@@ -127,7 +126,7 @@ class MovieDetailsFragment : Fragment() {
             .build()
         requireView().context.imageLoader.enqueue(movieCoverImg)
         if (movie.actors != null) {
-            actorsListView?.adapter = ActorsAdapter(movie.actors)
+            actorsListView?.adapter = ActorsAdapter(movie.actors!!)
         }
     }
 

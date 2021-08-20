@@ -3,25 +3,28 @@ package ru.givemesomecoffee.tetamtsandroid.di
 import android.app.Application
 import androidx.room.Room
 import dagger.*
-import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
-import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasourceImpl
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
-import ru.givemesomecoffee.tetamtsandroid.data.remote.RemoteDatasource
-import ru.givemesomecoffee.tetamtsandroid.data.remote.RemoteDatasourceImpl
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.MoviesApiService
-import ru.givemesomecoffee.tetamtsandroid.data.repository.Repository
+import ru.givemesomecoffee.data.repository.Repository
+import ru.givemesomecoffee.localdata.LocalDatasource
+import ru.givemesomecoffee.localdata.db.AppDatabase
+import ru.givemesomecoffee.localdata.db.LocalDatasourceImpl
+import ru.givemesomecoffee.remotedata.RemoteDatasource
+import ru.givemesomecoffee.remotedata.tmdb.MoviesApiService
+import ru.givemesomecoffee.remotedata.tmdb.RemoteDatasourceImpl
 import ru.givemesomecoffee.tetamtsandroid.data.repository.UserRepository
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragment
-import javax.inject.Singleton
 
+
+import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {
+
+
 
     @Component.Builder
     interface Builder{
@@ -29,9 +32,10 @@ interface AppComponent {
         @BindsInstance
         fun application(application: Application): Builder
 
+
+
         fun build(): AppComponent
     }
-
 
     fun userCase(): UserCase
     fun moviesListCase(): MoviesListCases
@@ -71,6 +75,13 @@ object AppModule {
 @Module
 class NetworkModule {
 
+/*    @Provides
+    @Reusable
+    fun provideRemoteDatasource(apiService: MoviesApiService): RemoteDatasource {
+        return RemoteDatasourceImpl(apiService)
+    }*/
+
+
     @Provides
     @Singleton
     fun provideMoviesApiService(): MoviesApiService {
@@ -78,20 +89,25 @@ class NetworkModule {
     }
 }
 
+
 @Module
 class DatabaseModule{
 
     @Provides
     @Singleton
-    fun provideAppDatabase(application: Application): AppDatabase{
+    fun provideAppDatabase(application: Application): AppDatabase {
         return Room.databaseBuilder(
-            application.applicationContext, AppDatabase::class.java,
+            application.applicationContext,
+            AppDatabase::class.java,
             "DATABASE_NAME"
         )
             .fallbackToDestructiveMigration()
             .build()
     }
+
+
 }
+
 
 @Module
 interface AppBindModule {
@@ -102,5 +118,6 @@ interface AppBindModule {
     @Binds
     fun bind_RemoteDatasourceImpl_to_RemoteDatasource(remoteDatasourceImpl: RemoteDatasourceImpl): RemoteDatasource
 
-
 }
+
+

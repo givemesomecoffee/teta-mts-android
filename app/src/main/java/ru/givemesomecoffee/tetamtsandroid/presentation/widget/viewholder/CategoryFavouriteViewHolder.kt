@@ -4,8 +4,8 @@ import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 
 class CategoryFavouriteViewHolder(view: View, private val itemClick: ((Int) -> Unit)? = null) :
     RecyclerView.ViewHolder(view) {

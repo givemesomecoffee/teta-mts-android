@@ -1,7 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.cases
 
-import ru.givemesomecoffee.tetamtsandroid.data.repository.Repository
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import ru.givemesomecoffee.data.entity.MovieUi
+import ru.givemesomecoffee.data.repository.Repository
 import javax.inject.Inject
 
 class MovieCase @Inject constructor(val repository: Repository) {

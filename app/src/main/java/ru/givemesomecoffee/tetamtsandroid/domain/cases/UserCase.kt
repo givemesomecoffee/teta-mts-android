@@ -1,9 +1,8 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.cases
 
 import android.util.Log
-import ru.givemesomecoffee.tetamtsandroid.App
+import ru.givemesomecoffee.data.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.data.repository.UserRepository
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import javax.inject.Inject
 
 

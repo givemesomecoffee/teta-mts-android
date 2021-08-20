@@ -3,8 +3,8 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.CategoryFavouriteViewHolder
 
 class CategoryFavouriteAdapter(
