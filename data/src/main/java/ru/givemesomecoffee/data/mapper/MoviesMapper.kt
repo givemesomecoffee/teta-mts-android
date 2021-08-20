@@ -10,7 +10,7 @@ import ru.givemesomecoffee.remotedata.tmdb.entity.Certification
 import ru.givemesomecoffee.remotedata.tmdb.entity.MovieApiResponse
 import ru.givemesomecoffee.remotedata.tmdb.entity.MoviesApiResponse
 
-class MoviesMapper {
+internal class MoviesMapper {
 
     private fun toMovieUi(movie: MovieDto): MovieUi {
         return MovieUi(
@@ -26,7 +26,7 @@ class MoviesMapper {
     }
 
     private suspend fun getCertification(id: String): Certification? {
-        val cert = MoviesApiService.create().getCert(id = id)
+        val cert = MoviesApiService.create().getCert(id = id) //TODO: fix dependency
         var certification: Certification? = null
         try {
             val dates = cert.results.first { it.iso_3166_1 == "RU" }

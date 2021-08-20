@@ -8,7 +8,7 @@ import ru.givemesomecoffee.localdata.db.dao.UserDao
 import ru.givemesomecoffee.localdata.db.entity.*
 import javax.inject.Inject
 
-class LocalDatasourceImpl @Inject constructor(db: AppDatabase) : LocalDatasource {
+internal class LocalDatasourceImpl @Inject constructor(db: AppDatabase) : LocalDatasource {
     private val moviesDao: MovieDao = db.MovieDao()
     private val categoriesDao: CategoryDao = db.CategoryDao()
     private val userDao: UserDao = db.UserDao()

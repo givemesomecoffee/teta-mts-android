@@ -7,7 +7,7 @@ import androidx.room.Query
 import ru.givemesomecoffee.localdata.db.entity.CategoryDto
 
 @Dao
-interface CategoryDao {
+internal interface CategoryDao {
 
     @Query("SELECT * FROM categories")
     fun getAll(): List<CategoryDto>

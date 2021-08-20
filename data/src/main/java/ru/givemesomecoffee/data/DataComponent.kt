@@ -1,41 +1,34 @@
-/*
+
 package ru.givemesomecoffee.data
 
-import dagger.Binds
-import dagger.Component
-import dagger.Module
-import dagger.Provides
+import android.app.Application
+import dagger.*
 import ru.givemesomecoffee.data.repository.Repository
-import ru.givemesomecoffee.localdata.LocalDatasource
-import ru.givemesomecoffee.localdata.db.LocalDatasourceImpl
-import ru.givemesomecoffee.remotedata.RemoteDatasource
-import ru.givemesomecoffee.remotedata.tmdb.RemoteDatasourceImpl
+import ru.givemesomecoffee.data.repository.UserRepository
+import ru.givemesomecoffee.localdata.LocalDataModule
+import ru.givemesomecoffee.remotedata.RemoteDataModule
+import javax.inject.Singleton
 
-@Component(modules = [DataModule::class, AppBindModule::class])
+@Singleton
+@Component(modules = [DataModule::class])
 interface DataComponent {
 
+    fun repository(): Repository
+    fun userRepository(): UserRepository
 
-}
+    @Component.Builder
+    interface Builder{
 
-@Module
-class DataModule{
+        @BindsInstance
+        fun application(application: Application): Builder
 
-    @Provides
-    fun provideRepository(localDatasource: LocalDatasource, remoteDatasource: RemoteDatasource): Repository{
-       return Repository(localDatasource = localDatasource, remoteDatasource = remoteDatasource)
+        fun build(): DataComponent
     }
 
 }
 
-@Module
-interface AppBindModule {
+@Module(includes = [LocalDataModule::class, RemoteDataModule::class])
+interface DataModule{}
 
-    @Binds
-    fun bind_LocalDatasourceImpl_to_LocalDatasource(localDatasourceImpl: LocalDatasourceImpl): LocalDatasource
 
-    @Binds
-    fun bind_RemoteDatasourceImpl_to_RemoteDatasource(remoteDatasourceImpl: RemoteDatasourceImpl): RemoteDatasource
 
-}
-
-*/

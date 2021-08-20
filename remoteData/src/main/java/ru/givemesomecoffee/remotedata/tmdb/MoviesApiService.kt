@@ -18,18 +18,19 @@ import java.util.concurrent.TimeUnit
 const val API_BASE_URL = "https://api.themoviedb.org/3/"
 const val API_LANG_QUERY = "ru-RU"
 const val API_TOKEN = "0b60005e258e5e6a053da6f4870cf6bf"
-const val API_POPULARITY_SORT_BY = "popularity.desc"
+const val API_POPULARITY_ORDER_BY = "popularity.desc"
 const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original"
 
+//TODO: fix dependencies to make it internal
 interface MoviesApiService {
     @GET("discover/movie")
     suspend fun getMovies(
-        @Query("sort_by") endpoint: String = API_POPULARITY_SORT_BY
+        @Query("sort_by") endpoint: String = API_POPULARITY_ORDER_BY
     ): MoviesApiResponse
 
     @GET("discover/movie")
     suspend fun getMoviesByGenre(
-        @Query("sort_by") endpoint: String = API_POPULARITY_SORT_BY,
+        @Query("sort_by") endpoint: String = API_POPULARITY_ORDER_BY,
         @Query("with_genres") genre: String
     ): MoviesApiResponse
 

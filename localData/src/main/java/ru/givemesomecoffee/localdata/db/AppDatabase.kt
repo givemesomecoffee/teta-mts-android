@@ -17,7 +17,7 @@ import ru.givemesomecoffee.localdata.db.entity.*
     version = 1
 )
 @TypeConverters(Converters::class)
-abstract class AppDatabase : RoomDatabase() {
+internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun MovieDao(): MovieDao
     abstract fun CategoryDao(): CategoryDao

@@ -10,7 +10,7 @@ import ru.givemesomecoffee.localdata.db.entity.UserWithFavourites
 
 
 @Dao
-interface UserDao {
+internal interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM users WHERE userId == :id")

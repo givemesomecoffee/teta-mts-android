@@ -4,7 +4,7 @@ import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.localdata.db.entity.CategoryDto
 import ru.givemesomecoffee.remotedata.tmdb.entity.Genre
 
-class CategoriesMapper {
+internal class CategoriesMapper {
 
     fun toCategoryUi(list: List<CategoryDto>): List<CategoryUi> {
         return list.map { CategoryUi(id = it.id, title = it.title) }

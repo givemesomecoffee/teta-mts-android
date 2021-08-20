@@ -4,7 +4,7 @@ import com.squareup.moshi.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CustomDateAdapter : JsonAdapter<Date>() {
+internal class CustomDateAdapter : JsonAdapter<Date>() {
     private val dateFormat = SimpleDateFormat(SERVER_FORMAT, Locale.getDefault())
 
     @FromJson

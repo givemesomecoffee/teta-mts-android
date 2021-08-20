@@ -4,7 +4,7 @@ import ru.givemesomecoffee.data.entity.UserUi
 import ru.givemesomecoffee.localdata.db.entity.UserDto
 import ru.givemesomecoffee.localdata.db.entity.UserWithFavourites
 
-class UserMapper {
+internal class UserMapper {
 
     fun toUserUi(user: UserWithFavourites, categoriesMapper: CategoriesMapper): UserUi {
         return UserUi(

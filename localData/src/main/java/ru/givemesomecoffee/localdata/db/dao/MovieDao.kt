@@ -5,7 +5,7 @@ import ru.givemesomecoffee.localdata.db.entity.MovieDto
 import ru.givemesomecoffee.localdata.db.entity.MovieWithActors
 
 @Dao
-interface MovieDao {
+internal interface MovieDao {
 
     @Query("SELECT * FROM movies ORDER BY popularity DESC")
     fun getAll(): List<MovieDto>

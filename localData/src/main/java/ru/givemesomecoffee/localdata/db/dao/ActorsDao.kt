@@ -8,7 +8,7 @@ import ru.givemesomecoffee.localdata.db.entity.ActorsToMovies
 
 
 @Dao
-interface ActorsDao {
+internal interface ActorsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun setActors(actors: List<ActorDto>)

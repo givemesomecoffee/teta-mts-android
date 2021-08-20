@@ -1,15 +1,7 @@
 package ru.givemesomecoffee.tetamtsandroid.di
 
-import android.app.Application
-import androidx.room.Room
 import dagger.*
 import ru.givemesomecoffee.data.repository.Repository
-import ru.givemesomecoffee.localdata.LocalDatasource
-import ru.givemesomecoffee.localdata.db.AppDatabase
-import ru.givemesomecoffee.localdata.db.LocalDatasourceImpl
-import ru.givemesomecoffee.remotedata.RemoteDatasource
-import ru.givemesomecoffee.remotedata.tmdb.MoviesApiService
-import ru.givemesomecoffee.remotedata.tmdb.RemoteDatasourceImpl
 import ru.givemesomecoffee.data.repository.UserRepository
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
@@ -26,10 +18,10 @@ interface AppComponent {
     interface Builder{
 
         @BindsInstance
-        fun application(application: Application): Builder
+        fun repository(repository: Repository): Builder
 
- /*       @BindsInstance
-        fun repository(caseDeps: CaseDeps): Builder*/
+        @BindsInstance
+        fun userRepository(repository: UserRepository): Builder
 
         fun build(): AppComponent
     }
@@ -40,7 +32,7 @@ interface AppComponent {
     fun inject(fragment: MoviesListFragment)
 }
 
-@Module(includes = [NetworkModule::class, DatabaseModule::class, AppBindModule::class])
+@Module()
 object AppModule {
 
     @Reusable
@@ -48,7 +40,7 @@ object AppModule {
     fun provideMovieListCases(
         repository: Repository
     ): MoviesListCases {
-        return MoviesListCases(repository = repository)
+        return MoviesListCases(repository =  repository )
     }
 
     @Reusable
@@ -62,56 +54,9 @@ object AppModule {
     @Reusable
     @Provides
     fun provideUserCase(
-        repository: UserRepository
+        userRepository: UserRepository
     ): UserCase{
-        return UserCase(repository = repository)
+        return UserCase(repository = userRepository)
     }
 
 }
-
-@Module
-class NetworkModule {
-
-    @Provides
-    @Singleton
-    fun provideMoviesApiService(): MoviesApiService {
-        return MoviesApiService.create()
-    }
-}
-
-
-@Module
-class DatabaseModule{
-
-    @Provides
-    @Singleton
-    fun provideAppDatabase(application: Application): AppDatabase {
-        return Room.databaseBuilder(
-            application.applicationContext,
-            AppDatabase::class.java,
-            "DATABASE_NAME"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-
-}
-
-@Module
-interface AppBindModule {
-
-   @Binds
-    fun bind_LocalDatasourceImpl_to_LocalDatasource(localDatasourceImpl: LocalDatasourceImpl): LocalDatasource
-
-    @Binds
-    fun bind_RemoteDatasourceImpl_to_RemoteDatasource(remoteDatasourceImpl: RemoteDatasourceImpl): RemoteDatasource
-
-}
-
-/*interface CaseDeps{
-
-    val repository: Repository
-
-    val userRepository: UserRepository
-}*/
-

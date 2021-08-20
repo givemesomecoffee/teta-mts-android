@@ -5,7 +5,7 @@ import ru.givemesomecoffee.localdata.db.entity.ActorDto
 import ru.givemesomecoffee.remotedata.tmdb.IMAGE_BASE_URL
 import ru.givemesomecoffee.remotedata.tmdb.entity.ActorApi
 
-class ActorsMapper {
+internal class ActorsMapper {
 
     @JvmName("fromApiToActorUi")
     fun toActorUi(list: List<ActorApi>): List<ActorUi> {
