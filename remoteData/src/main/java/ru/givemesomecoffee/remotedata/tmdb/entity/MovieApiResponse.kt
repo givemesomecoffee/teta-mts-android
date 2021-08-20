@@ -15,5 +15,6 @@ class Credits(val cast: List<ActorApi>)
 data class ActorApi (
     val id: String,
     val name: String,
-    val profile_path: String?
+    val profile_path: String?,
+    val order: Int
     )

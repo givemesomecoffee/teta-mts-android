@@ -9,6 +9,7 @@ class ActorDto(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "actorId")
     val id: Int?,
+    val order: Int
 )
 
 @Entity(primaryKeys = ["movieId", "actorId"])

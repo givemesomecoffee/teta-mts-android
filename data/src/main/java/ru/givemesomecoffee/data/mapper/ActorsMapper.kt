@@ -17,28 +17,31 @@ internal class ActorsMapper {
             ActorUi(
                 id = it.id.toInt(),
                 name = it.name,
-                imgUrl = img
+                imgUrl = img,
+                order = it.order
             )
         }
     }
 
-
     fun toActorUi(list: List<ActorDto>): List<ActorUi> {
-        return list.map {
+        val result =  list.map {
             ActorUi(
                 id = it.id,
                 name = it.name,
-                imgUrl = it.img
+                imgUrl = it.img,
+                order = it.order
             )
         }
+        return result.sortedBy { actor -> actor.order }
     }
 
     fun toActorDto(actors: List<ActorUi>): List<ActorDto> {
-        return actors.map {
+         return actors.map {
             ActorDto(
                 name = it.name,
                 img = it.imgUrl,
-                id = it.id
+                id = it.id,
+                order = it.order
             )
         }
     }
