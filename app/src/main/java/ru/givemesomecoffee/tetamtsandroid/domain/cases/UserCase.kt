@@ -2,9 +2,8 @@ package ru.givemesomecoffee.tetamtsandroid.domain.cases
 
 import android.util.Log
 import ru.givemesomecoffee.data.entity.UserUi
-import ru.givemesomecoffee.tetamtsandroid.data.repository.UserRepository
+import ru.givemesomecoffee.data.repository.UserRepository
 import javax.inject.Inject
-
 
 class UserCase @Inject constructor(val repository: UserRepository)  {
 

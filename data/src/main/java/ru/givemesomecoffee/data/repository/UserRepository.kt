@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.repository
+package ru.givemesomecoffee.data.repository
 
 import ru.givemesomecoffee.data.entity.UserUi
 import ru.givemesomecoffee.data.mapper.CategoriesMapper

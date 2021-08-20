@@ -2,7 +2,7 @@ package ru.givemesomecoffee.data.mapper
 
 import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.localdata.db.entity.CategoryDto
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.Genre
+import ru.givemesomecoffee.remotedata.tmdb.entity.Genre
 
 class CategoriesMapper {
 

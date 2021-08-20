@@ -3,7 +3,7 @@ package ru.givemesomecoffee.data.mapper
 import ru.givemesomecoffee.data.entity.ActorUi
 import ru.givemesomecoffee.localdata.db.entity.ActorDto
 import ru.givemesomecoffee.remotedata.tmdb.IMAGE_BASE_URL
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.ActorApi
+import ru.givemesomecoffee.remotedata.tmdb.entity.ActorApi
 
 class ActorsMapper {
 

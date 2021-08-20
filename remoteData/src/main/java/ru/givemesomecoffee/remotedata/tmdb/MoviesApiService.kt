@@ -9,12 +9,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.CertificationResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.GenresResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MovieApiResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MoviesApiResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.CertificationResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.GenresResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.MovieApiResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.MoviesApiResponse
 import java.util.concurrent.TimeUnit
-
 
 const val API_BASE_URL = "https://api.themoviedb.org/3/"
 const val API_LANG_QUERY = "ru-RU"

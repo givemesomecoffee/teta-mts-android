@@ -63,14 +63,8 @@ class MoviesListViewModelFactory @Inject constructor(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        //used toString() cause flat compare returns false,
-        // cant figure why(feels like it compares generic string of model class???)
-        require(modelClass.toString() == MoviesListViewModel::class.toString())
+        require(modelClass == MoviesListViewModel::class.java)
         return MoviesListViewModel(domain) as T
     }
 
-/*    @AssistedFactory
-    interface Factory {
-        fun create(@Assisted("movieId") movieId: Int): MovieDetailsViewModelFactory
-    }*/
 }

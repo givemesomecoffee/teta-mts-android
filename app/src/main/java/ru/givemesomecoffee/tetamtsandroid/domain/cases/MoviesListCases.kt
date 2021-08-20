@@ -7,7 +7,6 @@ import javax.inject.Inject
 
 class MoviesListCases  @Inject constructor(val repository: Repository){
 
-
     suspend fun getMoviesList(id: Int?): List<MovieUi> {
 
         return repository.getMoviesList(id)

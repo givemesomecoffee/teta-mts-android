@@ -44,7 +44,6 @@ class RegisterFragment : Fragment() {
     private var confirmLoginButton: MaterialButton? = null
     private val favouriteCategories: MutableList<Int> = mutableListOf()
 
-
     private fun init() {
         confirmLoginButton = requireView().findViewById(R.id.confirm_login_button)
         emailView = requireView().findViewById(R.id.profile_email_input)
@@ -90,7 +89,6 @@ class RegisterFragment : Fragment() {
         login = null
         super.onDetach()
     }
-
 
     private fun bindCategories(list: List<CategoryUi>?) {
         favouriteCategoriesListAdapter =

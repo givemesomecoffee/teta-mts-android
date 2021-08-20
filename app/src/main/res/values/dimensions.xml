@@ -47,7 +47,7 @@
     <item name="space_14" type="dimen">14sp</item>
     <item name="space_16" type="dimen">16sp</item>
     <item name="space_20" type="dimen">20sp</item>
-    
+
     <item name="radius_10" type="dimen">10dp</item>
     <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
     <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>

@@ -10,21 +10,17 @@ import ru.givemesomecoffee.localdata.db.LocalDatasourceImpl
 import ru.givemesomecoffee.remotedata.RemoteDatasource
 import ru.givemesomecoffee.remotedata.tmdb.MoviesApiService
 import ru.givemesomecoffee.remotedata.tmdb.RemoteDatasourceImpl
-import ru.givemesomecoffee.tetamtsandroid.data.repository.UserRepository
+import ru.givemesomecoffee.data.repository.UserRepository
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragment
-
-
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {
-
-
 
     @Component.Builder
     interface Builder{
@@ -32,7 +28,8 @@ interface AppComponent {
         @BindsInstance
         fun application(application: Application): Builder
 
-
+ /*       @BindsInstance
+        fun repository(caseDeps: CaseDeps): Builder*/
 
         fun build(): AppComponent
     }
@@ -75,13 +72,6 @@ object AppModule {
 @Module
 class NetworkModule {
 
-/*    @Provides
-    @Reusable
-    fun provideRemoteDatasource(apiService: MoviesApiService): RemoteDatasource {
-        return RemoteDatasourceImpl(apiService)
-    }*/
-
-
     @Provides
     @Singleton
     fun provideMoviesApiService(): MoviesApiService {
@@ -105,9 +95,7 @@ class DatabaseModule{
             .build()
     }
 
-
 }
-
 
 @Module
 interface AppBindModule {
@@ -120,4 +108,10 @@ interface AppBindModule {
 
 }
 
+/*interface CaseDeps{
+
+    val repository: Repository
+
+    val userRepository: UserRepository
+}*/
 

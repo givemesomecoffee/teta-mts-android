@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity
+package ru.givemesomecoffee.remotedata.tmdb.entity
 
 class GenresResponse (val genres: List<Genre>)
 

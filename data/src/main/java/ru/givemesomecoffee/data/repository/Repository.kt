@@ -1,6 +1,5 @@
 package ru.givemesomecoffee.data.repository
 
-import android.util.Log
 import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.data.mapper.ActorsMapper
@@ -26,13 +25,7 @@ class Repository @Inject constructor(
     }
 
     private suspend fun getNewMoviesDataset(id: Int?): List<MovieUi> {
-        Log.d("test111", "movies.toString()")
-
-            val movies = moviesMapper.toMovieUi(remoteDatasource.getMovies(id?.toString()))
-
-
-
-        Log.d("test111", "movies.toString()")
+        val movies = moviesMapper.toMovieUi(remoteDatasource.getMovies(id?.toString()))
         localDatasource.saveMovies(moviesMapper.toMovieDto(movies))
         return movies
     }
@@ -78,12 +71,9 @@ class Repository @Inject constructor(
     }
 
     suspend fun getMoviesList(id: Int?): List<MovieUi> {
-        Log.d("test", "getMoviesList")
         return try {
             getNewMoviesDataset(id)
         } catch (e: Exception) {
-            //
-            Log.d("test", e.toString())
             getLocalMoviesDataset(id)
         }
     }

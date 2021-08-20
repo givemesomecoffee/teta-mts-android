@@ -11,7 +11,6 @@ import coil.load
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.R
 
-
 class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
     RecyclerView.ViewHolder(view) {
     private val movieTitle: TextView = view.findViewById(R.id.movie_title)

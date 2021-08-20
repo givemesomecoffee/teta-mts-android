@@ -87,9 +87,7 @@ class LoginFragment : Fragment() {
                        withContext(Dispatchers.Main) {errorWrongDataView?.visibility = View.VISIBLE}
                     }
                 }
-
             }
-
         }
     }
 

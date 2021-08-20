@@ -9,7 +9,6 @@ import ru.givemesomecoffee.localdata.db.dao.MovieDao
 import ru.givemesomecoffee.localdata.db.dao.UserDao
 import ru.givemesomecoffee.localdata.db.entity.*
 
-
 @Database(
     entities = [MovieDto::class,
         CategoryDto::class,

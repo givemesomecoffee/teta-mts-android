@@ -1,4 +1,4 @@
-package ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity
+package ru.givemesomecoffee.remotedata.tmdb.entity
 
 import java.util.*
 

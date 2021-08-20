@@ -6,9 +6,9 @@ import ru.givemesomecoffee.localdata.db.entity.MovieDto
 import ru.givemesomecoffee.localdata.db.entity.MovieWithActors
 import ru.givemesomecoffee.remotedata.tmdb.IMAGE_BASE_URL
 import ru.givemesomecoffee.remotedata.tmdb.MoviesApiService
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.Certification
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MovieApiResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MoviesApiResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.Certification
+import ru.givemesomecoffee.remotedata.tmdb.entity.MovieApiResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.MoviesApiResponse
 
 class MoviesMapper {
 
@@ -35,7 +35,6 @@ class MoviesMapper {
         }
         return certification
     } //TODO: should be implemented not here
-
 
     suspend fun toMovieUi(response: MoviesApiResponse): List<MovieUi> {
         return response.results.map {

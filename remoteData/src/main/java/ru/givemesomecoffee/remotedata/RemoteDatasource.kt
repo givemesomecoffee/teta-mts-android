@@ -1,9 +1,9 @@
 package ru.givemesomecoffee.remotedata
 
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.CertificationResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.GenresResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MovieApiResponse
-import ru.givemesomecoffee.tetamtsandroid.data.remote.tmdb.entity.MoviesApiResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.CertificationResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.GenresResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.MovieApiResponse
+import ru.givemesomecoffee.remotedata.tmdb.entity.MoviesApiResponse
 
 interface RemoteDatasource {
 
