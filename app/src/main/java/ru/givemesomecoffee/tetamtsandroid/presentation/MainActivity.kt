@@ -11,6 +11,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,10 +21,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.RefreshDataService
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.Authorisation
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
+import java.util.concurrent.TimeUnit
 
 private const val USER_TOKEN = "user_token"
 private const val PREF_FILE_NAME = "UserPref"
@@ -37,7 +42,12 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     private lateinit var navController: NavController
     private var lastItemView: BottomNavigationItemView? = null
 
+
+
+
     private fun init() {
+
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController

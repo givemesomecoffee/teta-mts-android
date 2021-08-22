@@ -1,8 +1,11 @@
 package ru.givemesomecoffee.tetamtsandroid.di
 
+import androidx.work.WorkerFactory
 import dagger.*
 import ru.givemesomecoffee.data.repository.Repository
 import ru.givemesomecoffee.data.repository.UserRepository
+import ru.givemesomecoffee.tetamtsandroid.App
+import ru.givemesomecoffee.tetamtsandroid.DaggerWorkerFactory
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
@@ -30,10 +33,20 @@ interface AppComponent {
     fun moviesListCase(): MoviesListCases
     fun inject(fragment: MovieDetailsFragment)
     fun inject(fragment: MoviesListFragment)
+    fun inject(app: App)
+
 }
 
 @Module()
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideWorkerFactory(
+        domain: MoviesListCases
+    ): WorkerFactory {
+        return DaggerWorkerFactory(domain)
+    }
 
     @Reusable
     @Provides
