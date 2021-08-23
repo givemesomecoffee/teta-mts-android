@@ -5,7 +5,7 @@ import dagger.*
 import ru.givemesomecoffee.data.repository.Repository
 import ru.givemesomecoffee.data.repository.UserRepository
 import ru.givemesomecoffee.tetamtsandroid.App
-import ru.givemesomecoffee.tetamtsandroid.DaggerWorkerFactory
+import ru.givemesomecoffee.tetamtsandroid.service.DaggerRefreshDataWorkerFactory
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
@@ -45,7 +45,7 @@ object AppModule {
     fun provideWorkerFactory(
         domain: MoviesListCases
     ): WorkerFactory {
-        return DaggerWorkerFactory(domain)
+        return DaggerRefreshDataWorkerFactory(domain)
     }
 
     @Reusable
