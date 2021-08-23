@@ -1,5 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.service
 
+import  android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -19,16 +20,31 @@ const val CHANNEL_ID = "123"
 
 class RefreshDataWorker @Inject constructor(val context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
+
     lateinit var domain: MoviesListCases
+    private val notification = createNotification()
+
     override fun doWork(): Result {
 
+        CoroutineScope(Dispatchers.IO).launch {
+            domain.getMoviesList(null)
+        }
+
+        with(NotificationManagerCompat.from(context)) {
+            notify(123, notification)
+        }
+
+        return Result.success()
+    }
+
+    private fun createNotification(): Notification {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        return NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_search)
             .setContentTitle("Movie list refreshed")
             .setContentText("New top-20 list of movies ia available now!")
@@ -36,16 +52,7 @@ class RefreshDataWorker @Inject constructor(val context: Context, workerParams: 
             .setContentIntent(pendingIntent)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setAutoCancel(true)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            domain.getMoviesList(null)
-        }
-
-        with(NotificationManagerCompat.from(context)) {
-            notify(123, builder.build())
-        }
-
-        return Result.success()
+            .build()
     }
 
 }

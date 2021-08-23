@@ -24,7 +24,11 @@ class App : Application() {
         configureWorkManager()
         super.onCreate()
         createNotificationChannel()
-        WorkManager.getInstance(this).enqueue(createRefreshDataWorkRequest())
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "DatabaseRefreshWorker",
+            ExistingPeriodicWorkPolicy.KEEP,
+            createRefreshDataWorkRequest()
+        )
     }
 
     private fun initDaggerComponents() {
