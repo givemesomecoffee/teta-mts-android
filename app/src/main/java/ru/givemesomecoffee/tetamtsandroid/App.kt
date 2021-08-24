@@ -1,31 +1,33 @@
 package ru.givemesomecoffee.tetamtsandroid
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.AppDatabase
-import ru.givemesomecoffee.tetamtsandroid.di.ServiceLocator
+import ru.givemesomecoffee.data.DaggerDataComponent
+import ru.givemesomecoffee.data.DataComponent
+import ru.givemesomecoffee.tetamtsandroid.di.AppComponent
+import ru.givemesomecoffee.tetamtsandroid.di.DaggerAppComponent
 
 class App : Application() {
+
     override fun onCreate() {
         super.onCreate()
-        Log.d("test", "blocking  thread")
-        appContext = applicationContext
-        CoroutineScope(Dispatchers.Default).launch {
-            db = AppDatabase.getInstance()
-        }
+
+        dataComponent = DaggerDataComponent.builder()
+            .application(this)
+            .build()
+
+        appComponent = DaggerAppComponent.builder()
+            .repository(dataComponent.repository())
+            .userRepository(dataComponent.userRepository())
+            .build()
     }
 
     companion object {
-        lateinit var appContext: Context
-        lateinit var db: AppDatabase
-        val repository get() = ServiceLocator.provideRepository()
+        lateinit var appComponent: AppComponent
+            private set
+        private lateinit var dataComponent: DataComponent
     }
 
-    //TODO: try to remove context
 }
+
 
 

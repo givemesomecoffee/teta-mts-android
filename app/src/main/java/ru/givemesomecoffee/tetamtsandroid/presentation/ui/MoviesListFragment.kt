@@ -15,15 +15,18 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import ru.givemesomecoffee.data.entity.CategoryUi
+import ru.givemesomecoffee.data.entity.MovieUi
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryAdapter
-import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.MoviesListAdapter
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.LoadingState
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MoviesListViewModel
-import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
+import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.MoviesListViewModelFactory
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryAdapter
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.MoviesListAdapter
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
+import javax.inject.Inject
 
 class MoviesListFragment : Fragment() {
     private var moviesListFragmentClickListener: MoviesListFragmentClickListener? = null
@@ -36,7 +39,12 @@ class MoviesListFragment : Fragment() {
     private lateinit var errorHandlerView: TextView
     private var moviesList: List<MovieUi>? = null
     private var category: Int? = null
-    private val viewModel: MoviesListViewModel by viewModels()
+
+    @Inject
+    lateinit var factory: MoviesListViewModelFactory
+    private val viewModel: MoviesListViewModel by viewModels {
+        factory
+    }
 
     private fun init() {
         moviesListView = requireView().findViewById(R.id.movies_list)
@@ -54,6 +62,7 @@ class MoviesListFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        App.appComponent.inject(this)
         super.onAttach(context)
         if (context is MoviesListFragmentClickListener) {
             moviesListFragmentClickListener = context
@@ -61,7 +70,6 @@ class MoviesListFragment : Fragment() {
         val callback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    Log.d("back", category.toString())
                     moviesListFragmentClickListener?.homeOnBackPressed(category)
                     category = null
                 }
@@ -83,8 +91,8 @@ class MoviesListFragment : Fragment() {
         if (savedInstanceState != null) {
             category = savedInstanceState.getInt(CATEGORY)
         }
-        viewModel.init()
         init()
+        viewModel.init()
         moviesListView.layoutManager = GridLayoutManager(view.context, 2)
         moviesListView.addItemDecoration(
             RecyclerItemDecoration(spacingBottom = 50, isMovieList = true)
@@ -108,7 +116,6 @@ class MoviesListFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         moviesListFragmentClickListener = null
-        Log.d("list", "detached")
     }
 
     private fun setMoviesListAdapter(): MoviesListAdapter {
@@ -130,7 +137,6 @@ class MoviesListFragment : Fragment() {
         errorHandlerView.visibility = View.INVISIBLE
         category = categoryId
         viewModel.updateMoviesListByCategory(categoryId)
-
     }
 
     private fun onGetDataFailure(message: String?) {
@@ -142,11 +148,12 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun setNewMoviesList(await: List<MovieUi>) {
+        Log.d("test", "bind movies")
+        Log.d("test", await.toString())
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)
-        moviesListView.scrollToPosition(0) // scroll position loss on restore :C
-    }
+     }
 
     private fun setNewCategoriesList(await: List<CategoryUi>) {
         categoriesAdapter?.updateCategoriesList(await)

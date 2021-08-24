@@ -7,12 +7,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
+import ru.givemesomecoffee.data.entity.CategoryUi
+import ru.givemesomecoffee.tetamtsandroid.App
 
 class RegisterViewModel : ViewModel() {
-    private val domain = MoviesListCases()
+    private val domain = App.appComponent.moviesListCase() //TODO: rework
     val data: LiveData<List<CategoryUi>> get() = _data
     private val _data = MutableLiveData<List<CategoryUi>>()
 

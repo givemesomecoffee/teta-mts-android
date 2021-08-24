@@ -1,9 +1,9 @@
 package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
-import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
+import ru.givemesomecoffee.tetamtsandroid.App
 
 class Authorisation {
-    private val userCase = UserCase()
+    private val userCase = App.appComponent.userCase() //TODO: remove
 
     fun setNewToken(token: String, id: Int) {
         userCase.changeToken(token, id)

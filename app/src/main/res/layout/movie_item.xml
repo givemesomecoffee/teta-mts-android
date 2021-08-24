@@ -25,6 +25,14 @@
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
+
+        <ProgressBar
+            android:id="@+id/movie_cover_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -44,6 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_10"
+        android:ellipsize="end"
+        android:maxLines="5"
         android:textSize="@dimen/space_12"
         app:layout_constraintBottom_toTopOf="@id/ratingBar"
         app:layout_constraintStart_toStartOf="parent"

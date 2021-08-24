@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         mSettings = EncryptedSharedPreferences.create(
             PREF_FILE_NAME,
             masterKeyAlias,
@@ -56,18 +57,19 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) { login = checkLoginStatus() }
+            init()
 
-        login = checkLoginStatus()
-        setContentView(R.layout.activity_main)
-        init()
-
-        //swapping login/profile fragments
+            //swapping login/profile fragments
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 if (login == null && destination.id == R.id.profileFragment) {
                     navController.popBackStack()
                     navController.navigate(R.id.action_global_loginFragment)
                 }
             }
+        }
+
     }
 
     override fun onMovieCardClicked(id: Int) {
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
         mSettings?.edit()?.putString(USER_TOKEN, token)?.apply()
         login = id
         lifecycleScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 authorisationController.setNewToken(token, id)
             }
         }

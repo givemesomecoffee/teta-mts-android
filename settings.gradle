@@ -1,2 +1,5 @@
 rootProject.name = "tetamtsandroid"
 include ':app'
+include ':data'
+include ':remoteData'
+include ':localData'

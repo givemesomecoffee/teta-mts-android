@@ -1,12 +1,12 @@
 package ru.givemesomecoffee.tetamtsandroid.domain.cases
 
-import ru.givemesomecoffee.tetamtsandroid.App
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import ru.givemesomecoffee.data.entity.MovieUi
+import ru.givemesomecoffee.data.repository.Repository
+import javax.inject.Inject
 
-class MovieCase {
-    private val repository = App.repository
+class MovieCase @Inject constructor(val repository: Repository) {
 
-    fun getMovieById(id: Int): MovieUi {
+    suspend fun getMovieById(id: Int): MovieUi {
         return repository.getMovie(id)
     }
 }

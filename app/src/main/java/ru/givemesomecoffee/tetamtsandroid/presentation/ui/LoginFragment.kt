@@ -7,16 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ru.givemesomecoffee.tetamtsandroid.App
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 
 class LoginFragment : Fragment() {
     private var login: Login? = null
-    private val userCase = UserCase() //TODO: remove dependency
+    private val userCase = App.appComponent.userCase() //TODO: remove dependency
     private var confirmLoginButton: MaterialButton? = null
     private var emailView: TextInputLayout? = null
     private var passwordView: TextInputLayout? = null
@@ -73,12 +77,16 @@ class LoginFragment : Fragment() {
         if (email.isEmpty() || password.isEmpty()) {
             errorEmptyView?.visibility = View.VISIBLE
         } else {
-            val check: Int? = userCase.checkUser(email, password)
-            if (check != null) {
-                login?.saveLogin(check, getToken())
-                login?.showProfile()
-            } else {
-                errorWrongDataView?.visibility = View.VISIBLE
+            viewLifecycleOwner.lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    val check: Int? = userCase.checkUser(email, password)
+                    if (check != null) {
+                        login?.saveLogin(check, getToken())
+                        withContext(Dispatchers.Main) {  login?.showProfile()}
+                    } else {
+                       withContext(Dispatchers.Main) {errorWrongDataView?.visibility = View.VISIBLE}
+                    }
+                }
             }
         }
     }

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.MoviesDiffCallback
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.MoviesListViewHolder
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
-import ru.givemesomecoffee.tetamtsandroid.utils.MoviesDiffCallback
 
 class MoviesListAdapter(
     private var dataset: List<MovieUi>,

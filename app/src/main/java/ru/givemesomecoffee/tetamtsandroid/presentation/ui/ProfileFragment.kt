@@ -17,12 +17,12 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import ru.givemesomecoffee.data.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.R
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.UserUi
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel.ProfileViewModel
 import ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter.CategoryFavouriteAdapter
-import ru.givemesomecoffee.tetamtsandroid.utils.RecyclerItemDecoration
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.RecyclerItemDecoration
 
 class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels()
@@ -88,8 +88,8 @@ class ProfileFragment : Fragment() {
         inputEmail?.text = Editable.Factory.getInstance().newEditable(user?.email)
         inputPassword?.text = Editable.Factory.getInstance().newEditable(user?.password)
         if (user?.favouriteCategories != null) {
-            favouriteCategoriesListView.adapter =
-                CategoryFavouriteAdapter(user.favouriteCategories)
+           favouriteCategoriesListView.adapter =
+               CategoryFavouriteAdapter(user.favouriteCategories!!)
         }
     }
 

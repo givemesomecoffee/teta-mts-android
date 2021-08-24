@@ -1,16 +1,18 @@
+/*
 
 package ru.givemesomecoffee.tetamtsandroid.data.repository
 
-import ru.givemesomecoffee.tetamtsandroid.data.local.LocalDatasource
-import ru.givemesomecoffee.tetamtsandroid.data.local.db.entity.*
+import ru.givemesomecoffee.localdata.LocalDatasource
+import ru.givemesomecoffee.localdata.db.entity.*
 
-class FakeDataSource(private val movies: List<Movie>, private val categories: List<Category>) :
+
+class FakeDataSource(private val movies: List<MovieDto>, private val categories: List<CategoryDto>) :
     LocalDatasource {
-    override fun getAllMovies(): List<Movie> {
+    override fun getAllMovies(): List<MovieDto> {
         return movies
     }
 
-    override fun getMoviesByCategory(categoryId: Int): List<Movie> {
+    override fun getMoviesByCategory(categoryId: Int): List<MovieDto> {
         return movies.filter { it.categoryId == categoryId }
     }
 
@@ -18,11 +20,11 @@ class FakeDataSource(private val movies: List<Movie>, private val categories: Li
         TODO("Not yet implemented")
     }
 
-    override fun getAllCategories(): List<Category> {
+    override fun getAllCategories(): List<CategoryDto> {
         return categories
     }
 
-    override fun getCategoryById(id: Int): Category {
+    override fun getCategoryById(id: Int): CategoryDto {
         return categories.first { it.id == id }
     }
 
@@ -30,8 +32,9 @@ class FakeDataSource(private val movies: List<Movie>, private val categories: Li
         TODO("Not yet implemented")
     }
 
-    override fun checkUser(email: String, password: Int): User {
+    override fun checkUser(email: String, password: Int): UserDto {
         TODO("Not yet implemented")
     }
 }
 
+*/

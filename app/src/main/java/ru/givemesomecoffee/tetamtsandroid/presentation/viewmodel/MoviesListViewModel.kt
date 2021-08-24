@@ -3,12 +3,13 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.viewmodel
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
+import ru.givemesomecoffee.data.entity.CategoryUi
+import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.CategoryUi
-import ru.givemesomecoffee.tetamtsandroid.domain.entity.MovieUi
+import javax.inject.Inject
 
-class MoviesListViewModel : ViewModel() {
-    private val domain: MoviesListCases = MoviesListCases()
+class MoviesListViewModel(private val domain: MoviesListCases) : ViewModel() {
+
     val data: LiveData<List<MovieUi>> get() = _data
     private val _data = MutableLiveData<List<MovieUi>>()
     val categories: LiveData<List<CategoryUi>> get() = _categories
@@ -52,6 +53,18 @@ class MoviesListViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+}
+
+class MoviesListViewModelFactory @Inject constructor(
+    private val domain: MoviesListCases
+) : ViewModelProvider.Factory {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        require(modelClass == MoviesListViewModel::class.java)
+        return MoviesListViewModel(domain) as T
     }
 
 }
