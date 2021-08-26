@@ -16,4 +16,8 @@ class MoviesListCases  @Inject constructor(val repository: Repository){
         return repository.getCategoriesList()
     }
 
+    suspend fun refreshMoviesList() {
+         repository.refreshMoviesList()
+    }
+
 }

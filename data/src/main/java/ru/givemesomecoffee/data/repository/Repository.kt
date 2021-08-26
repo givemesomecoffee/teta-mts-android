@@ -46,15 +46,19 @@ class Repository @Inject constructor(
         return localDatasource.getCategoryById(id).title
     }
 
+    private suspend fun getNewMovie(id: Int): MovieUi {
+        val movie = moviesMapper.toMovieUi(
+            remoteDatasource.getMovie(id = id.toString()),
+            actorsMapper
+        )
+        val actors = movie.actors?.let { actorsMapper.toActorDto(it) }
+        localDatasource.saveActors(actors, movie.id!!)
+        return movie
+    }
+
     suspend fun getMovie(id: Int): MovieUi {
         return try {
-            val movie = moviesMapper.toMovieUi(
-                remoteDatasource.getMovie(id = id.toString()),
-                actorsMapper
-            )
-            val actors = movie.actors?.let { actorsMapper.toActorDto(it) }
-            localDatasource.saveActors(actors, movie.id!!)
-            movie
+            getNewMovie(id)
         } catch (e: Exception) {
             val movie = localDatasource.getMovieById(id = id)
             val category = getCategoryTitle(movie.movie.categoryId)
@@ -76,6 +80,14 @@ class Repository @Inject constructor(
         } catch (e: Exception) {
             getLocalMoviesDataset(id)
         }
+    }
+
+    suspend fun refreshMoviesList() {
+        val movies = getNewMoviesDataset(null)
+        for (movie in movies) {
+            movie.id?.let { getNewMovie(it) }
+        }
+        getNewCategoriesDataset()
     }
 
 }

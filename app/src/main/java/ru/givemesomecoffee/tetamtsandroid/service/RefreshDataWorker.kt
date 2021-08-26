@@ -1,6 +1,6 @@
 package ru.givemesomecoffee.tetamtsandroid.service
 
-import  android.app.Notification
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -27,7 +27,7 @@ class RefreshDataWorker @Inject constructor(val context: Context, workerParams: 
     override fun doWork(): Result {
 
         CoroutineScope(Dispatchers.IO).launch {
-            domain.getMoviesList(null)
+            domain.refreshMoviesList()
         }
 
         with(NotificationManagerCompat.from(context)) {
