@@ -8,11 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.transition.TransitionInflater
 import coil.imageLoader
 import coil.request.CachePolicy
 import coil.request.ImageRequest
@@ -72,7 +74,17 @@ class MovieDetailsFragment : Fragment() {
     override fun onAttach(context: Context) {
         movieId = requireArguments().getInt("id")
         App.appComponent.inject(this)
+
         super.onAttach(context)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementReturnTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+
     }
 
     override fun onCreateView(
@@ -84,57 +96,113 @@ class MovieDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val transName = requireArguments().getString("title")
+        Log.d("transition", "1")
+        Log.d("transition", transName.toString())
+        requireView().findViewById<ConstraintLayout>(R.id.movie_details_root).transitionName =
+            requireArguments().getString("root")
+        movieCover = requireView().findViewById(R.id.movie_cover)
+        Log.d("test", movieCover.toString())
+        requireView().findViewById<TextView>(R.id.movie_title).transitionName = transName
+        requireView().findViewById<TextView>(R.id.movie_title).text = transName
+
+        val key = requireArguments().getString("url")
+        Log.d("test", key!!)
+        movieCover.transitionName = key
+
+
+        val movieCoverImg = ImageRequest.Builder(requireView().context)
+            .error(R.drawable.no_image)
+            .placeholderMemoryCacheKey(key)
+            .data(key)
+
+            .allowHardware(false)
+            .target(onSuccess = { result -> setImgToView(result, "success") },
+                onError = { result -> setImgToView(result, "error") })
+            .build()
+        requireView().context.imageLoader.enqueue(movieCoverImg)
+
         super.onViewCreated(view, savedInstanceState)
         init()
-        movieDetailsHolder?.visibility = View.INVISIBLE
+        // movieDetailsHolder?.visibility = View.INVISIBLE
         movieId = arguments?.getInt("id")
         viewModel.init()
         refreshWrapper?.setOnRefreshListener { viewModel.getMovie() }
     }
 
-    private fun setImgToView(result: Drawable) {
-        Log.d("coil", "i sucsess")
-        progressBarCover?.visibility = View.INVISIBLE
-        movieCover.setImageDrawable(result)
+    private fun setImgToView(result: Drawable?, s: String) {
+
+        requireView().findViewById<ProgressBar>(R.id.movie_cover_progress_bar).visibility =
+            View.INVISIBLE
+        Log.d("coil", "wtf")
+        Log.d("coil", s)
+        Log.d("coil", result.toString())
+        if (result!= null) {
+            movieCover.setImageDrawable(result)
+        }
+        Log.d("test", movieCover.drawable.toString())
+        movieCover.scaleType = ImageView.ScaleType.MATRIX
         setTopCrop(movieCover)
+
+/*        movieCover.scaleType = ImageView.ScaleType.MATRIX
+        setTopCrop(movieCover)
+        */
+
+        /*       viewLifecycleOwner.lifecycleScope.launch {
+                   movieCover.setImageDrawable(result)
+
+                   Log.d("test", movieCover.drawable.toString())
+                   delay(2000)
+
+                   movieCover.scaleType = ImageView.ScaleType.MATRIX
+                   Log.d("test", movieCover.drawable.toString())
+                   delay(2000)
+                   setTopCrop(movieCover)
+                   Log.d("test", movieCover.drawable.toString())
+                   delay(200)
+
+               }
+       */
+
     }
 
     private fun bindData(movie: MovieUi) {
         this.movie = movie
-        errorHandlerView.visibility = View.INVISIBLE
+          errorHandlerView.visibility = View.INVISIBLE
         categoryTitle?.text = movie.category
-        movieTitle?.text = movie.title
         movieDescription?.text = movie.description
         ageSign?.text = movie.ageRestriction
         if (movie.ageRestriction.isNullOrEmpty()) {
-            ageSign?.visibility = View.INVISIBLE
+               ageSign?.visibility = View.INVISIBLE
         } else {
-            ageSign?.visibility = View.VISIBLE
+             ageSign?.visibility = View.VISIBLE
         }
         if (movie.releaseDate != null) {
             releaseDateView?.text = SimpleDateFormat("dd.MM.yyyy").format(movie.releaseDate!!)
         }
         ratingBar?.rating = movie.rateScore
-        movieDetailsHolder?.visibility = View.VISIBLE
-        val movieCoverImg = ImageRequest.Builder(requireView().context)
-            .error(R.drawable.no_image)
-            .data(movie.imageUrl)
-            .memoryCachePolicy(CachePolicy.DISABLED)
-            .target(onSuccess = { result -> setImgToView(result) },
-                onError = { result -> setImgToView(result!!) },
-                onStart = { progressBarCover?.visibility = View.VISIBLE })
-            .build()
-        requireView().context.imageLoader.enqueue(movieCoverImg)
+
+        //    movieDetailsHolder?.visibility = View.VISIBLE
+        /*   val movieCoverImg = ImageRequest.Builder(requireView().context)
+               .error(R.drawable.no_image)
+               .data(movie.imageUrl)
+               .memoryCachePolicy(CachePolicy.DISABLED)
+               .target(onSuccess = { result -> setImgToView(result) },
+                   onError = { result -> setImgToView(result!!) },
+                   onStart = { progressBarCover?.visibility = View.VISIBLE })
+               .build()
+           requireView().context.imageLoader.enqueue(movieCoverImg)*/
         if (movie.actors != null) {
             actorsListView?.adapter = ActorsAdapter(movie.actors!!)
         }
+
     }
 
     private fun onGetDataFailure(message: String?) {
         refreshWrapper?.isRefreshing = false
         Toast.makeText(view?.context, message, Toast.LENGTH_SHORT).show()
         if (movie == null) {
-            errorHandlerView.visibility = View.VISIBLE
+              errorHandlerView.visibility = View.VISIBLE
         }
     }
 

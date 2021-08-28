@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
     }
 
     override fun onMovieCardClicked(id: Int) {
-        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(id)
+        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(id, "123", "123", "123")
         navController.navigate(action)
     }
 

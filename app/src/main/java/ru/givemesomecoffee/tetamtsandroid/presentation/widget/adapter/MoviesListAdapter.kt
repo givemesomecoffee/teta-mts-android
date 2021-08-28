@@ -2,6 +2,9 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.data.entity.MovieUi
@@ -11,7 +14,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.MoviesL
 
 class MoviesListAdapter(
     private var dataset: List<MovieUi>,
-    private var itemClick: ((Int) -> Unit)?
+    private var itemClick: ((Int, TextView, ConstraintLayout, ImageView) -> Unit)?
 ) : RecyclerView.Adapter<MoviesListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {

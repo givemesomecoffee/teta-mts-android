@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_cover_height"
             android:importantForAccessibility="no"
-            android:scaleType="matrix"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible"
+            android:src="@drawable/no_image"/>
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/movie_details_guideline"
             android:layout_width="wrap_content"
@@ -164,6 +165,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
+            android:visibility="gone"
             android:id="@+id/movie_cover_progress_bar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
