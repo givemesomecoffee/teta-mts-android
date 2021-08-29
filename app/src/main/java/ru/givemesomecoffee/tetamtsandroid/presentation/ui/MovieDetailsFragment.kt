@@ -32,10 +32,8 @@ import javax.inject.Inject
 
 const val MOVIE_ID = "id"
 const val MOVIE_URL = "url"
-const val ROOT_TRANSITION_NAME = "root"
 
 class MovieDetailsFragment : Fragment() {
-    private var rootView: ConstraintLayout? = null
     private var categoryTitle: TextView? = null
     private var movieTitle: TextView? = null
     private var movieDescription: TextView? = null
@@ -49,7 +47,6 @@ class MovieDetailsFragment : Fragment() {
     private var movieId: Int? = null
     private var progressBarCover: ProgressBar? = null
     private var actorsListView: RecyclerView? = null
-    private var motionView: MotionLayout? = null
     private var isRefreshData: Boolean = false
 
     private val viewModel: MovieDetailsViewModel by viewModels {
@@ -61,12 +58,8 @@ class MovieDetailsFragment : Fragment() {
 
     private fun init() {
         postponeEnterTransition()
-  /*      rootView = requireView().findViewById(R.id.movie_details_root)
-        setRootTransitionName(rootView)*/
         movieCover = requireView().findViewById(R.id.movie_cover)
         movieCover.transitionName = requireArguments().getString(MOVIE_URL)
-        loadMovieCover()
-        motionView = requireView().findViewById(R.id.constraintLayout)
         categoryTitle = requireView().findViewById(R.id.movie_category)
         movieTitle = requireView().findViewById(R.id.movie_title)
         movieDescription = requireView().findViewById(R.id.movie_description)
@@ -130,11 +123,6 @@ class MovieDetailsFragment : Fragment() {
         requireView().context.imageLoader.enqueue(movieCoverImg)
     }
 
-    private fun setRootTransitionName(rootView: ConstraintLayout?) {
-        rootView?.transitionName =
-            requireArguments().getString(ROOT_TRANSITION_NAME)
-    }
-
     private fun setImgToView(result: Drawable?) {
         requireView().findViewById<ProgressBar>(R.id.movie_cover_progress_bar).visibility =
             View.INVISIBLE
@@ -155,33 +143,32 @@ class MovieDetailsFragment : Fragment() {
         ageSign?.text = movie.ageRestriction
         if (movie.ageRestriction.isNullOrEmpty()) {
             ageSign?.background = null
+        } else{
+            ageSign?.setBackgroundResource(R.drawable.circle)
         }
         if (movie.releaseDate != null) {
             @Suppress("SimpleDateFormat")
             releaseDateView?.text = SimpleDateFormat("dd.MM.yyyy").format(movie.releaseDate!!)
         }
         ratingBar?.rating = movie.rateScore
-        if (isRefreshData) {
+
             val movieCoverImg = ImageRequest.Builder(requireView().context)
                 .error(R.drawable.no_image)
+                .placeholderMemoryCacheKey(movie.imageUrl)
                 .data(movie.imageUrl)
-                .memoryCachePolicy(CachePolicy.DISABLED)
-                .target(onSuccess = { result -> setImgToView(result) },
-                    onError = { result -> setImgToView(result!!) },
-                    onStart = { progressBarCover?.visibility = View.VISIBLE })
+                .allowHardware(false)
+                .target(
+                    onSuccess = { result -> setImgToView(result) },
+                    onError = { result -> setImgToView(result) }
+                )
                 .build()
             requireView().context.imageLoader.enqueue(movieCoverImg)
             isRefreshData = false
-        }
 
         if (movie.actors != null) {
             actorsListView?.adapter = ActorsAdapter(movie.actors!!)
         }
 
-        //start motion animation here since it works badly with dynamic content,
-        // and if started before data loaded it simply never finishes(looks so)
-        // or views just never get rendered
-        motionView?.transitionToEnd()
     }
 
     private fun onGetDataFailure(message: String?) {

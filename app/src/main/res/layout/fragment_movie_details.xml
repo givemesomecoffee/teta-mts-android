@@ -48,13 +48,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/movie_details_guideline">
 
-            <androidx.constraintlayout.motion.widget.MotionLayout
+           <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/offset_20"
-                app:layoutDescription="@xml/fragment_movie_details_xml_constraintlayout_scene">
-
+                android:layout_marginStart="@dimen/offset_20">
                 <TextView
                     android:id="@+id/movie_category"
                     android:layout_width="wrap_content"
@@ -92,7 +90,6 @@
                     android:layout_width="@dimen/age_sign_dimen"
                     android:layout_height="@dimen/age_sign_dimen"
                     android:layout_marginEnd="@dimen/offset_20"
-                    android:background="@drawable/circle"
                     android:gravity="center"
                     android:textAlignment="center"
                     android:textSize="@dimen/space_14"
@@ -150,7 +147,7 @@
                     app:layout_constraintTop_toBottomOf="@id/actors_section_title"
                     tools:listitem="@layout/actor_item" />
 
-            </androidx.constraintlayout.motion.widget.MotionLayout>
+           </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
         <ProgressBar
