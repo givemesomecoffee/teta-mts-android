@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.App
@@ -64,7 +65,12 @@ class MoviesListFragment : Fragment() {
             true
         }
         categoriesAdapter = setCategoryAdapter()
-        categoriesListView.adapter = categoriesAdapter
+        categoriesListView.adapter = AlphaInAnimationAdapter(categoriesAdapter!!).apply {
+            // Change the durations.
+            setDuration(1500)
+            // Disable the first scroll mode.
+            setFirstOnly(false)
+        }
         viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
         viewModel.categories.observe(viewLifecycleOwner, Observer(::setNewCategoriesList))
         viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
