@@ -2,7 +2,9 @@
 package ru.givemesomecoffee.data
 
 import android.app.Application
-import dagger.*
+import dagger.BindsInstance
+import dagger.Component
+import dagger.Module
 import ru.givemesomecoffee.data.repository.Repository
 import ru.givemesomecoffee.data.repository.UserRepository
 import ru.givemesomecoffee.localdata.LocalDataModule

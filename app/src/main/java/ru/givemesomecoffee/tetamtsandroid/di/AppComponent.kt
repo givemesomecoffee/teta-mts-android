@@ -5,12 +5,12 @@ import dagger.*
 import ru.givemesomecoffee.data.repository.Repository
 import ru.givemesomecoffee.data.repository.UserRepository
 import ru.givemesomecoffee.tetamtsandroid.App
-import ru.givemesomecoffee.tetamtsandroid.service.DaggerRefreshDataWorkerFactory
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragment
+import ru.givemesomecoffee.tetamtsandroid.service.DaggerRefreshDataWorkerFactory
 import javax.inject.Singleton
 
 @Singleton
