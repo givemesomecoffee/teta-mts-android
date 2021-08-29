@@ -23,8 +23,8 @@ class RegisterViewModel : ViewModel() {
         }
     }
 
-    fun init(){
-        if (data.value == null){
+    fun init() {
+        if (data.value == null) {
             getCategories()
         }
     }

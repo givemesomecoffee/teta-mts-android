@@ -9,8 +9,7 @@
         android:drawable="@drawable/ic_rating_star_empty" />
     <item
         android:id="@android:id/progress"
-        android:drawable="@drawable/ic_rating_star_filled"
-        />
+        android:drawable="@drawable/ic_rating_star_filled" />
 
 </layer-list>
 

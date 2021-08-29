@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/ask"
-        android:title="Задать вопрос"
-        app:actionLayout="@layout/profile_menu_item"
-        />
+        android:title="@string/profile_support_ask_title"
+        app:actionLayout="@layout/profile_menu_item" />
     <item
         android:id="@+id/issue"
-        android:title="Сообщить о проблеме"
+        android:title="@string/profile_support_issue_title"
         app:actionLayout="@layout/profile_menu_item" />
 
 </menu>

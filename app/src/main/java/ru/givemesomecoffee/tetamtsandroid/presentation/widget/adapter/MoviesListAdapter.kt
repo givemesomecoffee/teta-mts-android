@@ -3,8 +3,6 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.widget.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.givemesomecoffee.data.entity.MovieUi

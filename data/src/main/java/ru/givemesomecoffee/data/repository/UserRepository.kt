@@ -6,7 +6,7 @@ import ru.givemesomecoffee.data.mapper.UserMapper
 import ru.givemesomecoffee.localdata.LocalDatasource
 import javax.inject.Inject
 
-class UserRepository @Inject constructor( private val localDatasource: LocalDatasource) {
+class UserRepository @Inject constructor(private val localDatasource: LocalDatasource) {
     private val userMapper by lazy { UserMapper() }
     private val categoriesMapper by lazy { CategoriesMapper() }
 

@@ -1,4 +1,3 @@
-
 package ru.givemesomecoffee.data
 
 import android.app.Application
@@ -19,7 +18,7 @@ interface DataComponent {
     fun userRepository(): UserRepository
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
 
         @BindsInstance
         fun application(application: Application): Builder
@@ -30,7 +29,7 @@ interface DataComponent {
 }
 
 @Module(includes = [LocalDataModule::class, RemoteDataModule::class])
-interface DataModule{}
+interface DataModule {}
 
 
 

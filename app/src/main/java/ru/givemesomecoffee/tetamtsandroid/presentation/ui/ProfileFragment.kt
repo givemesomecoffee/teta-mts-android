@@ -66,7 +66,7 @@ class ProfileFragment : Fragment() {
         init()
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
         lifecycle.coroutineScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 login?.getUserId()?.let { viewModel.initUser(it) }
             }
         }
@@ -88,8 +88,8 @@ class ProfileFragment : Fragment() {
         inputEmail?.text = Editable.Factory.getInstance().newEditable(user?.email)
         inputPassword?.text = Editable.Factory.getInstance().newEditable(user?.password)
         if (user?.favouriteCategories != null) {
-           favouriteCategoriesListView.adapter =
-               CategoryFavouriteAdapter(user.favouriteCategories!!)
+            favouriteCategoriesListView.adapter =
+                CategoryFavouriteAdapter(user.favouriteCategories!!)
         }
     }
 

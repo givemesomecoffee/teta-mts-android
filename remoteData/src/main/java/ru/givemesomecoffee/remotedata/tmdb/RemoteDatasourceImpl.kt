@@ -7,11 +7,11 @@ import ru.givemesomecoffee.remotedata.tmdb.entity.MovieApiResponse
 import ru.givemesomecoffee.remotedata.tmdb.entity.MoviesApiResponse
 import javax.inject.Inject
 
-internal class RemoteDatasourceImpl @Inject constructor(private val apiService: MoviesApiService):
+internal class RemoteDatasourceImpl @Inject constructor(private val apiService: MoviesApiService) :
     RemoteDatasource {
 
     override suspend fun getMovies(id: String?): MoviesApiResponse {
-        return if (id == null){
+        return if (id == null) {
             apiService.getMovies()
         } else {
             apiService.getMoviesByGenre(genre = id)

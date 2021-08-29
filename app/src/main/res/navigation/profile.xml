@@ -8,8 +8,7 @@
         android:id="@+id/profileFragment"
         android:name="ru.givemesomecoffee.tetamtsandroid.presentation.ui.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"
-        >
+        tools:layout="@layout/fragment_profile">
         <argument
             android:name="userId"
             app:argType="integer" />

@@ -18,7 +18,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
 
         @BindsInstance
         fun repository(repository: Repository): Builder
@@ -53,7 +53,7 @@ object AppModule {
     fun provideMovieListCases(
         repository: Repository
     ): MoviesListCases {
-        return MoviesListCases(repository =  repository )
+        return MoviesListCases(repository = repository)
     }
 
     @Reusable
@@ -68,7 +68,7 @@ object AppModule {
     @Provides
     fun provideUserCase(
         userRepository: UserRepository
-    ): UserCase{
+    ): UserCase {
         return UserCase(repository = userRepository)
     }
 

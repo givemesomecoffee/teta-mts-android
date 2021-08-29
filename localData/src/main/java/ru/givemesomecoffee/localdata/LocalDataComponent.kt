@@ -10,7 +10,7 @@ import ru.givemesomecoffee.localdata.db.LocalDatasourceImpl
 import javax.inject.Singleton
 
 @Module(includes = [LocalDataBindings::class])
-class LocalDataModule{
+class LocalDataModule {
 
     @Provides
     @Singleton

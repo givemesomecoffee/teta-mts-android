@@ -82,9 +82,11 @@ class LoginFragment : Fragment() {
                     val check: Int? = userCase.checkUser(email, password)
                     if (check != null) {
                         login?.saveLogin(check, getToken())
-                        withContext(Dispatchers.Main) {  login?.showProfile()}
+                        withContext(Dispatchers.Main) { login?.showProfile() }
                     } else {
-                       withContext(Dispatchers.Main) {errorWrongDataView?.visibility = View.VISIBLE}
+                        withContext(Dispatchers.Main) {
+                            errorWrongDataView?.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
