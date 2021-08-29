@@ -44,7 +44,6 @@ class MoviesListViewHolder(
             error(R.drawable.no_image)
             MemoryCache.Key(item.imageUrl)
             allowHardware(false)
-            //memoryCachePolicy(CachePolicy.WRITE_ONLY)
             target(
                 onSuccess = { setImg(it) },
                 onError = { setImg(it!!) },
@@ -64,12 +63,7 @@ class MoviesListViewHolder(
         root.transitionName = "root_" + item.title
         movieCover.transitionName = item.imageUrl
         itemView.setOnClickListener {
-            item.id?.let { id ->
-                itemClick?.invoke(
-                    id,
-                    movieCover
-                )
-            }
+            item.id?.let { id -> itemClick?.invoke(id, movieCover) }
         }
     }
 

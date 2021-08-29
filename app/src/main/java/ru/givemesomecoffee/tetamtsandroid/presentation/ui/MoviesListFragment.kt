@@ -2,7 +2,6 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,9 +64,7 @@ class MoviesListFragment : Fragment() {
         }
         categoriesAdapter = setCategoryAdapter()
         categoriesListView.adapter = AlphaInAnimationAdapter(categoriesAdapter!!).apply {
-            // Change the durations.
             setDuration(1500)
-            // Disable the first scroll mode.
             setFirstOnly(false)
         }
         viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
@@ -136,15 +133,11 @@ class MoviesListFragment : Fragment() {
         return MoviesListAdapter(
             listOf(),
             itemClick = { movieId: Int, movieCover: ImageView ->
-                navigateWithAnimation(movieId, movieCover)
-                //moviesListFragmentClickListener?.onMovieCardClicked(movieId)
+                navigateToMovieDetailsFragmentWithAnimation(movieId, movieCover)
             })
     }
 
-    private fun navigateWithAnimation(
-        movieId: Int,
-        movieCover: ImageView
-    ) {
+    private fun navigateToMovieDetailsFragmentWithAnimation(movieId: Int, movieCover: ImageView) {
         val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(
             movieId,
             movieCover.transitionName
@@ -177,8 +170,6 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun setNewMoviesList(await: List<MovieUi>) {
-        Log.d("test", "bind movies")
-        Log.d("test", await.toString())
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)

@@ -43,5 +43,7 @@
     <string name="confirm_login_button_title">ВОЙТИ</string>
     <string name="empty_fields_error">Заполните все поля</string>
     <string name="user_not_found_error">Пользователь не найден</string>
+    <string name="profile_support_issue_title">Сообщить о проблеме</string>
+    <string name="profile_support_ask_title">Задать вопрос</string>
 
 </resources>
