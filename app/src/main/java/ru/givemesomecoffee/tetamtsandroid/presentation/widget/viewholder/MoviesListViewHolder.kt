@@ -12,6 +12,7 @@ import coil.load
 import coil.memory.MemoryCache
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.R
+import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.setTopCrop
 
 class MoviesListViewHolder(
     view: View,

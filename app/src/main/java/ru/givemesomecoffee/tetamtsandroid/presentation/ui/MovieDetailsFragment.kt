@@ -3,12 +3,12 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -58,14 +58,26 @@ class MovieDetailsFragment : Fragment() {
 
     private fun init() {
         postponeEnterTransition()
+/*        setEnterSharedElementCallback(object: SharedElementCallback(){
+            override fun onSharedElementEnd(sharedElementNames: List<String>,
+                                            sharedElements: List<View>, sharedElementSnapshots: List<View>? ) {
+
+                requireView().findViewById<MotionLayout>(R.id.movie_details_root).transitionToEnd()
+            }
+        })*/
+        movieDetailsHolder = requireView().findViewById(R.id.constraintLayout)
+        movieDetailsHolder?.visibility = View.INVISIBLE
         movieCover = requireView().findViewById(R.id.movie_cover)
         movieCover.transitionName = requireArguments().getString(MOVIE_URL)
+
+        Log.d("test", movieCover.imageMatrix.toString())
+        loadMovieCover()
         categoryTitle = requireView().findViewById(R.id.movie_category)
         movieTitle = requireView().findViewById(R.id.movie_title)
         movieDescription = requireView().findViewById(R.id.movie_description)
         ageSign = requireView().findViewById(R.id.age_sign)
         refreshWrapper = requireView().findViewById(R.id.swipe_container)
-        movieDetailsHolder = requireView().findViewById(R.id.movie_details_scroll)
+
         ratingBar = requireView().findViewById(R.id.ratingBar)
         releaseDateView = requireView().findViewById(R.id.movie_date)
         progressBarCover = requireView().findViewById(R.id.movie_cover_progress_bar)
@@ -84,9 +96,11 @@ class MovieDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+            TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
         sharedElementReturnTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+            TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
+
+
     }
 
     override fun onCreateView(
@@ -98,6 +112,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         init()
         super.onViewCreated(view, savedInstanceState)
         viewModel.init()
@@ -121,6 +136,7 @@ class MovieDetailsFragment : Fragment() {
             )
             .build()
         requireView().context.imageLoader.enqueue(movieCoverImg)
+
     }
 
     private fun setImgToView(result: Drawable?) {
@@ -128,10 +144,13 @@ class MovieDetailsFragment : Fragment() {
             View.INVISIBLE
         if (result != null) {
             movieCover.setImageDrawable(result)
+
         }
+        movieCover.imageMatrix = setTopCrop(movieCover)
         movieCover.scaleType = ImageView.ScaleType.MATRIX
-        setTopCrop(movieCover)
         startPostponedEnterTransition()
+
+        Log.d("transition", movieCover.width.toString())
     }
 
     private fun bindData(movie: MovieUi) {
@@ -143,7 +162,7 @@ class MovieDetailsFragment : Fragment() {
         ageSign?.text = movie.ageRestriction
         if (movie.ageRestriction.isNullOrEmpty()) {
             ageSign?.background = null
-        } else{
+        } else {
             ageSign?.setBackgroundResource(R.drawable.circle)
         }
         if (movie.releaseDate != null) {
@@ -152,11 +171,11 @@ class MovieDetailsFragment : Fragment() {
         }
         ratingBar?.rating = movie.rateScore
 
+        if (isRefreshData) {
             val movieCoverImg = ImageRequest.Builder(requireView().context)
                 .error(R.drawable.no_image)
-                .placeholderMemoryCacheKey(movie.imageUrl)
                 .data(movie.imageUrl)
-                .allowHardware(false)
+                .memoryCachePolicy(CachePolicy.DISABLED)
                 .target(
                     onSuccess = { result -> setImgToView(result) },
                     onError = { result -> setImgToView(result) }
@@ -164,11 +183,14 @@ class MovieDetailsFragment : Fragment() {
                 .build()
             requireView().context.imageLoader.enqueue(movieCoverImg)
             isRefreshData = false
+        }
 
         if (movie.actors != null) {
             actorsListView?.adapter = ActorsAdapter(movie.actors!!)
         }
 
+        requireView().findViewById<MotionLayout>(R.id.movie_details_root).transitionToEnd()
+        movieDetailsHolder?.visibility = View.VISIBLE
     }
 
     private fun onGetDataFailure(message: String?) {
