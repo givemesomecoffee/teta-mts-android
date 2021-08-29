@@ -151,12 +151,13 @@ class MovieDetailsFragment : Fragment() {
         this.movie = movie
         errorHandlerView.visibility = View.INVISIBLE
         categoryTitle?.text = movie.category
+        categoryTitle?.setBackgroundResource(R.drawable.round_border)
+        Log.d("motion", categoryTitle?.visibility.toString() )
+        Log.d("motion", categoryTitle?.visibility.toString() )
         movieDescription?.text = movie.description
         ageSign?.text = movie.ageRestriction
         if (movie.ageRestriction.isNullOrEmpty()) {
             ageSign?.background = null
-        } else {
-            ageSign?.visibility = View.VISIBLE
         }
         if (movie.releaseDate != null) {
             releaseDateView?.text = SimpleDateFormat("dd.MM.yyyy").format(movie.releaseDate!!)
