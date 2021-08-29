@@ -6,22 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/movie_details_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_movie_details_xml_movie_details_root_scene">
 
         <ImageView
             android:id="@+id/movie_cover"
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_cover_height"
-            android:importantForAccessibility="no"
             android:background="@color/white"
+            android:importantForAccessibility="no"
+            android:src="@drawable/no_image"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible"
-            android:src="@drawable/no_image"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/movie_details_guideline"
             android:layout_width="wrap_content"
@@ -48,10 +50,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/movie_details_guideline">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/offset_20">
+                android:layout_marginStart="@dimen/offset_20"
+                app:layoutDescription="@xml/fragment_movie_details_xml_constraintlayout_scene">
 
                 <TextView
                     android:id="@+id/movie_category"
@@ -148,7 +152,7 @@
                     app:layout_constraintTop_toBottomOf="@id/actors_section_title"
                     tools:listitem="@layout/actor_item" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.motion.widget.MotionLayout>
         </androidx.core.widget.NestedScrollView>
 
         <TextView
@@ -165,15 +169,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/movie_cover_progress_bar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/movie_details_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

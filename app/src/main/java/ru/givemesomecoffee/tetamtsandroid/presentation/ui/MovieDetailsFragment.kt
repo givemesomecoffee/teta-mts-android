@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.transition.TransitionInflater
 import coil.imageLoader
-import coil.request.CachePolicy
 import coil.request.ImageRequest
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.App
@@ -45,6 +45,7 @@ class MovieDetailsFragment : Fragment() {
     private var movieId: Int? = null
     private var progressBarCover: ProgressBar? = null
     private var actorsListView: RecyclerView? = null
+    private var motion: MotionLayout? = null
 
     private val viewModel: MovieDetailsViewModel by viewModels {
         factory.create(movieId!!)
@@ -69,6 +70,7 @@ class MovieDetailsFragment : Fragment() {
         actorsListView!!.addItemDecoration(RecyclerItemDecoration(10, 0, 20))
         viewModel.data.observe(viewLifecycleOwner, Observer(::bindData))
         viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
+        motion = requireView().findViewById(R.id.constraintLayout)
     }
 
     override fun onAttach(context: Context) {
@@ -117,8 +119,8 @@ class MovieDetailsFragment : Fragment() {
             .data(key)
 
             .allowHardware(false)
-            .target(onSuccess = { result -> setImgToView(result, "success") },
-                onError = { result -> setImgToView(result, "error") })
+            .target(onSuccess = { result -> setImgToView(result) },
+                onError = { result -> setImgToView(result) })
             .build()
         requireView().context.imageLoader.enqueue(movieCoverImg)
 
@@ -130,52 +132,31 @@ class MovieDetailsFragment : Fragment() {
         refreshWrapper?.setOnRefreshListener { viewModel.getMovie() }
     }
 
-    private fun setImgToView(result: Drawable?, s: String) {
+    private fun setImgToView(result: Drawable?) {
 
         requireView().findViewById<ProgressBar>(R.id.movie_cover_progress_bar).visibility =
             View.INVISIBLE
         Log.d("coil", "wtf")
-        Log.d("coil", s)
+
         Log.d("coil", result.toString())
-        if (result!= null) {
+        if (result != null) {
             movieCover.setImageDrawable(result)
         }
         Log.d("test", movieCover.drawable.toString())
         movieCover.scaleType = ImageView.ScaleType.MATRIX
         setTopCrop(movieCover)
-
-/*        movieCover.scaleType = ImageView.ScaleType.MATRIX
-        setTopCrop(movieCover)
-        */
-
-        /*       viewLifecycleOwner.lifecycleScope.launch {
-                   movieCover.setImageDrawable(result)
-
-                   Log.d("test", movieCover.drawable.toString())
-                   delay(2000)
-
-                   movieCover.scaleType = ImageView.ScaleType.MATRIX
-                   Log.d("test", movieCover.drawable.toString())
-                   delay(2000)
-                   setTopCrop(movieCover)
-                   Log.d("test", movieCover.drawable.toString())
-                   delay(200)
-
-               }
-       */
-
     }
 
     private fun bindData(movie: MovieUi) {
         this.movie = movie
-          errorHandlerView.visibility = View.INVISIBLE
+        errorHandlerView.visibility = View.INVISIBLE
         categoryTitle?.text = movie.category
         movieDescription?.text = movie.description
         ageSign?.text = movie.ageRestriction
         if (movie.ageRestriction.isNullOrEmpty()) {
-               ageSign?.visibility = View.INVISIBLE
+            ageSign?.background = null
         } else {
-             ageSign?.visibility = View.VISIBLE
+            ageSign?.visibility = View.VISIBLE
         }
         if (movie.releaseDate != null) {
             releaseDateView?.text = SimpleDateFormat("dd.MM.yyyy").format(movie.releaseDate!!)
@@ -183,18 +164,20 @@ class MovieDetailsFragment : Fragment() {
         ratingBar?.rating = movie.rateScore
 
         //    movieDetailsHolder?.visibility = View.VISIBLE
-        /*   val movieCoverImg = ImageRequest.Builder(requireView().context)
+           val movieCoverImg = ImageRequest.Builder(requireView().context)
                .error(R.drawable.no_image)
                .data(movie.imageUrl)
-               .memoryCachePolicy(CachePolicy.DISABLED)
+               //.memoryCachePolicy(CachePolicy.DISABLED)
                .target(onSuccess = { result -> setImgToView(result) },
                    onError = { result -> setImgToView(result!!) },
                    onStart = { progressBarCover?.visibility = View.VISIBLE })
                .build()
-           requireView().context.imageLoader.enqueue(movieCoverImg)*/
+           requireView().context.imageLoader.enqueue(movieCoverImg)
         if (movie.actors != null) {
             actorsListView?.adapter = ActorsAdapter(movie.actors!!)
         }
+
+        motion!!.transitionToEnd()
 
     }
 
@@ -202,7 +185,7 @@ class MovieDetailsFragment : Fragment() {
         refreshWrapper?.isRefreshing = false
         Toast.makeText(view?.context, message, Toast.LENGTH_SHORT).show()
         if (movie == null) {
-              errorHandlerView.visibility = View.VISIBLE
+            errorHandlerView.visibility = View.VISIBLE
         }
     }
 
