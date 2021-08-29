@@ -14,7 +14,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.viewholder.MoviesL
 
 class MoviesListAdapter(
     private var dataset: List<MovieUi>,
-    private var itemClick: ((Int, TextView, ConstraintLayout, ImageView) -> Unit)?
+    private var itemClick: ((Int, ImageView) -> Unit)?
 ) : RecyclerView.Adapter<MoviesListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {

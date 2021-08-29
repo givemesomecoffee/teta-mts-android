@@ -16,7 +16,7 @@ import ru.givemesomecoffee.tetamtsandroid.presentation.widget.utils.setTopCrop
 
 class MoviesListViewHolder(
     view: View,
-    private val itemClick: ((Int, TextView, ConstraintLayout, ImageView) -> Unit)?
+    private val itemClick: ((Int, ImageView) -> Unit)?
 ) :
     RecyclerView.ViewHolder(view) {
     private val movieTitle: TextView = view.findViewById(R.id.movie_title)
@@ -68,8 +68,6 @@ class MoviesListViewHolder(
             item.id?.let { id ->
                 itemClick?.invoke(
                     id,
-                    movieTitle,
-                    root,
                     movieCover
                 )
             }

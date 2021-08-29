@@ -24,12 +24,6 @@
             android:name="id"
             app:argType="integer" />
         <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="root"
-            app:argType="string" />
-        <argument
             android:name="url"
             app:argType="string" />
     </fragment>

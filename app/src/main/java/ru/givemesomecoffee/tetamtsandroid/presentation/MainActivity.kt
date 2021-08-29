@@ -72,11 +72,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
 
     }
 
-    override fun onMovieCardClicked(id: Int) {
-        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(id, "123", "123", "123")
-        navController.navigate(action)
-    }
-
     override fun homeOnBackPressed(category: Int?) {
         if (category == null) {
             finishAffinity()

@@ -3,7 +3,6 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,26 +57,16 @@ class MovieDetailsFragment : Fragment() {
 
     private fun init() {
         postponeEnterTransition()
-/*        setEnterSharedElementCallback(object: SharedElementCallback(){
-            override fun onSharedElementEnd(sharedElementNames: List<String>,
-                                            sharedElements: List<View>, sharedElementSnapshots: List<View>? ) {
-
-                requireView().findViewById<MotionLayout>(R.id.movie_details_root).transitionToEnd()
-            }
-        })*/
         movieDetailsHolder = requireView().findViewById(R.id.constraintLayout)
         movieDetailsHolder?.visibility = View.INVISIBLE
         movieCover = requireView().findViewById(R.id.movie_cover)
         movieCover.transitionName = requireArguments().getString(MOVIE_URL)
-
-        Log.d("test", movieCover.imageMatrix.toString())
         loadMovieCover()
         categoryTitle = requireView().findViewById(R.id.movie_category)
         movieTitle = requireView().findViewById(R.id.movie_title)
         movieDescription = requireView().findViewById(R.id.movie_description)
         ageSign = requireView().findViewById(R.id.age_sign)
         refreshWrapper = requireView().findViewById(R.id.swipe_container)
-
         ratingBar = requireView().findViewById(R.id.ratingBar)
         releaseDateView = requireView().findViewById(R.id.movie_date)
         progressBarCover = requireView().findViewById(R.id.movie_cover_progress_bar)
@@ -99,8 +88,6 @@ class MovieDetailsFragment : Fragment() {
             TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
         sharedElementReturnTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
-
-
     }
 
     override fun onCreateView(
@@ -112,7 +99,6 @@ class MovieDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         init()
         super.onViewCreated(view, savedInstanceState)
         viewModel.init()
@@ -144,13 +130,10 @@ class MovieDetailsFragment : Fragment() {
             View.INVISIBLE
         if (result != null) {
             movieCover.setImageDrawable(result)
-
         }
         movieCover.imageMatrix = setTopCrop(movieCover)
         movieCover.scaleType = ImageView.ScaleType.MATRIX
         startPostponedEnterTransition()
-
-        Log.d("transition", movieCover.width.toString())
     }
 
     private fun bindData(movie: MovieUi) {

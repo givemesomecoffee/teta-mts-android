@@ -136,27 +136,21 @@ class MoviesListFragment : Fragment() {
     private fun setMoviesListAdapter(): MoviesListAdapter {
         return MoviesListAdapter(
             listOf(),
-            itemClick = { movieId: Int, title: TextView, root: ConstraintLayout, movieCover: ImageView ->
-                navigateWithAnimation(movieId, title, root, movieCover)
+            itemClick = { movieId: Int, movieCover: ImageView ->
+                navigateWithAnimation(movieId, movieCover)
                 //moviesListFragmentClickListener?.onMovieCardClicked(movieId)
             })
     }
 
     private fun navigateWithAnimation(
         movieId: Int,
-        title: TextView,
-        root: ConstraintLayout,
         movieCover: ImageView
     ) {
         val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(
             movieId,
-            title.transitionName,
-            root.transitionName,
             movieCover.transitionName
         )
         val extras = FragmentNavigatorExtras(
-           // root to root.transitionName,
-          //  title to title.transitionName,
             movieCover to movieCover.transitionName
         )
         findNavController().navigate(action, extras)
