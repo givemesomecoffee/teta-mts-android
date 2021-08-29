@@ -60,9 +60,11 @@ class MovieDetailsFragment : Fragment() {
     lateinit var factory: MovieDetailsViewModelFactory.Factory
 
     private fun init() {
-        rootView = requireView().findViewById(R.id.movie_details_root)
-        setRootTransitionName(rootView)
+        postponeEnterTransition()
+  /*      rootView = requireView().findViewById(R.id.movie_details_root)
+        setRootTransitionName(rootView)*/
         movieCover = requireView().findViewById(R.id.movie_cover)
+        movieCover.transitionName = requireArguments().getString(MOVIE_URL)
         loadMovieCover()
         motionView = requireView().findViewById(R.id.constraintLayout)
         categoryTitle = requireView().findViewById(R.id.movie_category)
@@ -114,6 +116,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun loadMovieCover() {
         val key = requireArguments().getString(MOVIE_URL)
+
         val movieCoverImg = ImageRequest.Builder(requireView().context)
             .error(R.drawable.no_image)
             .placeholderMemoryCacheKey(key)
@@ -140,6 +143,7 @@ class MovieDetailsFragment : Fragment() {
         }
         movieCover.scaleType = ImageView.ScaleType.MATRIX
         setTopCrop(movieCover)
+        startPostponedEnterTransition()
     }
 
     private fun bindData(movie: MovieUi) {

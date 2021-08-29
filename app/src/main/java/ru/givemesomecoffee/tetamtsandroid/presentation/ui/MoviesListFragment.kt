@@ -155,9 +155,9 @@ class MoviesListFragment : Fragment() {
             movieCover.transitionName
         )
         val extras = FragmentNavigatorExtras(
-            root to root.transitionName,
+           // root to root.transitionName,
           //  title to title.transitionName,
-          //  movieCover to movieCover.transitionName
+            movieCover to movieCover.transitionName
         )
         findNavController().navigate(action, extras)
     }
