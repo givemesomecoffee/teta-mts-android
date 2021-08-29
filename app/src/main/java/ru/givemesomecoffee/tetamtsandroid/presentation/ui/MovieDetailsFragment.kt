@@ -85,9 +85,9 @@ class MovieDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
+            TransitionInflater.from(context).inflateTransition(R.transition.transition_movie_cover)
         sharedElementReturnTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.transition_test)
+            TransitionInflater.from(context).inflateTransition(R.transition.transition_movie_cover)
     }
 
     override fun onCreateView(
