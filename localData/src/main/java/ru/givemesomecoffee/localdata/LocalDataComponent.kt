@@ -2,13 +2,15 @@ package ru.givemesomecoffee.localdata
 
 import android.app.Application
 import androidx.room.Room
-import dagger.*
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
 import ru.givemesomecoffee.localdata.db.AppDatabase
 import ru.givemesomecoffee.localdata.db.LocalDatasourceImpl
 import javax.inject.Singleton
 
 @Module(includes = [LocalDataBindings::class])
-class LocalDataModule{
+class LocalDataModule {
 
     @Provides
     @Singleton

@@ -6,12 +6,17 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.memory.MemoryCache
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.R
 
-class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) :
+class MoviesListViewHolder(
+    view: View,
+    private val itemClick: ((Int, ImageView) -> Unit)?
+) :
     RecyclerView.ViewHolder(view) {
     private val movieTitle: TextView = view.findViewById(R.id.movie_title)
     private val movieDescription: TextView = view.findViewById(R.id.movie_description)
@@ -19,6 +24,7 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
     private val movieAge: TextView = view.findViewById(R.id.age_sign)
     private val ratingBar: RatingBar = view.findViewById(R.id.ratingBar)
     private val progressBar: ProgressBar = view.findViewById(R.id.movie_cover_progress_bar)
+    private val root: ConstraintLayout = view.findViewById(R.id.movie_item_root)
 
     private fun setLoading() {
         progressBar.visibility = View.VISIBLE
@@ -32,14 +38,18 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
 
     fun bind(item: MovieUi) {
         movieTitle.text = item.title
+        movieTitle.transitionName = item.title
         movieDescription.text = item.description
         movieCover.load(item.imageUrl) {
             error(R.drawable.no_image)
+            MemoryCache.Key(item.imageUrl)
+            allowHardware(false)
             target(
                 onSuccess = { setImg(it) },
                 onError = { setImg(it!!) },
-                onStart = { setLoading()})
+                onStart = { setLoading() })
         }
+
         movieAge.text = item.ageRestriction
         if (item.ageRestriction.isNullOrEmpty()) {
             movieAge.visibility = View.INVISIBLE
@@ -50,7 +60,11 @@ class MoviesListViewHolder(view: View, private val itemClick: ((Int) -> Unit)?) 
             rating = item.rateScore
             contentDescription = item.rateScore.toString()
         }
-        itemView.setOnClickListener { item.id?.let { id -> itemClick?.invoke(id) } }
+        root.transitionName = "root_" + item.title
+        movieCover.transitionName = item.imageUrl
+        itemView.setOnClickListener {
+            item.id?.let { id -> itemClick?.invoke(id, movieCover) }
+        }
     }
 
 }

@@ -1,8 +1,9 @@
-
 package ru.givemesomecoffee.data
 
 import android.app.Application
-import dagger.*
+import dagger.BindsInstance
+import dagger.Component
+import dagger.Module
 import ru.givemesomecoffee.data.repository.Repository
 import ru.givemesomecoffee.data.repository.UserRepository
 import ru.givemesomecoffee.localdata.LocalDataModule
@@ -17,7 +18,7 @@ interface DataComponent {
     fun userRepository(): UserRepository
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
 
         @BindsInstance
         fun application(application: Application): Builder
@@ -28,7 +29,7 @@ interface DataComponent {
 }
 
 @Module(includes = [LocalDataModule::class, RemoteDataModule::class])
-interface DataModule{}
+interface DataModule {}
 
 
 

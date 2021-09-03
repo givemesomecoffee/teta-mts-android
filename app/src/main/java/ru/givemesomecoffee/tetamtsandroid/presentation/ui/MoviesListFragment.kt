@@ -2,19 +2,22 @@ package ru.givemesomecoffee.tetamtsandroid.presentation.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import ru.givemesomecoffee.data.entity.CategoryUi
 import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.tetamtsandroid.App
@@ -54,8 +57,16 @@ class MoviesListFragment : Fragment() {
         errorHandlerView = requireView().findViewById(R.id.error_handler)
         moviesAdapter = setMoviesListAdapter()
         moviesListView.adapter = moviesAdapter
+        postponeEnterTransition()
+        moviesListView.viewTreeObserver.addOnPreDrawListener {
+            startPostponedEnterTransition()
+            true
+        }
         categoriesAdapter = setCategoryAdapter()
-        categoriesListView.adapter = categoriesAdapter
+        categoriesListView.adapter = AlphaInAnimationAdapter(categoriesAdapter!!).apply {
+            setDuration(1500)
+            setFirstOnly(false)
+        }
         viewModel.data.observe(viewLifecycleOwner, Observer(::setNewMoviesList))
         viewModel.categories.observe(viewLifecycleOwner, Observer(::setNewCategoriesList))
         viewModel.loadingState.observe(viewLifecycleOwner, Observer(::onLoading))
@@ -121,9 +132,20 @@ class MoviesListFragment : Fragment() {
     private fun setMoviesListAdapter(): MoviesListAdapter {
         return MoviesListAdapter(
             listOf(),
-            itemClick = { movieId: Int ->
-                moviesListFragmentClickListener?.onMovieCardClicked(movieId)
+            itemClick = { movieId: Int, movieCover: ImageView ->
+                navigateToMovieDetailsFragmentWithAnimation(movieId, movieCover)
             })
+    }
+
+    private fun navigateToMovieDetailsFragmentWithAnimation(movieId: Int, movieCover: ImageView) {
+        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(
+            movieId,
+            movieCover.transitionName
+        )
+        val extras = FragmentNavigatorExtras(
+            movieCover to movieCover.transitionName
+        )
+        findNavController().navigate(action, extras)
     }
 
     private fun setCategoryAdapter(): CategoryAdapter {
@@ -148,12 +170,10 @@ class MoviesListFragment : Fragment() {
     }
 
     private fun setNewMoviesList(await: List<MovieUi>) {
-        Log.d("test", "bind movies")
-        Log.d("test", await.toString())
         moviesList = await
         emptyListView?.visibility = if (await.isEmpty()) View.VISIBLE else View.GONE
         moviesAdapter?.updateMoviesList(await)
-     }
+    }
 
     private fun setNewCategoriesList(await: List<CategoryUi>) {
         categoriesAdapter?.updateCategoriesList(await)

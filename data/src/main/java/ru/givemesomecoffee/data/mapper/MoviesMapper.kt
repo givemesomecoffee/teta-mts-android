@@ -67,7 +67,7 @@ internal class MoviesMapper {
             category = movie.genres[0].name,
             releaseDate = certification?.release_date,
 
-        )
+            )
     }
 
     fun toMovieUi(

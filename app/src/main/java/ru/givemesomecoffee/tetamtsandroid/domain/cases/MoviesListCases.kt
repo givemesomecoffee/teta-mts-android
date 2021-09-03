@@ -5,7 +5,7 @@ import ru.givemesomecoffee.data.entity.MovieUi
 import ru.givemesomecoffee.data.repository.Repository
 import javax.inject.Inject
 
-class MoviesListCases  @Inject constructor(val repository: Repository){
+class MoviesListCases @Inject constructor(val repository: Repository) {
 
     suspend fun getMoviesList(id: Int?): List<MovieUi> {
 
@@ -17,7 +17,7 @@ class MoviesListCases  @Inject constructor(val repository: Repository){
     }
 
     suspend fun refreshMoviesList() {
-         repository.refreshMoviesList()
+        repository.refreshMoviesList()
     }
 
 }

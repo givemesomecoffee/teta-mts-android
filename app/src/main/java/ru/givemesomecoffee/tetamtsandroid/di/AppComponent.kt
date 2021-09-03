@@ -5,12 +5,12 @@ import dagger.*
 import ru.givemesomecoffee.data.repository.Repository
 import ru.givemesomecoffee.data.repository.UserRepository
 import ru.givemesomecoffee.tetamtsandroid.App
-import ru.givemesomecoffee.tetamtsandroid.service.DaggerRefreshDataWorkerFactory
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MovieCase
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.MoviesListCases
 import ru.givemesomecoffee.tetamtsandroid.domain.cases.UserCase
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MovieDetailsFragment
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragment
+import ru.givemesomecoffee.tetamtsandroid.service.DaggerRefreshDataWorkerFactory
 import javax.inject.Singleton
 
 @Singleton
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
 
         @BindsInstance
         fun repository(repository: Repository): Builder
@@ -53,7 +53,7 @@ object AppModule {
     fun provideMovieListCases(
         repository: Repository
     ): MoviesListCases {
-        return MoviesListCases(repository =  repository )
+        return MoviesListCases(repository = repository)
     }
 
     @Reusable
@@ -68,7 +68,7 @@ object AppModule {
     @Provides
     fun provideUserCase(
         userRepository: UserRepository
-    ): UserCase{
+    ): UserCase {
         return UserCase(repository = userRepository)
     }
 

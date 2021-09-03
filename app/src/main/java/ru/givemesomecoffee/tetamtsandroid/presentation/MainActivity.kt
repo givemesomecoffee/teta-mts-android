@@ -21,7 +21,6 @@ import ru.givemesomecoffee.tetamtsandroid.R
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.Login
 import ru.givemesomecoffee.tetamtsandroid.presentation.interfaces.MoviesListFragmentClickListener
 import ru.givemesomecoffee.tetamtsandroid.presentation.ui.Authorisation
-import ru.givemesomecoffee.tetamtsandroid.presentation.ui.MoviesListFragmentDirections
 
 private const val USER_TOKEN = "user_token"
 private const val PREF_FILE_NAME = "UserPref"
@@ -70,11 +69,6 @@ class MainActivity : AppCompatActivity(), MoviesListFragmentClickListener,
             }
         }
 
-    }
-
-    override fun onMovieCardClicked(id: Int) {
-        val action = MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(id)
-        navController.navigate(action)
     }
 
     override fun homeOnBackPressed(category: Int?) {

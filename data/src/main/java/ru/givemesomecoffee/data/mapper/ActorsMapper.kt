@@ -24,7 +24,7 @@ internal class ActorsMapper {
     }
 
     fun toActorUi(list: List<ActorDto>): List<ActorUi> {
-        val result =  list.map {
+        val result = list.map {
             ActorUi(
                 id = it.id,
                 name = it.name,
@@ -36,7 +36,7 @@ internal class ActorsMapper {
     }
 
     fun toActorDto(actors: List<ActorUi>): List<ActorDto> {
-         return actors.map {
+        return actors.map {
             ActorDto(
                 name = it.name,
                 img = it.imgUrl,

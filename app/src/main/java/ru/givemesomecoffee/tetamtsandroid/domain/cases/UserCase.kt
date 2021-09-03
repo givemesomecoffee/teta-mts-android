@@ -5,7 +5,7 @@ import ru.givemesomecoffee.data.entity.UserUi
 import ru.givemesomecoffee.data.repository.UserRepository
 import javax.inject.Inject
 
-class UserCase @Inject constructor(val repository: UserRepository)  {
+class UserCase @Inject constructor(val repository: UserRepository) {
 
     fun getUser(id: Int): UserUi {
         Log.d("test", Thread.currentThread().toString())

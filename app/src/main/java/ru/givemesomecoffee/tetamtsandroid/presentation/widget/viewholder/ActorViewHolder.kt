@@ -28,6 +28,7 @@ class ActorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(item: ActorUi) {
         if (item.imgUrl.isNullOrEmpty()) {
             actorPhoto.setImageResource(R.drawable.no_image)
+            progressBar.visibility = View.INVISIBLE
         } else {
             actorPhoto.load(item.imgUrl) {
                 error(R.drawable.no_image)
